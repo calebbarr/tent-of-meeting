@@ -1,5 +1,7 @@
 TentOfMeeting::Application.routes.draw do
 
+  devise_for :users
+
   # get "verses/show"
   resources :verses
 
