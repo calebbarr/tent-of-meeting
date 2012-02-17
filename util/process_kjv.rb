@@ -14,13 +14,18 @@ while(line = kjv.gets)
     book_id_str,book_name = line.split(/(?<=Book [0-9]{2})\s/)
     book_id =  book_id+1
     print "Book.create({id: "+book_id.to_s+", name: \""+book_name.to_s+"\"})\n"
+    chapter_name = 1
+    chapter_id+=1
+    print "Chapter.create({id: "+chapter_id.to_s+", name: "+chapter_name.to_s+", book_id: "+book_id.to_s+"})\n"
     # line = kjv.gets
   elsif line.length == 0 then
     # puts book_name+" "+chapter_name.to_s+":"+verse_name.to_s
     # puts content
-    print "Verse.create({id: "+verse_id.to_s+", name: "+verse_name.to_s+", chapter_id: "+chapter_id.to_s+"})\n"
-    print "VerseText.create({id: "+verse_id.to_s+",verse_id: "+verse_id.to_s+", language: \"eng\", content: \""+content+"\"})\n"
-    content = ""
+    if book_id !=0 and chapter_id !=0 and verse_id !=0 and content != "" then
+      print "Verse.create({id: "+verse_id.to_s+", name: "+verse_name.to_s+", chapter_id: "+chapter_id.to_s+"})\n"
+      print "VerseText.create({id: "+verse_id.to_s+",verse_id: "+verse_id.to_s+", language: \"eng\", content: \""+content+"\"})\n"
+      content = ""
+    end
   else
     if line[0,8] =~/[0-9]{3}:[0-9]{3}/ then
       chapter_verse,content = line.split(/(?<=[0-9]{3}:[0-9]{3})\s/)
