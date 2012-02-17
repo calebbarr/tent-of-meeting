@@ -1,0 +1,6 @@
+%h1
+	=@book.name
+	=@chapter.name
+%p
+	- @verses.each do |verse|
+		= link_to verse.name, verse_url(verse.id)

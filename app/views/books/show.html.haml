@@ -1,0 +1,6 @@
+%h1
+	=@book.name
+	
+%p
+	- @chapters.each do |chapter|
+		= link_to chapter.name, chapter_url(chapter.id)

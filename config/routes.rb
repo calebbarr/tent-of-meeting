@@ -1,10 +1,10 @@
 TentOfMeeting::Application.routes.draw do
-
   devise_for :users
-
-  # get "verses/show"
-  resources :verses
-
+  resources :verses, :only => :show
+  resources :chapters, :only => :show
+  resources :books, :only => :show
+  # match "Genesis/:id/:id" => 'verses#show'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
