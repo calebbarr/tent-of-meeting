@@ -1,4 +1,8 @@
 TentOfMeeting::Application.routes.draw do
+
+  # get "verses/show"
+  resources :verses
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
