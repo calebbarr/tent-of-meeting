@@ -1,11 +1,29 @@
-TentOfMeeting::Application.routes.draw do
+TentOfMeeting::Application.routes.draw do  
+
+  ## application routes
+  
+  ## users
   devise_for :users
   
+  match "/profile", :controller => :profile, :action => :show
+  #should be a post here, once that functionality is working
+  get "profile/edit"
+  
+  #should be a post here, once that functionality is working
+  get "profile/settings", :as => "settings"
+  
+  get "users/show"
+  
+  
+  ### Bible navigation -- legacy /debug
   #these should be removed soon, verses, chapters, and books should not be accessible
   # by id
   resources :verses, :only => :show
   resources :chapters, :only => :show
   resources :books, :only => :show
+  
+  
+  ### Bible navigation
   
   #these need to be manually specified because each book is a "controller" level specification
   # (top level). otherwise, we could just say /verses(/:book(/:chapter(/:verse))) and interpret
