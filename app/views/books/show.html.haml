@@ -3,4 +3,4 @@
 	
 %p
 	- @chapters.each do |chapter|
-		= link_to chapter.name, chapter_url(chapter.id)
+		= link_to chapter.name, "/"+@book.name.to_s+"/"+chapter.name.to_s
