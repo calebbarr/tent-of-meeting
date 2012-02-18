@@ -1,6 +1,6 @@
 %h1
 	= link_to @book.name.to_s, "/"+@book.name
-	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
+	= link_to @chapter.name.to_s, "/"+@book.name+"/"+@chapter.name.to_s
 %p
 	- @verses.each do |verse|
 		= link_to verse.name, "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s
