@@ -17,7 +17,7 @@
 				#main-navigation
 					%ul.wat-cf
 			#wrapper.wat-cf
-				.flash
+				.flash{:align => "center"}
 					- flash.each do |type, message|
 						%div{:class => "message #{type}"}
 							%p= message
