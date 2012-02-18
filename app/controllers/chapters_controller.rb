@@ -24,7 +24,7 @@ class ChaptersController < NavigationController
       @book = @chapter.book
       @verse = Verse.lookup(@book.id,@chapter.name,1)
       @verse_text = VerseText.find(@verse.id)
-      verse_url = "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+      verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
       redirect_to verse_url
     end
   end
@@ -37,7 +37,7 @@ class ChaptersController < NavigationController
       @book = @chapter.book
       @verse = Verse.lookup(@book.id,@chapter.name,1)
       @verse_text = VerseText.find(@verse.id)
-      verse_url = "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+      verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
       redirect_to verse_url
     end
   end

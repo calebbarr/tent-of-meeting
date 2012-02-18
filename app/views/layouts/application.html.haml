@@ -27,6 +27,8 @@
 						.block
 							%p
 								[
+								=link_to "<<<",prev_book_path
+								|
 								=link_to "<<",prev_chapter_path
 								|
 								=link_to "<",prev_verse_path
@@ -36,6 +38,8 @@
 								=link_to ">",next_verse_path
 								|
 								=link_to ">>",next_chapter_path
+								|
+								=link_to ">>>",next_book_path
 								]
 				#sidebar
 					= yield :sidebar

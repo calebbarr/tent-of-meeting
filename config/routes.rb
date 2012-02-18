@@ -29,7 +29,9 @@ TentOfMeeting::Application.routes.draw do
   get "verses/next", :controller => :verses, :action => :next, :as => "next_verse"
   get "verses/prev", :controller => :verses, :action => :prev, :as => "prev_verse"
   get "chapters/next", :controller => :chapters, :action => :next, :as => "next_chapter"
-  get "chapters/prev", :controller => :chapters, :action => :prev, :as => "prev_chapter"  
+  get "chapters/prev", :controller => :chapters, :action => :prev, :as => "prev_chapter"
+  get "books/next", :controller => :books, :action => :next, :as => "next_book"
+  get "books/prev", :controller => :books, :action => :prev, :as => "prev_book"
   
   ## Bible Reference URLs
   #these need to be manually specified because each book is a "controller" level specification
