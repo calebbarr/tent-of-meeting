@@ -1,5 +1,5 @@
 %h1
-	=@book.name
+	= link_to @book.name.to_s, "/"+@book.name
 	
 %p
 	- @chapters.each do |chapter|
