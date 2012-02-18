@@ -4,6 +4,10 @@ class BooksController < NavigationController
     @chapters = @book.chapters
   end
   
+  def index
+    @books = Book.all
+  end
+  
   def next
     navigation = get_navigation_from_session
     if navigation[:book] != nil then
