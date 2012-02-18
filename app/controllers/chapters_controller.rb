@@ -1,4 +1,4 @@
-class ChaptersController < ApplicationController
+class ChaptersController < NavigationController
   def show
     if params[:book] != nil then
       book_id = params[:book]
@@ -13,6 +13,32 @@ class ChaptersController < ApplicationController
       @chapter = Chapter.find(params[:id])
       @book = @chapter.book
       @verses = @chapter.verses
+    end
+  end
+  
+  def next
+    navigation = get_navigation_from_session
+    if navigation[:chapter] != nil then
+      chapter_id = navigation[:chapter]
+      @chapter = Chapter.next(chapter_id)
+      @book = @chapter.book
+      @verse = Verse.lookup(@book.id,@chapter.name,1)
+      @verse_text = VerseText.find(@verse.id)
+      verse_url = "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+      redirect_to verse_url
+    end
+  end
+  
+  def prev
+    navigation = get_navigation_from_session
+    if navigation[:chapter] != nil then
+      chapter_id = navigation[:chapter]
+      @chapter = Chapter.prev(chapter_id)
+      @book = @chapter.book
+      @verse = Verse.lookup(@book.id,@chapter.name,1)
+      @verse_text = VerseText.find(@verse.id)
+      verse_url = "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+      redirect_to verse_url
     end
   end
 

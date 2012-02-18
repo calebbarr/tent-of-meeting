@@ -18,13 +18,20 @@ TentOfMeeting::Application.routes.draw do
   ### Bible navigation -- legacy /debug
   #these should be removed soon, verses, chapters, and books should not be accessible
   # by id
-  resources :verses, :only => :show
-  resources :chapters, :only => :show
-  resources :books, :only => :show
+  # resources :verses, :only => :show
+  # resources :chapters, :only => :show
+  # resources :books, :only => :show
   
   
   ### Bible navigation
   
+  get "verses/random", :controller => :verses, :action => :random, :as => "random_verse"
+  get "verses/next", :controller => :verses, :action => :next, :as => "next_verse"
+  get "verses/prev", :controller => :verses, :action => :prev, :as => "prev_verse"
+  get "chapters/next", :controller => :chapters, :action => :next, :as => "next_chapter"
+  get "chapters/prev", :controller => :chapters, :action => :prev, :as => "prev_chapter"  
+  
+  ## Bible Reference URLs
   #these need to be manually specified because each book is a "controller" level specification
   # (top level). otherwise, we could just say /verses(/:book(/:chapter(/:verse))) and interpret
   # the optional parameters in the controller (e.g. /verses/Ruth/2/17)

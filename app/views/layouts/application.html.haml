@@ -27,15 +27,15 @@
 						.block
 							%p
 								[
-								=link_to "<<","#"
+								=link_to "<<",prev_chapter_path
 								|
-								=link_to "<","#"
+								=link_to "<",prev_verse_path
 								|
-								=link_to "*","#"
+								=link_to "*",random_verse_path
 								|
-								=link_to ">","#"
+								=link_to ">",next_verse_path
 								|
-								=link_to ">>","#"
+								=link_to ">>",next_chapter_path
 								]
 				#sidebar
 					= yield :sidebar
