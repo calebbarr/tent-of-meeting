@@ -359,3 +359,5 @@ TentOfMeeting::Application.routes.draw do
   #root :to => something
   #right now there is a JS redirect on public/index.html
   
+end
+  
