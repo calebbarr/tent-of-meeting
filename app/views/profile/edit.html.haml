@@ -2,7 +2,8 @@
 	Tent of Meeting -
 	Profile
 	
-%h1 Profile
+%h1
+	= user = -> {return  current_user != nil ? current_user.email : "Profile"}.call
 %p
 	Edit user information here.
 	= link_to "[done]", profile_path
