@@ -3,15 +3,18 @@ class NavigationController < ApplicationController
   
   def store_navigation_in_session
     session[:navigation] = {:book => nil, :chapter => nil, :verse => nil}
-    if @book != nil then
-      session[:navigation][:book] = @book.id
+    if @book == nil then
+      @book = Book.find(1)
     end
-    if @chapter != nil then
-      session[:navigation][:chapter] = @chapter.id
+    session[:navigation][:book] = @book.id
+    if @chapter == nil then
+      @chapter = Chapter.lookup(session[:navigation][:book], 1)
     end
-    if @verse != nil then
-      session[:navigation][:verse] = @verse.id
+    session[:navigation][:chapter] = @chapter.id
+    if @verse == nil then
+    @verse = Verse.lookup(@book.id,@chapter.name,1)
     end
+    session[:navigation][:verse] = @verse.id
   end
   
   def get_navigation_from_session
