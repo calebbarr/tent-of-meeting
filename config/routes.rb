@@ -270,9 +270,9 @@ TentOfMeeting::Application.routes.draw do
   match "/Ephesians/:chapter", :controller => :chapters, :action => :show, book: 49
   match "/Ephesians/:chapter/:verse", :controller => :verses, :action => :show, book: 49
   
-  match "/Phillipians", :controller => :books, :action => :show, id: 50
-  match "/Phillipians/:chapter", :controller => :chapters, :action => :show, book: 50
-  match "/Phillipians/:chapter/:verse", :controller => :verses, :action => :show, book: 50
+  match "/Philippians", :controller => :books, :action => :show, id: 50
+  match "/Philippians/:chapter", :controller => :chapters, :action => :show, book: 50
+  match "/Philippians/:chapter/:verse", :controller => :verses, :action => :show, book: 50
   
   match "/Colossians", :controller => :books, :action => :show, id: 51
   match "/Colossians/:chapter", :controller => :chapters, :action => :show, book: 51
