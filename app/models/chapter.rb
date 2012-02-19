@@ -7,19 +7,22 @@ class Chapter < ActiveRecord::Base
   end
   
   def next
-    return id+1 < NUMBER_OF_CHAPTERS ? Chapter.find(id+1) : self
+    return id+1 <= NUMBER_OF_CHAPTERS ? Chapter.find(id+1) : self
   end
   
   def self.next(id)
-    return id+1 < NUMBER_OF_CHAPTERS ? Chapter.find(id+1) : self
+    return id+1 <= NUMBER_OF_CHAPTERS ? Chapter.find(id+1) : Chapter.find(id)
   end
   
   def prev
-    return id-1 > 0 ? Chapter.find(id-1) : self
+    return id-1 > 0 ? Chapter.find(id-1) : Chapter.find(id)
   end
   
   def self.prev(id)
-    return id-1 > 0 ? Chapter.find(id-1) : self
+    return id-1 > 0 ? Chapter.find(id-1) : Chapter.find(id)
   end
   
+  def islast?
+    return id == NUMBER_OF_CHAPTERS
+  end
 end

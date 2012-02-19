@@ -13,8 +13,9 @@ class BooksController < NavigationController
     if navigation[:book] != nil then
       book_id = navigation[:book]
       @book = Book.next(book_id)
-      @chapter = Chapter.lookup(book_id,1)
-      @verse = Verse.lookup(book_id,@chapter.name,1)
+      @chapter = Chapter.lookup(book_id,chapter_name = -> {return  book_id == NUMBER_OF_BOOKS ? LAST_CHAPTER_NAME : 1}.call)
+      #book_id == last, and not @book.islast, because we need to deal with the un-incremented book
+      @verse = Verse.lookup(book_id,@chapter.name,verse_name = -> {return  @chapter.islast? ? LAST_VERSE_NAME : 1}.call)
       @verse_text = VerseText.find(@verse.id)
       verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
       redirect_to verse_url
