@@ -1,3 +1,7 @@
+%title
+	Tent of Meeting -
+	= @book.name.to_s
+	= @chapter.name.to_s + "\:"+@verse.name.to_s
 %h1
 	= link_to @book.name.to_s, "/"+@book.name
 	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
