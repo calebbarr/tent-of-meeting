@@ -7,8 +7,7 @@ class Verse < ActiveRecord::Base
   end
   
   def self.random
-    index = rand(1..NUMBER_OF_VERSES)
-    return Verse.find(index)
+    return Verse.find(Random.new.rand(1..NUMBER_OF_VERSES))
   end
   
   def next
