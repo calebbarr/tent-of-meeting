@@ -15,7 +15,7 @@
 					= if user_signed_in? then link_to "Logout", destroy_user_session_path, :method => :delete else link_to "Sign in", new_user_session_path, :method => :get end
 					]
 					#search-field{:align => "right", :style => "padding-right:25%"}
-						= form_tag :controller => :verses, :action => :search, :method => :get do
+						= form_tag :controller => :verses, :action => :search do
 							=search_field_tag(:query, value="", :id => 'search_box')
 							= submit_tag nil, :hidden => true
 				#main-navigation

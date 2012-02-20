@@ -11,9 +11,8 @@ TentOfMeeting::Application.routes.draw do
   get "profile/settings", :as => "settings"
   get "users/show"
     
-  resources :verses do
-    match :search, :on => :collection
-  end
+  
+  post "verses/search", :controller => :verses, :action => :search
     
   ### Bible navigation  
   get "verses/random", :controller => :verses, :action => :random, :as => "random_verse"
