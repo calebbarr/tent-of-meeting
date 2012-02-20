@@ -6,5 +6,6 @@
 	= link_to @book.name.to_s, "/"+@book.name
 	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
 	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+	=  -> {return  @verse.has_quiz? ?  link_to("*", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : ""}.call
 %p{:style => "width:50%;"}
 	=@verse_text.content

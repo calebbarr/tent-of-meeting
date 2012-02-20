@@ -57,5 +57,5 @@ class VersesController < NavigationController
       redirect_to verse_url
     end
   end
-
+  
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217044302) do
+ActiveRecord::Schema.define(:version => 20120219054950) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(:version => 20120217044302) do
   create_table "chapters", :force => true do |t|
     t.integer  "book_id"
     t.integer  "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "multiple_choice_questions", :force => true do |t|
+    t.integer  "verse_id"
+    t.text     "content"
+    t.text     "a"
+    t.text     "b"
+    t.text     "c"
+    t.text     "d"
+    t.string   "correct"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

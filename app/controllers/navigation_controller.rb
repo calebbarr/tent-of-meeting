@@ -1,5 +1,7 @@
 class NavigationController < ApplicationController
   after_filter :store_navigation_in_session
+  before_filter :clear_q_id
+  #need to remember to clear that out, shouldn't be done in the session
   
   def store_navigation_in_session
     session[:navigation] = {:book => nil, :chapter => nil, :verse => nil}
@@ -19,6 +21,10 @@ class NavigationController < ApplicationController
   
   def get_navigation_from_session
     return session[:navigation]
+  end
+  
+  def clear_q_id
+    session[:q_id] = nil
   end
   
 end

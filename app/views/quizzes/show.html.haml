@@ -1,0 +1,40 @@
+%title
+	Tent of Meeting -
+	= @book.name.to_s
+	= @chapter.name.to_s + "\:"+@verse.name.to_s
+	\- Quiz
+	
+%h1
+	= link_to @book.name.to_s, "/"+@book.name
+	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
+	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+	
+#quiz{:align => "left", :style => "padding-left:33%", :width => "50%"}
+	%table{:width => "80%"}
+		- q = @verse.multiple_choice_questions[Random.new.rand(0...@verse.multiple_choice_questions.length)]
+		%tr{:align => "center"}
+			= q.content
+		%tr{:align => "left" }
+			%td{:width => "5%"}
+			%td{:width => "5%"}
+				=button_to('a', multiple_choice_check_answer_path(:q_id => q.id, :answer => "a"), :method => :get)
+			%td
+				=q.a
+			%tr{:align => "left" }
+				%td{:width => "5%"}
+				%td{:width => "5%"}
+					=button_to('b', multiple_choice_check_answer_path(:q_id => q.id, :answer => "b"), :method => :get)
+				%td
+					=q.b
+			%tr{:align => "left" }
+				%td{:width => "5%"}
+				%td{:width => "5%"}
+					=button_to('c', multiple_choice_check_answer_path(:q_id => q.id, :answer => "c"), :method => :get)
+				%td
+					=q.c
+			%tr{:align => "left" }
+				%td{:width => "5%"}
+				%td{:width => "5%"}
+					=button_to('d', multiple_choice_check_answer_path(:q_id => q.id, :answer => "d"), :method => :get)
+				%td
+					=q.d

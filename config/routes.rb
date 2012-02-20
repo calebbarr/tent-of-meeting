@@ -4,17 +4,13 @@ TentOfMeeting::Application.routes.draw do
   
   ## users
   devise_for :users
-  
   match "/profile", :controller => :profile, :action => :show
   #should be a post here, once that functionality is working
   get "profile/edit"
-  
   #should be a post here, once that functionality is working
   get "profile/settings", :as => "settings"
-  
   get "users/show"
-
-  
+    
   ### Bible navigation  
   get "verses/random", :controller => :verses, :action => :random, :as => "random_verse"
   get "verses/next", :controller => :verses, :action => :next, :as => "next_verse"
@@ -24,7 +20,10 @@ TentOfMeeting::Application.routes.draw do
   get "books/next", :controller => :books, :action => :next, :as => "next_book"
   get "books/prev", :controller => :books, :action => :prev, :as => "prev_book"
   get "/Bible", :controller => :books, :action => :index, :as => "books_index"
-  
+    
+  # activity URLs
+  get "/quiz/:q_id/:answer", :controller => :quizzes, :action => :answer, :as => :multiple_choice_check_answer
+    
   ## Bible Reference URLs
   #these need to be manually specified because each book is a "controller" level specification
   # (top level). otherwise, we could just say /verses(/:book(/:chapter(/:verse))) and interpret
@@ -33,6 +32,7 @@ TentOfMeeting::Application.routes.draw do
   match "/Genesis", :controller => :books, :action => :show, id: 1
   match "/Genesis/:chapter", :controller => :chapters, :action => :show, book: 1
   match "/Genesis/:chapter/:verse", :controller => :verses, :action => :show, book: 1
+  match "/Genesis/:chapter/:verse/quiz", :controller => :quizzes, :action => :show, book: 1
   
   match "/Exodus", :controller => :books, :action => :show, id: 2
   match "/Exodus/:chapter", :controller => :chapters, :action => :show, book: 2
