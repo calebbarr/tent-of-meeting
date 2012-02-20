@@ -1,7 +1,6 @@
 %title
 	Tent of Meeting - Search
-#books{:align => "left", :style => "padding-left:25%"}
-	=link_to "<<<", books_index_path
+	
 -if @results.length > 0 then
 	%table{:align => "center", :width => "50%"}
 		- @results.each do |result|
