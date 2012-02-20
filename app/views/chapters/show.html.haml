@@ -3,9 +3,11 @@
 	= @book.name.to_s
 	= @chapter.name.to_s
 	
+#books{:align => "left", :style => "padding-left:25%"}
+	=link_to "<<<", books_index_path
 %h1
 	= link_to @book.name.to_s, "/"+@book.name
 	= link_to @chapter.name.to_s, "/"+@book.name+"/"+@chapter.name.to_s
-%p
+%p{:style => "width:50%"}
 	- @verses.each do |verse|
 		= link_to verse.name, "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s

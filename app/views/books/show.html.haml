@@ -1,12 +1,12 @@
 %title
 	Tent of Meeting -
 	= @book.name.to_s
-#books{:align => "left", :style => "padding-left:35%"}
+#books{:align => "left", :style => "padding-left:25%"}
 	=link_to "<<<", books_index_path
 %h1
 	= link_to @book.name.to_s, "/"+@book.name
 	
-%p
+%p{:style => "width:50%"}
 	- @chapters.each do |chapter|
 		- puts chapter.name
 		= link_to chapter.name, "/"+@book.name.to_s+"/"+chapter.name.to_s

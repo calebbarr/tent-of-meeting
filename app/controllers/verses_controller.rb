@@ -58,4 +58,22 @@ class VersesController < NavigationController
     end
   end
   
+  def search
+    @results = []
+    if params[:query] != nil then
+      @query = params[:query]
+      VerseText.search(params[:query]).each do |vt|
+        result = {}
+        result[:content] = vt.content
+        verse = vt.verse
+        result[:verse] = verse
+        chapter = verse.chapter
+        result[:chapter] = chapter
+        book = chapter.book
+        result[:book] = book
+        @results << result
+      end
+    end
+  end
+  
 end

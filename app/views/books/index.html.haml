@@ -1,5 +1,5 @@
 %title
 	Tent of Meeting - Bible
-#books{:style => "padding-left:20%;padding-right:20%;"}
+#books{:width => "50%", :style => "padding-left:25%;padding-right:25%;"}
 	- @books.each do |book|
 		=link_to book.name,"/"+book.name.to_s

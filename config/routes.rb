@@ -11,6 +11,10 @@ TentOfMeeting::Application.routes.draw do
   get "profile/settings", :as => "settings"
   get "users/show"
     
+  resources :verses do
+    match :search, :on => :collection
+  end
+    
   ### Bible navigation  
   get "verses/random", :controller => :verses, :action => :random, :as => "random_verse"
   get "verses/next", :controller => :verses, :action => :next, :as => "next_verse"
@@ -20,6 +24,7 @@ TentOfMeeting::Application.routes.draw do
   get "books/next", :controller => :books, :action => :next, :as => "next_book"
   get "books/prev", :controller => :books, :action => :prev, :as => "prev_book"
   get "/Bible", :controller => :books, :action => :index, :as => "books_index"
+
     
   # activity URLs
   get "/quiz/:q_id/:answer", :controller => :quizzes, :action => :answer, :as => :multiple_choice_check_answer
