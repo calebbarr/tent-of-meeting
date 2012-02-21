@@ -7,6 +7,5 @@ VERSE_AUDIO_URL_STEM = "http://www.ebibleaudio.com/Radio/MP3%2032800%20Single%20
 VERSE_AUDIO_BOOK_ABBREV ={
   "Philippians" => "PHP",
   "Philemon" => "PHM",
-  "Jude" => "JDE"
-  
+  "Jude" => "JDE" 
 }

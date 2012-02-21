@@ -10,6 +10,16 @@ module VersesHelper
     if verse_name.length < 2 then
       verse_name = "0"+verse_name
     end
+    
+    if book_stem == "PSA" then
+      if chapter_name.length < 3 then
+        chapter_name = "0"+chapter_name
+      end
+      if verse_name.length < 3 then
+        verse_name = "0"+verse_name
+      end
+    end
+    
     book_prefix = book_id_string + "_" + book_stem
     return VERSE_AUDIO_URL_STEM + "/" + book_prefix + "/" + book_prefix + "_" + chapter_name + "_" + verse_name +".MP3"
   end
