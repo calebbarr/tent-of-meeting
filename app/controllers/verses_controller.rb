@@ -12,12 +12,6 @@ class VersesController < NavigationController
           @book = @chapter.book
         end
       end
-    else
-      #this code could be factored to avoid duplication, but I want to make it easier to delete (soon)
-      @verse = Verse.find(params[:id])  
-      @verse_text = @verse.verse_text[0] #the default text for this verse
-      @chapter = @verse.chapter
-      @book = @chapter.book
     end
   end
   
@@ -57,22 +51,11 @@ class VersesController < NavigationController
       redirect_to verse_url
     end
   end
-  
+
   def search
-    @results = []
     if params[:query] != nil then
       @query = params[:query]
-      VerseText.search(params[:query]).each do |vt|
-        result = {}
-        result[:content] = vt.content
-        verse = vt.verse
-        result[:verse] = verse
-        chapter = verse.chapter
-        result[:chapter] = chapter
-        book = chapter.book
-        result[:book] = book
-        @results << result
-      end
+      @results =  VerseText.search(@query).page(params[:page])
     end
   end
   

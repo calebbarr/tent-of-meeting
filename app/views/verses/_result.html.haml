@@ -1,0 +1,12 @@
+- @results.each do |vt|
+	- verse = vt.verse
+	-chapter = verse.chapter
+	- book = chapter.book
+	%tr
+		%td{:valign => "top", :align => "left", :width => "25%"}
+			= link_to book.name, "/"+book.name
+			= link_to chapter.name, "/"+book.name+"/"+chapter.name.to_s
+			\:
+			= link_to verse.name, "/"+book.name+"/"+chapter.name.to_s+"/"+verse.name.to_s
+		%td
+			=vt.content

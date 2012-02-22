@@ -24,10 +24,7 @@
 				#main-navigation
 					%ul.wat-cf
 			#wrapper.wat-cf
-				/ .flash{:align => "center"}
-				/ 	- flash.each do |type, message|
-				/ 		%div{:class => "message #{type}"}
-				/ 			%p= message
+				/ this is where the flash was
 				#main{:align => "center"}
 					#display{:style => "min-height:230px"}
 						= yield

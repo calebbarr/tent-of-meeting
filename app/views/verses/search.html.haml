@@ -1,21 +1,10 @@
 %title
 	Tent of Meeting - Search
-	
 -if @results.length > 0 then
+	= paginate @results
 	%table{:align => "center", :width => "50%"}
-		- @results.each do |result|
-			- book = result[:book]
-			- chapter = result[:chapter]
-			- verse = result[:verse]
-			- content = result[:content]
-			%tr
-				%td{:valign => "top", :align => "left", :width => "25%"}
-					= link_to book.name, "/"+book.name
-					= link_to chapter.name, "/"+book.name+"/"+chapter.name.to_s
-					\:
-					= link_to verse.name, "/"+book.name+"/"+chapter.name.to_s+"/"+verse.name.to_s
-				%td
-					=content
+		= render "verses/result.html.haml"
+
 -else
 	%p
 		no results for - "

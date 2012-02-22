@@ -9,3 +9,4 @@ VERSE_AUDIO_BOOK_ABBREV ={
   "Philemon" => "PHM",
   "Jude" => "JDE" 
 }
+VERSE_SEARCH_RESULTS_PER_PAGE = 5
