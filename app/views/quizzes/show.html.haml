@@ -9,10 +9,10 @@
 	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
 	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
 	
-#quiz{:align => "left", :style => "padding-left:33%", :width => "50%"}
+#quiz{:align => "left", :style => "padding-left:33%", :width => "22%"}
 	%table{:width => "80%"}
 		- q = @verse.multiple_choice_questions[Random.new.rand(0...@verse.multiple_choice_questions.length)]
-		%tr{:align => "center"}
+		%tr{:align => "center", :width => "50%"}
 			= q.content
 		%tr{:align => "left" }
 			%td{:width => "5%"}

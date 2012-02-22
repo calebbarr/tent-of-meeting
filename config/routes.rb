@@ -134,6 +134,7 @@ TentOfMeeting::Application.routes.draw do
   match "/Psalms", :controller => :books, :action => :show, id: 19
   match "/Psalms/:chapter", :controller => :chapters, :action => :show, book: 19
   match "/Psalms/:chapter/:verse", :controller => :verses, :action => :show, book: 19
+  match "/Psalms/:chapter/:verse/quiz", :controller => :quizzes, :action => :show, book: 19
   
   match "/Proverbs", :controller => :books, :action => :show, id: 20
   match "/Proverbs/:chapter", :controller => :chapters, :action => :show, book: 20
