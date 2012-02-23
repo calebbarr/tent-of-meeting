@@ -1,0 +1,1 @@
+MultipleChoiceQuestion.create({ verse_id: 13941 , content: "According to Psalms 1:1, where does the blessed man not sit?", a: "idly by the way", b: "in the seat of the scornful", c: "in the way, where the paths meet", d: "in the house of the wicked woman", correct: "b" })

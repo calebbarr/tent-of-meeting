@@ -6,7 +6,7 @@
 	= link_to @book.name.to_s, "/"+@book.name
 	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
 	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
-	=  -> {return  @verse.has_quiz? ?  link_to("*", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : ""}.call
+	=  -> {return  @verse.has_quiz? ?  link_to("*", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("+", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
 
 - audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
 %embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :width => "25%", :wmode => "transparent"}

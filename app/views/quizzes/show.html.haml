@@ -8,6 +8,7 @@
 	= link_to @book.name.to_s, "/"+@book.name
 	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
 	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+	= link_to("+", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")
 	
 #quiz{:align => "left", :style => "padding-left:33%", :width => "22%"}
 	%table{:width => "80%"}

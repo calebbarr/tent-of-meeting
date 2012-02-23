@@ -1,0 +1,23 @@
+= form_tag :controller => :quizzes, :action => :create do |f|
+	%fieldset
+		%p
+			= label :Question, "question:"
+			= text_field_tag :content, 'According to ' + @book.name+" "+@chapter.name.to_s+":"+@verse.name.to_s+", ", :size => 100	
+		%p
+			= label :a, "a:"
+			= text_field :a, "", :size => 70
+			=radio_button_tag("correct",  value = "a", checked = false)
+		%p
+			= label :b, "b:"
+			= text_field :b, "", :size => 70
+			=radio_button_tag("correct",  value = "b", checked = false)
+		%p
+			= label :c, "c:"
+			= text_field :c, "", :size => 70
+			=radio_button_tag("correct",  value = "c", checked = false)
+		%p
+			= label :d, "d:"
+			= text_field :d, "", :size => 70
+			=radio_button_tag("correct",  value = "d", checked = false)
+		%p.actions
+		= submit_tag("save question")

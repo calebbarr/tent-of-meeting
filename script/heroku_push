@@ -1,0 +1,7 @@
+#!/bin/bash
+#this script will re-seed the database, so it will erase all users on the staging version of the app
+cat ../resources/generated_questions.rb >> ../db/seeds.rb
+rm ../resources/generated_questions.rb
+touch ../resources/generated_questions.rb
+heroku push origin master
+heroku run rake db:seed
