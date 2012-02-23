@@ -1,0 +1,1 @@
+MultipleChoiceQuestion.create({ verse_id: 13941 , content: "According to Psalms 1:1, where does the blessed man not stand?", a: "in the way of sinners", b: "with the counsel of the ungodly", c: "at the mouth of Sheol", d: "in any danger", correct: "a" })
