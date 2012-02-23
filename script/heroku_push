@@ -6,4 +6,4 @@ touch ./resources/generated_questions.rb
 git add .
 git commit -m "pushing to heroku"
 git push heroku  master
-heroku run rake db:seed
+heroku run rake db:reset
