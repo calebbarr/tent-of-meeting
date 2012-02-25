@@ -1,0 +1,121 @@
+%title
+	Tent of Meeting -
+	= @book.name.to_s
+	= @chapter.name.to_s + "\:"+@verse.name.to_s
+%h1
+	= link_to @book.name.to_s, "/"+@book.name
+	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
+	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+	=  -> {return  @verse.has_quiz? ?  link_to("*", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("+", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
+	
+#hidden_verse_text{:style => "display:none"}
+	=@verse_text.content
+%body{:onload => "writeVerse()"}
+	#memorize{:style => "width:50%;", :align => "center"}
+		%input{:id => "type_verse", :size=> "42", :type => "text", :value => ""}
+		:javascript
+			$("#type_verse").keypress(function(event) {
+				if ( event.which == 13 ) {
+					processInput();
+				 }
+			});
+		#verse_text{:align => "center"}
+:css
+	.highlighted{
+		color: blue;
+	}
+	.hidden{
+		color: white;
+	}
+%script
+	Array.prototype.shuffle = function (){ 
+	for(var rnd, tmp, i=this.length; i; rnd=parseInt(Math.random()*i), tmp=this[--i], this[i]=this[rnd], this[rnd]=tmp);
+	};
+	Array.prototype.removeValue = function(val) {
+	for(var i=0; i<this.length; i++) {
+	if(this[i] == val) {
+	this.splice(i, 1);
+	break;
+	}
+	}
+	};
+
+	var index = 0
+	var verse = $('#hidden_verse_text').html().trim()
+	var words = verse.split(" ")
+	var remove = words.length/5;
+	var not_removed = [];
+	victory_round = false;
+
+	function writeVerse() {
+	for(var i = 0; i < words.length; i++){
+	var wordSpan = "<span onclick='toggleHide("+i+")' id='word"+i+"'>"+words[i]+" "+"</span>";
+	$('#verse_text').append(wordSpan);
+	not_removed.push(i);
+	}
+	not_removed.shuffle();
+	$('#word'+0).toggleClass('highlighted');
+	}
+
+	function removeWords(){
+	if(victory_round == true){
+	window.location.href = "/memorize/next";
+	//do some Ajax
+	}
+	limit = remove
+	if(not_removed.length <= remove){
+	limit = not_removed.length;
+	victory_round = true;
+	}
+
+	for(var i = 0; i < limit; i++){
+	var remove_index = not_removed.pop();
+	var removed_word = $('#word'+remove_index).html();
+	$('#word'+remove_index).addClass("hidden");
+	}
+	index = 0;
+	$('#word'+0).addClass("highlighted")
+
+	}
+
+	function toggleHide(id){
+	if($('#word'+id).hasClass('hidden')){
+	not_removed.push(id);
+	not_removed.shuffle();
+	victory_round = false
+	} else {
+	not_removed.removeValue(id);
+	if(not_removed.length == words.length){
+	victory_round = true;
+	}
+	}
+	$('#word'+id).toggleClass('hidden');
+	}
+
+	function processInput(){
+	var typed_words = $("#type_verse").val().split(" ");
+	var typed_index = 0;
+	$("#type_verse").val("");
+	for(var i = 0; i < typed_words.length; i++){
+	var typed_word = typed_words[i]
+	var verse_word = words[index]
+	if(typed_word.toLowerCase().replace(/[^A-Za-z0-9]/g,"") == verse_word.toLowerCase().replace(/[^A-Za-z0-9]/g,"")){ //change to ignore case and punctuation
+	$('#word'+index).removeClass('highlighted');
+	if(index == words.length-1){
+	removeWords();
+	} else{
+	index +=1;
+	$('#word'+index).addClass('highlighted');
+	}
+	}
+	}
+	}
+	String.prototype.trim = function() {
+	return this.replace(/^\s+|\s+$/g,"");
+	}
+	String.prototype.ltrim = function() {
+	return this.replace(/^\s+/,"");
+	}
+	String.prototype.rtrim = function() {
+	return this.replace(/\s+$/,"");
+	}
