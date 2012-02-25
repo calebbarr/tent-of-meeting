@@ -11,7 +11,7 @@ gem 'haml-rails'
 gem 'devise'
 gem 'heroku'
 gem 'kaminari'
-
+gem 'coffee-filter'
 
 # Gems used only for assets and not required
 # in production environments by default.
