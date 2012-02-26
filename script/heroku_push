@@ -1,6 +1,8 @@
 #!/bin/bash
 #this script will re-seed the database, so it will erase all users on the staging version of the app
-cat ./resources/generated_questions.rb >> ./db/seeds.rb
+cat ./resources/all_bible > ./db/seeds.rb
+cat ./resources/all_related_verses.rb >> ./db/seeds.rb
+cat ./resources/generated_questions.rb >> ./resources/all_questions.rb
 rm ./resources/generated_questions.rb
 touch ./resources/generated_questions.rb
 git add .
