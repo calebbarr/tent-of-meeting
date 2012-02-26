@@ -2,14 +2,22 @@
 	Tent of Meeting -
 	= @book.name.to_s
 	= @chapter.name.to_s + "\:"+@verse.name.to_s
+
+
 %h1
-	= link_to("~", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize")
 	= link_to @book.name.to_s, "/"+@book.name
 	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
 	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
-	=  -> {return  @verse.has_quiz? ?  link_to("*", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("+", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
+
+	
 
 - audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
 %embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :width => "25%", :wmode => "transparent"}
 #verse_text{:style => "width:50%;"}
 	=@verse_text.content
+%font{:size => "1"}
+	= link_to("memorize", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize")
+	,
+	=  -> {return  @verse.has_quiz? ?  link_to("take quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("create quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
+	,
+	= link_to "related", "/verses/related?verse="+@verse.id.to_s	

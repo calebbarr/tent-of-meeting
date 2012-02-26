@@ -3,7 +3,8 @@ class Verse < ActiveRecord::Base
   has_many :verse_texts
   has_many :multiple_choice_questions
   has_many :related_verses, :foreign_key => "relatee_id", class_name: "RelatedVerses"
-  has_many :related, :through => :related_verses
+  has_many :related, :through => :related_verses, :foreign_key => "related_id"
+  paginates_per VERSE_SEARCH_RESULTS_PER_PAGE
   
   def self.lookup(book_id,chapter_name,verse_name)
     return Book.find(book_id).verses.joins(:chapter).where("chapters.name=?",chapter_name).where(:name => verse_name).first

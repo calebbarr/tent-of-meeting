@@ -15,6 +15,13 @@ class VersesController < NavigationController
     end
   end
   
+  def related
+    @verse = Verse.find(params[:verse])
+    @related =  @verse.related.page(params[:page])
+    @chapter = @verse.chapter
+    @book = @chapter.book
+  end
+  
   def random
     @verse = Verse.random
     @verse_text = VerseText.find(@verse.id)

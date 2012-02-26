@@ -15,12 +15,33 @@ ActiveRecord::Base.establish_connection(db_config['development'])
 require '../app/models/verse'
 require '../app/models/book'
 require '../app/models/chapter'
+require '../app/models/related_verses'
+
+
+books_to_urls = {
+  "Song of Solomon" => "songs"
+}
+
+website_to_books = {
+  "Psalm" => "Psalms",
+  "Song of Songs" => "Song of Solomon"
+}
+
 
 hydra = Typhoeus::Hydra.new
+related_verses_file = File.open("../resources/all_related_verses.rb", "w")
+exceptions = []
+index = 1
+percent = 0
 Verse.all.each do |verse|
+  if index % 311 == 0 then
+    percent+=1
+    puts percent.to_s + "%"
+  end
+  index +=1
   chapter = verse.chapter
   book = chapter.book
-  book_name = book.name == "Song of Solomon" ? "songs" : book.name.downcase.gsub(" ","_")
+  book_name = books_to_urls.has_key?(book.name) ? books_to_urls[book.name] : book.name.downcase.gsub(" ","_")
   url = "http://concordances.org/"
   url += book_name
   url += "/"
@@ -34,8 +55,24 @@ Verse.all.each do |verse|
   hydra.run
   response = request.response
   doc = Hpricot(response.body)
-  puts url
+  
   (doc/"/html/body/table[2]/tr[1]/td[4]/table[1]/tr[1]/td[1]/p/b/a/text()").each do | reference|
-    puts reference.to_s
+      begin
+      book_chapter_verse_array = reference.to_s.split(/\s(?=[0-9]+:[0-9]+)/)
+      book_name_candidate = book_chapter_verse_array[0]
+      book_name = website_to_books.has_key?(book_name_candidate) ? website_to_books[book_name_candidate]: book_name_candidate
+      chapter_verse_array = book_chapter_verse_array[1].split(":")
+      chapter_name = chapter_verse_array[0]
+      verse_name = chapter_verse_array[1]
+      book_id = Book.where("name=?",book_name).first.id
+      related_verse = Verse.lookup(book_id,chapter_name,verse_name)
+      related_verses_file.puts "RelatedVerses.create({ relatee_id: " + verse.id.to_s + " , related_id: " + related_verse.id.to_s + " })"
+      RelatedVerses.create(relatee_id: verse.id, related_id: related_verse.id)
+    rescue
+      exceptions << {verse_id: verse.id, book_name: book_name, chapter_name: chapter_name, verse_name: verse_name, book_id: book_id, url: url}
+    end
   end
+end
+exceptions.each do |exception|
+  puts exception
 end
