@@ -1,0 +1,3 @@
+class NTGreekWord < OriginalWord
+  
+end

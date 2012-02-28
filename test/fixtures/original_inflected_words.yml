@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  strong_id: 1
+  form: MyString
+  type: 
+  transliteration: MyString
+  binyan: MyString
+  tense: MyString
+  pos: MyString
+  case: MyString
+  number: MyString
+  gender: MyString
+  person: MyString
+  mood: MyString
+  voice: MyString
+
+two:
+  strong_id: 1
+  form: MyString
+  type: 
+  transliteration: MyString
+  binyan: MyString
+  tense: MyString
+  pos: MyString
+  case: MyString
+  number: MyString
+  gender: MyString
+  person: MyString
+  mood: MyString
+  voice: MyString

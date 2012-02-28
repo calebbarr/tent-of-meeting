@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226001752) do
+ActiveRecord::Schema.define(:version => 20120228070131) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,32 @@ ActiveRecord::Schema.define(:version => 20120226001752) do
     t.text     "c"
     t.text     "d"
     t.string   "correct"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "original_inflected_words", :force => true do |t|
+    t.integer  "strong_id"
+    t.string   "form"
+    t.string   "type"
+    t.string   "transliteration"
+    t.string   "binyan"
+    t.string   "tense"
+    t.string   "pos"
+    t.string   "case"
+    t.string   "number"
+    t.string   "gender"
+    t.string   "person"
+    t.string   "mood"
+    t.string   "voice"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "original_words", :force => true do |t|
+    t.integer  "strong_id"
+    t.string   "form"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
