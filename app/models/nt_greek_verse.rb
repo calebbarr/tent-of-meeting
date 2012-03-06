@@ -1,0 +1,3 @@
+class NTGreekVerse < OriginalVerse
+  
+end

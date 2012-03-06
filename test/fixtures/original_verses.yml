@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  content: MyString
+  strong_ids: MyString
+  type: 
+  verse_id: 1
+
+two:
+  content: MyString
+  strong_ids: MyString
+  type: 
+  verse_id: 1
