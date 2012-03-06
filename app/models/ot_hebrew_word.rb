@@ -1,3 +1,5 @@
 class OTHebrewWord < OriginalWord
-  has_many :ot_hebrew_inflected_word
+	def inflections
+		return OTHebrewInflectedWord.where("strong_id=?",strong_id).all
+	end
 end
