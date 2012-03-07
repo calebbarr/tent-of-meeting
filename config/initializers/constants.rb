@@ -11,3 +11,8 @@ VERSE_AUDIO_BOOK_ABBREV ={
 }
 VERSE_SEARCH_RESULTS_PER_PAGE = 5
 FIRST_NT_VERSE = 23146
+LANGUAGE_ABBREVIATIONS = {
+  "ot_heb" => "Ancient Hebrew",
+  "nt_grk" => "Koine Greek",
+  "eng" => "English"
+}

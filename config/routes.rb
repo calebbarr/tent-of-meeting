@@ -11,10 +11,11 @@ TentOfMeeting::Application.routes.draw do
   get "profile/edit"
   #should be a post here, once that functionality is working
   get "profile/settings", :as => "settings"
+  post "profile/settings", :controller => :profile, :action => :update, as: "update_settings"
   get "users/show"
     
   
-  post "verses/search", :controller => :verses, :action => :search
+  post "verses/search", :controller => :verses, :action => :search, as: "verse_search"
   get "verses/search", :controller => :verses, :action => :search
   get "verses/related", :controller => :verses, :action => :related
     

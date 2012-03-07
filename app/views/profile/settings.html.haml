@@ -4,6 +4,29 @@
 
 %h1
 	= user = -> {return  current_user != nil ? current_user.email : "Profile"}.call
-%p
-	Edit settings here.
-	= link_to "[done]", profile_path
+
+#language-settings
+	= form_tag controller: :profile, action: :update, method: :post
+	%b
+		Old Testament Language:	
+	%br
+	- ot_select_string = "<option value='eng' "
+	- ot_select_string += -> {return @user[:ot_lg] == "eng" ? "selected='selected' " : ""}.call
+	- ot_select_string += ">English</option>"
+	- ot_select_string += "<option value='ot_heb' "
+	- ot_select_string += -> {return @user[:ot_lg] == "ot_heb" ? "selected='selected' " : ""}.call
+	- ot_select_string += ">Ancient Hebrew</option>"
+	= select_tag 'ot_lg', ot_select_string.html_safe
+	%br
+	%b
+		New Testament Language:
+	%br
+	- nt_select_string = "<option value='eng' "
+	- nt_select_string += -> {return @user[:nt_lg] == "eng" ? "selected='selected' " : ""}.call
+	- nt_select_string += ">English</option>"
+	- nt_select_string += "<option value='nt_grk' "
+	- nt_select_string += -> {return @user[:nt_lg] == "nt_grk" ? "selected='selected' " : ""}.call
+	- nt_select_string += ">Koine Greek</option>"
+	= select_tag 'nt_lg', nt_select_string.html_safe
+	%br
+	= submit_tag "update"

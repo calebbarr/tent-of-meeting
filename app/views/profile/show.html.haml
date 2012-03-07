@@ -2,7 +2,12 @@
 	Tent of Meeting -
 	Profile
 %h1
-	= user = -> {return  current_user != nil ? current_user.email : "Profile"}.call
+	= user_email = -> {return  current_user != nil ? current_user.email : "Anonymous User"}.call
 %p
-	User information here.
-	= link_to "[edit]", profile_edit_path
+	Old Testament Language:
+	= @user[:ot_lg]
+	%br
+	New Testament Language:
+	= @user[:nt_lg]
+	%br
+	= link_to "[edit]", settings_path
