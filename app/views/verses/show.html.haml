@@ -14,7 +14,7 @@
 - audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
 %embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :width => "25%", :wmode => "transparent"}
 #verse_text{:style => "width:50%;"}
-	=@verse_text.content
+	=@verse_text
 %font{:size => "1"}
 	= link_to("memorize", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize")
 	,

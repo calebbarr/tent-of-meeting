@@ -7,17 +7,14 @@
 		#container
 			#header
 				%h1
-					/ %a{:href => "/"} =Tent of Meeting
+					/ %a{:href => "/"} =Tent of Meeting	
 				#user-navigation{:align => "center"}
 					[
 					= link_to "Profile", profile_path
 					= link_to "Settings", settings_path
 					= if user_signed_in? then link_to "Logout", destroy_user_session_path, :method => :delete else link_to "Sign in", new_user_session_path, :method => :get end
 					]
-				#search-field{:align => "right", :style => "padding-right:25%"}
-					= form_tag :controller => :verses, :action => :search do
-						=search_field_tag(:query, value="", :id => 'search_box')
-						= submit_tag nil, :hidden => true
+
 				#books{:align => "left", :style => "padding-left:25%"}
 					=link_to "<<<", books_index_path						
 							
@@ -46,6 +43,10 @@
 								|
 								=link_to ">>>",next_book_path
 								]
+				#search-field{:align => "center"}
+					= form_tag :controller => :verses, :action => :search do
+						=search_field_tag(:query, value="", :id => 'search_box')
+						= submit_tag nil, :hidden => true
 					#flash
 						.flash{:align => "center", :style => "min-height:20px"}
 							- flash.each do |type, message|

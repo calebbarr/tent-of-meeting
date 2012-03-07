@@ -7,7 +7,55 @@ class VersesController < NavigationController
         if params[:verse] != nil then
           verse_name = params[:verse]
           @verse = Verse.lookup(book_id, chapter_name, verse_name)
-          @verse_text = VerseText.find(@verse.id)
+          if signed_in? then
+            session[:ot_lg] = nil
+            session[:nt_lg] = nil
+            #set language according to user's preference.
+            if @verse.id < FIRST_NT_VERSE then
+              if current_user.ot_lg == "eng" then
+                @verse_text = VerseText.find(@verse.id).content
+              elsif current_user.ot_lg == "ot_heb" then
+                @verse_text = OriginalVerse.find(@verse.id).content
+              elsif current_user.ot_lg == nil then
+                current_user.ot_lg = "eng"
+                @verse_text = VerseText.find(@verse.id).content
+              end
+            else
+                if current_user.nt_lg == "eng" then
+                  @verse_text = VerseText.find(@verse.id).content
+                elsif current_user.nt_lg == "nt_grk" then
+                  @verse_text = OriginalVerse.find(@verse.id).content
+                elsif current_user.nt_lg == nil then
+                  current_user.nt_lg = "eng"
+                  @verse_text = VerseText.find(@verse.id).content
+                end
+            end
+          else
+            #we still want the user to be able to set preferences and such, but all this should be stored in the session
+            if @verse.id < FIRST_NT_VERSE then
+              if session[:ot_lg] != nil then
+                if session[:ot_lg] == "ot_heb" then
+                  @verse_text = OriginalVerse.find(@verse.id).content
+                elsif session[:ot_lg] == "eng" then
+                  @verse_text = VerseText.find(@verse.id).content
+                end
+              else
+                session[:ot_lg] = "eng"
+                @verse_text = VerseText.find(@verse.id).content
+              end
+            else
+              if session[:nt_lg] != nil then
+                if session[:nt_lg] == "nt_grk" then
+                  @verse_text = OriginalVerse.find(@verse.id).content
+                elsif session[:nt_lg] == "eng" then
+                  @verse_text = VerseText.find(@verse.id).content
+                end
+              else
+                session[:nt_lg] = "eng"
+                @verse_text = VerseText.find(@verse.id).content
+              end
+            end
+          end
           @chapter = @verse.chapter
           @book = @chapter.book
         end

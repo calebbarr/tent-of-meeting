@@ -2,6 +2,8 @@ require 'rubygems'
 require 'active_record'
 require 'typhoeus'
 require 'hpricot'
+#for some reason, when running this script, you need to comment out the following line from verse.rb
+#  paginates_per VERSE_SEARCH_RESULTS_PER_PAGE
 
 # Load your yml config from rails
 db_config = YAML::load(File.open("../config/database.yml"))
