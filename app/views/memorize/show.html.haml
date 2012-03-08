@@ -5,9 +5,7 @@
 %h1
 	= link_to @book.name.to_s, "/"+@book.name
 	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
-	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
-	=  -> {return  @verse.has_quiz? ?  link_to("*", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("+", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
-	
+	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s	
 #hidden_verse_text{:style => "display:none"}
 	=@verse_text.content
 %body{:onload => "writeVerse()"}
@@ -20,6 +18,10 @@
 				 }
 			});
 		#verse_text{:align => "center"}
+		%font{:size => "1"}
+			=  -> {return  @verse.has_quiz? ?  link_to("take quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("create quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
+			,
+			= link_to "related", "/verses/related?verse="+@verse.id.to_s
 :css
 	.highlighted{
 		color: blue;

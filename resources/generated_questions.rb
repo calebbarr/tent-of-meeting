@@ -1,1 +1,0 @@
-MultipleChoiceQuestion.create({ verse_id: 22929 , content: "According to Zechariah 4:6, in the vision given to Zechariah, who uttered the words "Not by might, nor by power, but by my spirit, saith the LORD of hosts"?", a: "Zechariah", b: "an angel", c: "Zerubbabel", d: "Joshua the high priest", correct: "b" })
