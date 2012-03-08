@@ -102,7 +102,7 @@ class QuizzesController < ApplicationController
             if question.save then
                 #write the code to generate this in a file, gets copied to seeds file each push to staging
                 File.open("resources/generated_questions.rb", "a") do |f|
-                  f.puts "MultipleChoiceQuestion.create({ verse_id: "+@verse.id.to_s+" , content: \""+content+"\", a: \""+a+"\", b: \""+b+"\", c: \""+c+"\", d: \""+d+"\", correct: \""+correct+"\" })"
+                  f.puts "MultipleChoiceQuestion.create({ verse_id: "+@verse.id.to_s+" , content: \""+content.gsub(/"/,/\"/)+"\", a: \""+a+"\", b: \""+b+"\", c: \""+c+"\", d: \""+d+"\", correct: \""+correct+"\" })"
                   f.close 
                 end
                 redirect_to new_quiz_path, notice: 'Question was successfully created.'
