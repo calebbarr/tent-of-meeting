@@ -57,8 +57,8 @@ ActiveRecord::Schema.define(:version => 20120307041644) do
   end
 
   create_table "original_verses", :force => true do |t|
-    t.string   "content"
-    t.string   "strong_ids"
+    t.text     "content"
+    t.text     "strong_ids"
     t.string   "type"
     t.integer  "verse_id"
     t.datetime "created_at"
