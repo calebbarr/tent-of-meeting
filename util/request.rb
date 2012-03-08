@@ -33,7 +33,7 @@ require 'hpricot'
 # hydra.run
 
 hydra = Typhoeus::Hydra.new
-url = "http://biblos.com/john/16-14.htm"
+url = "http://biblos.com/job/12-18.htm"
 
 
 request = Typhoeus::Request.new(url, :method => :get)
@@ -42,16 +42,13 @@ hydra.run
 response = request.response
 doc = Hpricot(response.body)
 # puts url
-hebrew_verse = ""
-strong_ids = ""
-(doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td/table/tr[2]/td/div[2]/span/span").each do |span|
-  hebrew_verse += (span/"text()").to_s + " "
-  strong_ids += (span/"a").to_s.split()[1].split("/")[4].split("\.")[0] + " "
+english_translations = []
+(doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td/table/tr/td/table[2]/tr/td/table/tr/td[4]").each do |span|
+  english_translations << span/"text()".to_s
   #for some reason the xpath isn't working to get the href attribute
 end
 
-puts hebrew_verse
-puts strong_ids
+puts english_translations.slice(1..-1).join("|")
 # 
 # 
 # 
