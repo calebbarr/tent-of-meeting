@@ -5,6 +5,7 @@ class CreateOriginalVerses < ActiveRecord::Migration
       t.text :strong_ids
       t.string :type
       t.integer :verse_id
+      t.text :translations
 
       t.timestamps
     end

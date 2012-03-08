@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20120307041644) do
     t.text     "strong_ids"
     t.string   "type"
     t.integer  "verse_id"
+    t.text     "translations"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

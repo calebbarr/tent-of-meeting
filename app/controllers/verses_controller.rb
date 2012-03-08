@@ -16,6 +16,7 @@ class VersesController < NavigationController
                 @verse_text = VerseText.find(@verse.id).content
               elsif current_user.ot_lg == "ot_heb" then
                 @verse_text = OriginalVerse.find(@verse.id).content
+                @translations = OriginalVerse.find(@verse.id).translations.split("|")
               elsif current_user.ot_lg == nil then
                 current_user.ot_lg = "eng"
                 @verse_text = VerseText.find(@verse.id).content
@@ -25,6 +26,7 @@ class VersesController < NavigationController
                   @verse_text = VerseText.find(@verse.id).content
                 elsif current_user.nt_lg == "nt_grk" then
                   @verse_text = OriginalVerse.find(@verse.id).content
+                  @translations = OriginalVerse.find(@verse.id).translations.split("|")
                 elsif current_user.nt_lg == nil then
                   current_user.nt_lg = "eng"
                   @verse_text = VerseText.find(@verse.id).content
@@ -36,6 +38,7 @@ class VersesController < NavigationController
               if session[:ot_lg] != nil then
                 if session[:ot_lg] == "ot_heb" then
                   @verse_text = OriginalVerse.find(@verse.id).content
+                  @translations = OriginalVerse.find(@verse.id).translations.split("|")
                 elsif session[:ot_lg] == "eng" then
                   @verse_text = VerseText.find(@verse.id).content
                 end
@@ -47,6 +50,7 @@ class VersesController < NavigationController
               if session[:nt_lg] != nil then
                 if session[:nt_lg] == "nt_grk" then
                   @verse_text = OriginalVerse.find(@verse.id).content
+                  @translations = OriginalVerse.find(@verse.id).translations.split("|")
                 elsif session[:nt_lg] == "eng" then
                   @verse_text = VerseText.find(@verse.id).content
                 end
