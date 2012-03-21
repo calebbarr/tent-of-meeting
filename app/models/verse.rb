@@ -5,7 +5,7 @@ class Verse < ActiveRecord::Base
   has_many :related_verses, :foreign_key => "relatee_id", class_name: "RelatedVerses"
   has_many :related, :through => :related_verses, :foreign_key => "related_id"
   has_one :original_verse
-  # paginates_per VERSE_SEARCH_RESULTS_PER_PAGE
+  paginates_per VERSE_SEARCH_RESULTS_PER_PAGE
   
   def self.lookup(book_id,chapter_name,verse_name)
     return Book.find(book_id).verses.joins(:chapter).where("chapters.name=?",chapter_name).where(:name => verse_name).first
@@ -43,4 +43,20 @@ class Verse < ActiveRecord::Base
     return multiple_choice_questions.length > 0
   end
   
+  def self.unfavorite(user_id,verse_id)
+    FavoriteVerseRelationship.destroy(FavoriteVerseRelationship.where("favorite_id=?",verse_id).where("user_id=?",user_id).first.id)
+  end
+  
+  def is_favorite?(user_id)
+    #redo this code later, client code needs to authenticate user
+    return FavoriteVerseRelationship.where("user_id=?",user_id).where("favorite_id=?",id).all.length > 0
+  end
+  def link
+    book = chapter.book
+    link = ""
+  	link += "<a href='/"+book.name+"'>"+book.name.to_s+"</a>"
+  	link += " <a href='/"+book.name+"/"+chapter.name.to_s+"'>"+chapter.name.to_s+":</a>"
+    link += "<a href='/"+book.name+"/"+chapter.name.to_s+"/"+name.to_s+"'>"+name.to_s+"</a>"
+    return link.html_safe
+  end  
 end

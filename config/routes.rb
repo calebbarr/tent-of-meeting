@@ -9,11 +9,16 @@ TentOfMeeting::Application.routes.draw do
   match "/profile", :controller => :profile, :action => :show
   #should be a post here, once that functionality is working
   get "profile/edit"
-  #should be a post here, once that functionality is working
   get "profile/settings", :as => "settings"
   post "profile/settings", :controller => :profile, :action => :update, as: "update_settings"
   get "users/show"
-    
+  
+  
+  #possibly rewrite routes for favorite chapters and books later
+  get "verses/favorites/add/:id", controller: :verses, action: :add_favorite_verse, as: "add_favorite_verse"
+  get "verses/favorites", controller: :verses, action: :favorite_verses, as: "get_favorite_verses"
+  get "verses/favorites/delete/:id", controller: :verses, action: :remove_favorite_verse, as: "remove_favorite_verse"
+  #these need to use the correct HTTP verbs when possible
   
   post "verses/search", :controller => :verses, :action => :search, as: "verse_search"
   get "verses/search", :controller => :verses, :action => :search

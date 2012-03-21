@@ -42,6 +42,7 @@ class ProfileController < ApplicationController
     if signed_in? then
        current_user.ot_lg = params[:ot_lg]
        current_user.nt_lg = params[:nt_lg]
+       current_user.save
     else
       session[:ot_lg] = params[:ot_lg]
       session[:nt_lg] = params[:nt_lg]

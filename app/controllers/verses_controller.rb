@@ -118,4 +118,45 @@ class VersesController < NavigationController
     end
   end
   
+  def add_favorite_verse
+    if params[:id] != nil then
+      verse_id = params[:id]
+      if signed_in? then
+        FavoriteVerseRelationship.create(user_id: current_user.id, favorite_id: verse_id)
+      else
+        #implement some session-based behavior for unauthenticated users
+      end
+      @verse = Verse.find(verse_id)
+      @chapter = @verse.chapter
+      @book = @chapter.book
+      verse_path = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+      redirect_to verse_path
+    end
+  end
+  
+  def remove_favorite_verse
+    if params[:id] != nil then
+      verse_id = params[:id]
+      if signed_in? then
+        Verse.unfavorite(current_user.id,verse_id)
+      else
+        #implement some session-based behavior for unauthenticated users
+      end
+      @verse = Verse.find(verse_id)
+      @chapter = @verse.chapter
+      @book = @chapter.book
+      verse_path = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+      redirect_to verse_path
+    end
+  end
+  
+  #should make functionality to return favorite verses *in* (book, chapter, NT, OT)
+  def favorite_verses
+    if signed_in?
+      return User.get_favorite_verses(current_user.id)
+    else
+      #implement some session-based behavior for unauthenticated users
+    end
+  end
+  
 end

@@ -11,3 +11,13 @@
 	= @user[:nt_lg]
 	%br
 	= link_to "[edit]", settings_path
+	
+%p
+	- if signed_in? then
+		Favorite Verses:
+		%p
+			- current_user.favorite_verses.each do |verse|
+				- chapter = verse.chapter
+				- book = chapter.book
+				%p
+					= verse.link
