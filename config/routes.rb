@@ -1,5 +1,9 @@
 TentOfMeeting::Application.routes.draw do  
 
+  get "nt_greek_words/index"
+
+  get "nt_greek_words/show"
+
   get "ot_hebrew_words/index"
 
   get "ot_hebrew_words/show"
@@ -39,6 +43,7 @@ TentOfMeeting::Application.routes.draw do
   get "/Bible", :controller => :books, :action => :index, :as => "books_index"
   
   get "/hebrew/:id", :controller => :OT_hebrew_words, :action => :show
+  get "/greek/:id", :controller => :NT_greek_words, :action => :show
   
   
   # activity URLs
