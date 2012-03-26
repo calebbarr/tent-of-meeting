@@ -4,6 +4,7 @@ echo "# encoding: utf-8" > ./db/seeds.rb
 cat ./resources/all_bible.rb >> ./db/seeds.rb
 cat ./resources/all_original_verses.rb >> ./db/seeds.rb
 cat ./resources/all_related_verses.rb >> ./db/seeds.rb
+cat ./resources/all_original_words.rb >> ./db/seeds.rb
 cat ./resources/generated_questions.rb >> ./resources/all_questions.rb
 rm ./resources/generated_questions.rb
 touch ./resources/generated_questions.rb

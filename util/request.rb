@@ -32,23 +32,90 @@ require 'hpricot'
 # hydra.queue(request)
 # hydra.run
 
-hydra = Typhoeus::Hydra.new
-url = "http://biblos.com/job/12-18.htm"
+$url_stem = "http://concordances.org/hebrew/"
+$hydra = Typhoeus::Hydra.new
+$curr_row = 2
+#used in getting long definition from other site
+url = $url_stem
 
 
-request = Typhoeus::Request.new(url, :method => :get)
-hydra.queue(request)
-hydra.run
-response = request.response
-doc = Hpricot(response.body)
-# puts url
-english_translations = []
-(doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td/table/tr/td/table[2]/tr/td/table/tr/td[4]").each do |span|
-  english_translations << span/"text()".to_s
-  #for some reason the xpath isn't working to get the href attribute
+def process_inflected(link)
+  process_inflection(link_array[0].lstrip(),link_array[1].sub(".htm",""))
 end
 
-puts english_translations.slice(1..-1).join("|")
+$exceptions = []
+
+def process_uninflected(strongs_num)
+  begin
+    link = strongs_num.to_s+".htm"
+    url = $url_stem+link
+    request = Typhoeus::Request.new(url, :method => :get)
+    $hydra.queue(request)
+    $hydra.run
+    response = request.response
+    doc = Hpricot(response.body)
+    puts "strongs number:"
+    puts strongs_num
+    original_word = (doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td[1]/span[2]/text()")
+    puts "form: "
+    puts original_word.to_s
+    everything_else = (doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td[1]/text()")[0..3]
+    pos = everything_else[0]
+    transliteration = everything_else[1]
+    phonetic_spelling = everything_else[2]
+    short_def = everything_else[3]
+    puts "pos:"
+    puts pos
+    puts "transliteration:"
+    puts transliteration
+    puts "phonetic spelling:"
+    puts phonetic_spelling
+    puts "short definition:"
+    puts short_def
+    medium_def = (doc/"/html/body/table[2]/tr[1]/td[2]/table[2]/tr[1]/td[1]/text()")[-1]
+    # long_def = (doc/"/html/body/table[2]/tr/td[2]/table[2]/tr[1]/td[1]/p[3]").to_s.gsub(/<\/?\s*[^a|\/a].+>/,"")
+    # long_def = (doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td/p[17]/text()")[0].to_s.gsub(/<\/?\s*[^(a|\/a)][^>]*>/,"")
+    # if long_def == "" then
+    #   long_def = (doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td/p[2]").to_s.gsub(/<\/?\s*[^(a|\/a)][^>]*>/,"")
+    # end
+    # /html/body/table[2]/tr/td[2]/table[2]/tr/td/p[16]
+
+    long_def_url = "http://www.sacrednamebible.com/kjvstrongs/STRHEB"+((strongs_num-1)/100).to_s+".htm"
+    request = Typhoeus::Request.new(long_def_url, :method => :get)
+    $hydra.queue(request)
+    $hydra.run
+    response = request.response
+    doc = Hpricot(response.body)
+    if strongs_num != 1 and (strongs_num-1) % 100 == 0 then
+      $curr_row = 1
+    end
+    $curr_row +=1
+    #the first time, the row is three, the second time, the row is two
+    row_string = $curr_row.to_s
+    path = "/html/body/center/table/tr["+row_string+"]/td[3]/p"
+    long_def = (doc/path).to_s.gsub(/<\/?\s*[^(a|\/a)][^>]*>/,"").gsub(/(\')(?!\}).+\'\s\(<a\shref=\".+\">/, "<a>").gsub(/<\/a>\)/, "</a>")
+    # long_def = # long_d = (doc/"/html/body/table[2]/tr/td[2]/table[2]/tr/td/p[5]/text()")[0]
+    puts "short def:"
+    puts short_def
+    puts "medium def:"
+    puts medium_def
+    puts "long def:"
+    puts long_def
+  rescue
+    $exceptions << strongs_num
+  end
+  # Process.exit!
+end
+
+(1..8674).each do |num|
+  process_uninflected(num)
+end
+
+puts "EXCEPTIONS"
+$exceptions.each do |e|
+  puts e
+end
+
 # 
 # 
 # 

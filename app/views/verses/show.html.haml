@@ -2,8 +2,6 @@
 	Tent of Meeting -
 	= @book.name.to_s
 	= @chapter.name.to_s + "\:"+@verse.name.to_s
-
-
 %h1
 	= @verse.link
 
@@ -16,7 +14,10 @@
 		-tokens = @verse_text.split()
 		-tokens.each_with_index do |token,index|
 			%span{title: @translations[index]}
-				=token
+				- if index < @strong_ids.length then
+					=link_to token, "/hebrew/" + @strong_ids[index]
+				- else 
+					= token
 %font{:size => "1"}
 	= link_to("memorize", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize")
 	,

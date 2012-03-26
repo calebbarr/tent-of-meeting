@@ -1,5 +1,9 @@
 TentOfMeeting::Application.routes.draw do  
 
+  get "ot_hebrew_words/index"
+
+  get "ot_hebrew_words/show"
+
   get "memorize/show"
 
   ## application routes
@@ -33,8 +37,10 @@ TentOfMeeting::Application.routes.draw do
   get "books/next", :controller => :books, :action => :next, :as => "next_book"
   get "books/prev", :controller => :books, :action => :prev, :as => "prev_book"
   get "/Bible", :controller => :books, :action => :index, :as => "books_index"
-
-    
+  
+  get "/hebrew/:id", :controller => :OT_hebrew_words, :action => :show
+  
+  
   # activity URLs
   get "/quiz/:q_id/:answer", :controller => :quizzes, :action => :answer, :as => :multiple_choice_check_answer
   get "memorize/next", :controller => :memorize, :action => :next

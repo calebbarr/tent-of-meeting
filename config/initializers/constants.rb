@@ -16,3 +16,5 @@ LANGUAGE_ABBREVIATIONS = {
   "nt_grk" => "Koine Greek",
   "eng" => "English"
 }
+NUM_STRONGS_HEBREW = 8674
+NUM_STRONGS_GREEK = 5624

@@ -1,0 +1,2 @@
+module OtHebrewWordsHelper
+end
