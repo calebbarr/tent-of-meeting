@@ -15,7 +15,7 @@
 		-tokens.each_with_index do |token,index|
 			%span{title: @translations[index]}
 				- if index < @strong_ids.length then
-					=link_to token, "/hebrew/" + @strong_ids[index]
+					=link_to token, ->{ @verse.id > NUM_STRONGS_HEBREW ? "/greek/" :  "/hebrew/"}.call + @strong_ids[index]
 				- else 
 					= token
 %font{:size => "1"}
