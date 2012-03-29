@@ -27,3 +27,6 @@
 	,
 	/the 1 here is just a stand-in for session-based code if not authenticated
 	= -> {return @verse.is_favorite?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("\u2665", controller: :verses, action: :remove_favorite_verse,  id: @verse.id) : link_to("\u2661", controller: :verses, action: :add_favorite_verse,  id: @verse.id) }.call
+	,
+	/the 1 here is just a stand-in for session-based code if not authenticated
+	= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎", controller: :notes, action: :new, :verse_id => @verse.id) }.call

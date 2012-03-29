@@ -5,10 +5,16 @@ class Verse < ActiveRecord::Base
   has_many :related_verses, :foreign_key => "relatee_id", class_name: "RelatedVerses"
   has_many :related, :through => :related_verses, :foreign_key => "related_id"
   has_one :original_verse
+  has_many :notes
   paginates_per VERSE_SEARCH_RESULTS_PER_PAGE
   
   def self.lookup(book_id,chapter_name,verse_name)
     return Book.find(book_id).verses.joins(:chapter).where("chapters.name=?",chapter_name).where(:name => verse_name).first
+  end
+  
+  def path
+    book = chapter.book
+    return "/"+book.name+"/"+chapter.name.to_s+"/"+name.to_s
   end
   
   def self.random
@@ -43,6 +49,10 @@ class Verse < ActiveRecord::Base
     return multiple_choice_questions.length > 0
   end
   
+  def has_note?(user_id)
+    return notes.where("user_id=?", user_id).length > 0
+  end
+  
   def self.unfavorite(user_id,verse_id)
     FavoriteVerseRelationship.destroy(FavoriteVerseRelationship.where("favorite_id=?",verse_id).where("user_id=?",user_id).first.id)
   end
@@ -51,6 +61,7 @@ class Verse < ActiveRecord::Base
     #redo this code later, client code needs to authenticate user
     return FavoriteVerseRelationship.where("user_id=?",user_id).where("favorite_id=?",id).all.length > 0
   end
+  
   def link
     book = chapter.book
     link = ""
@@ -58,5 +69,9 @@ class Verse < ActiveRecord::Base
   	link += " <a href='/"+book.name+"/"+chapter.name.to_s+"'>"+chapter.name.to_s+":</a>"
     link += "<a href='/"+book.name+"/"+chapter.name.to_s+"/"+name.to_s+"'>"+name.to_s+"</a>"
     return link.html_safe
-  end  
+  end
+  
+  def notes_per_user(user_id)
+    return notes.where("user_id=?",user_id)
+  end
 end

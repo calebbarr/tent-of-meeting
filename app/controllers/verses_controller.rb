@@ -8,6 +8,9 @@ class VersesController < NavigationController
           verse_name = params[:verse]
           @verse = Verse.lookup(book_id, chapter_name, verse_name)
           if signed_in? then
+            @notes = @verse.notes_per_user(current_user.id)
+            #not sure if this is best practice
+            #may need to do some more database work
             session[:ot_lg] = nil
             session[:nt_lg] = nil
             #set language according to user's preference.
