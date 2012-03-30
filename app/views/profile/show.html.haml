@@ -12,7 +12,7 @@
 	%br
 	= link_to "[edit]", settings_path
 	
-%p
+#favorite_verses
 	- if signed_in? then
 		Favorite Verses:
 		%p
@@ -21,3 +21,21 @@
 				- book = chapter.book
 				%p
 					= verse.link
+					
+#notes
+	- if signed_in? then
+		Notes:
+		%table
+			- current_user.notes.each do |note|
+				- verse = note.verse
+				- chapter = verse.chapter
+				- book = chapter.book
+				%tr
+					%td
+						= verse.link
+					%td
+						%b
+							= link_to note.name, :controller => :notes, :action => :show, :id => note.id, :verse_id => verse.id
+					%td
+						= note.content
+						

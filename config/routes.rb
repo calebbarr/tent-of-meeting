@@ -1,13 +1,5 @@
 TentOfMeeting::Application.routes.draw do  
 
-  get "notes/new"
-
-  get "notes/create"
-
-  get "notes/index"
-
-  get "notes/show"
-
   get "nt_greek_words/index"
 
   get "nt_greek_words/show"
@@ -58,6 +50,10 @@ TentOfMeeting::Application.routes.draw do
   get "/quiz/:q_id/:answer", :controller => :quizzes, :action => :answer, :as => :multiple_choice_check_answer
   get "memorize/next", :controller => :memorize, :action => :next
   resources :notes
+  get "notes/new"
+  get "notes/create"
+  get "notes/index"
+  get "notes/show/:id", action: :show, controller: :notes
   get "/notes/delete/:id", :controller => :notes, :action => :delete
   
   ## Bible Reference URLs

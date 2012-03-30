@@ -4,8 +4,7 @@
 	=@verse_text.content	
 %h3
 	your notes:
-#new_note{:style => "width:50%", align: "right"}
-	= link_to("✎", controller: :notes, action: :new, :verse_id => @verse.id)
+	= link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id)
 %table{:id => "notes"}
 	- @notes.each  do |note|
 		%tr
