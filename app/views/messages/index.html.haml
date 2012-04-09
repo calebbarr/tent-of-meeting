@@ -1,0 +1,31 @@
+:javascript
+	$(function() {
+		// Create a new client to connect to Faye
+		// var client = new Faye.Client('http://localhost:9292/faye');
+	var client = new Faye.Client('http://tent-of-meeting-faye.herokuapp.com/faye');
+
+		// Subscribe to the public channel
+		var public_subscription = client.subscribe('/messages/public', function(data) {
+		      $('<p></p>').html(data.username + ": " + data.msg).appendTo('#chat_room');
+		    });
+ 
+		// Handle form submissions and post messages to faye
+		$('#new_message_form').submit(function(){
+			// Publish the message to the public channel
+			client.publish('/messages/public', {
+				username: ' Anonymous User ',
+				msg: $('#message').val()
+			});
+			// Clear the message box
+			$('#message').val('');
+			// Don't actually submit the form, otherwise the page will refresh.
+			return false;
+		});
+	});
+.chat_container
+	#chat_room
+		%p.alert
+			Welcome to the chat room #{session[:username]}!
+	%form#new_message_form
+		%input#message{:name => "message", :type => "text"}
+			%input{:type => "submit", :value => "Send"}

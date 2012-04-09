@@ -2,6 +2,7 @@
 	%head
 		/ %title Tent of Meeting 
 		= javascript_include_tag 'application'
+		= javascript_include_tag "http://localhost:9292/faye.js"
 		= csrf_meta_tag
 	%body
 		#container
@@ -29,6 +30,8 @@
 				#main{:align => "center"}
 					#display{:style => "min-height:230px"}
 						= yield
+						#sidebar{:style => "padding-left:75%; height:300px; overflow:auto", align: :left}
+							= render_cell :chat , :show
 					#footer
 						.block
 							%p
@@ -52,5 +55,5 @@
 							- flash.each do |type, message|
 								%div{:class => "message #{type}"}
 									%p= message
-				#sidebar
-					= yield :sidebar
+				/ #sidebar
+				/ 	= yield :sidebar
