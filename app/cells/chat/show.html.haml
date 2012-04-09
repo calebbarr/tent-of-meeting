@@ -13,7 +13,7 @@
 			client.publish('/messages/public', {
 				username: "#{@username}" , 
 				msg: $('#message').val(),
-				timestamp : "#{Time.now.strftime("%I:%M%p").to_s}"
+				timestamp : "#{-> {Time.now.strftime("%I:%M:%S%p")}.call.to_s}"
 			});
 
 			// Clear the message box

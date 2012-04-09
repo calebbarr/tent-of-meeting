@@ -1,12 +1,17 @@
+!!!
 %html
 	%head
 		/ %title Tent of Meeting 
 		= javascript_include_tag 'application'
 		= javascript_include_tag "http://localhost:9292/faye.js"
 		= csrf_meta_tag
+		%meta{:charset => "UTF-8"}
+			= stylesheet_link_tag "http://localhost/tent_of_meeting.css"
 	%body
-		#container
-			#header
+		.container
+			%header
+				%a{:href => "#"}
+					%img#Insert_logo{:alt => "Insert Logo Here", :height => "90", :src => "", :style => "background: #C6D580; display:block;", :width => "180"}/
 				%h1
 					/ %a{:href => "/"} =Tent of Meeting	
 				#user-navigation{:align => "center"}
@@ -14,46 +19,46 @@
 					= link_to "Profile", profile_path
 					= link_to "Settings", settings_path
 					= if user_signed_in? then link_to "Logout", destroy_user_session_path, :method => :delete else link_to "Sign in", new_user_session_path, :method => :get end
-					]
-					#search-field{:align => "right", style: "padding-right:25%"}
-						= form_tag verse_search_url, :controller => :verses, :action => :search do
-							=search_field_tag(:query, value="", :id => 'search_box')
-							= submit_tag nil, :hidden => true
-
-				#books{:align => "left", :style => "padding-left:25%"}
-					=link_to "<<<", books_index_path						
-							
-				#main-navigation
-					%ul.wat-cf
-			#wrapper.wat-cf
-				/ this is where the flash was
-				#main{:align => "center"}
-					#display{:style => "min-height:230px"}
-						= yield
-						#sidebar{:style => "padding-left:75%; height:300px; overflow:auto", align: :left}
-							= render_cell :chat , :show
-					#footer
-						.block
-							%p
-								[
-								=link_to "<<<",prev_book_path
-								|
-								=link_to "<<",prev_chapter_path
-								|
-								=link_to "<",prev_verse_path
-								|
-								=link_to "*",random_verse_path
-								|
-								=link_to ">",next_verse_path
-								|
-								=link_to ">>",next_chapter_path
-								|
-								=link_to ">>>",next_book_path
-								]
-					#flash
-						.flash{:align => "center", :style => "min-height:20px"}
-							- flash.each do |type, message|
-								%div{:class => "message #{type}"}
-									%p= message
-				/ #sidebar
-				/ 	= yield :sidebar
+					]					
+			.sidebar1
+				%nav
+					%ul
+						%li
+							%a{:href => "#"} Link one
+						%li
+							%a{:href => "#"} Link two
+						%li
+							%a{:href => "#"} Link three
+						%li
+							%a{:href => "#"} Link four
+				%aside
+					%p lorem ipsum
+				/ end .sidebar1
+			%article.content{align: "center" }
+				= yield
+				%br
+			%aside{style: "height:300px; overflow:scroll"}
+				= render_cell :chat , :show
+			%footer{ align: "center"}
+				.block
+					%p
+						[
+						=link_to "<<<",prev_book_path
+						|
+						=link_to "<<",prev_chapter_path
+						|
+						=link_to "<",prev_verse_path
+						|
+						=link_to "*",random_verse_path
+						|
+						=link_to ">",next_verse_path
+						|
+						=link_to ">>",next_chapter_path
+						|
+						=link_to ">>>",next_book_path
+						]
+			#flash
+				.flash{:align => "center", :style => "min-height:20px"}
+					- flash.each do |type, message|
+						%div{:class => "message #{type}"}
+							%p= message
