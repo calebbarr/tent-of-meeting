@@ -3,42 +3,55 @@
 	%head
 		/ %title Tent of Meeting 
 		= javascript_include_tag 'application'
-		= javascript_include_tag "http://localhost:9292/faye.js"
+		= javascript_include_tag "http://cbarr.dyndns.org:9292/faye.js"
+		= javascript_include_tag "http://cbarr.dyndns.org/colorbox/jquery.colorbox.js"
+		= javascript_include_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/js/jquery-ui-1.8.18.custom.min.js"
 		= csrf_meta_tag
 		%meta{:charset => "UTF-8"}
-			= stylesheet_link_tag "http://localhost/tent_of_meeting.css"
+			= stylesheet_link_tag "http://cbarr.dyndns.org/tent_of_meeting.css"
+			= stylesheet_link_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/css/smoothness/jquery-ui-1.8.18.custom.css"
 	%body
 		.container
 			%header
 				%a{:href => "#"}
 					%img#Insert_logo{:alt => "Insert Logo Here", :height => "90", :src => "", :style => "background: #C6D580; display:block;", :width => "180"}/
-				%h1
-					/ %a{:href => "/"} =Tent of Meeting	
-				#user-navigation{:align => "center"}
-					[
-					= link_to "Profile", profile_path
-					= link_to "Settings", settings_path
-					= if user_signed_in? then link_to "Logout", destroy_user_session_path, :method => :delete else link_to "Sign in", new_user_session_path, :method => :get end
-					]					
+				%h1{id: "main_header", align: "center"}
+				%nav
+					.user_navigation{align: "center"}
+						%span
+							= link_to "Profile", profile_path
+						%span
+							= link_to "Settings", settings_path
+						%span
+							= if user_signed_in? then link_to "Logout", destroy_user_session_path, :method => :delete else link_to "Sign in", new_user_session_path, :method => :get end
 			.sidebar1
 				%nav
 					%ul
 						%li
-							%a{:href => "#"} Link one
+							%a.action1{:href => "#verse_text"} show verse
 						%li
-							%a{:href => "#"} Link two
+							= link_to("memorize", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize")
 						%li
-							%a{:href => "#"} Link three
+							=  -> {return  @verse.has_quiz? ?  link_to("take quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("create quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
 						%li
-							%a{:href => "#"} Link four
+							= link_to "related", "/verses/related?verse="+@verse.id.to_s
+						%li
+							= -> {return @verse.is_favorite?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("\u2665", controller: :verses, action: :remove_favorite_verse,  id: @verse.id) : link_to("\u2661", controller: :verses, action: :add_favorite_verse,  id: @verse.id) }.call
+							/the 1 here is just a stand-in for session-based code if not authenticated
+						%li
+							/the 1 here is just a stand-in for session-based code if not authenticated
+							= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id) }.call
 				%aside
-					%p lorem ipsum
+					%p
+						lorem ipsum
 				/ end .sidebar1
 			%article.content{align: "center" }
-				= yield
+				#stage
+					= yield
 				%br
 			%aside{style: "height:300px; overflow:scroll"}
-				= render_cell :chat , :show
+				#chat
+					= render_cell :chat , :show
 			%footer{ align: "center"}
 				.block
 					%p
@@ -61,4 +74,4 @@
 				.flash{:align => "center", :style => "min-height:20px"}
 					- flash.each do |type, message|
 						%div{:class => "message #{type}"}
-							%p= message
+							%p= message							

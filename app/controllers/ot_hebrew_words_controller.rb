@@ -1,4 +1,4 @@
-class OTHebrewWordsController < ApplicationController
+class OTHebrewWordsController < NavigationController
   def index
   end
 

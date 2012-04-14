@@ -1,4 +1,4 @@
-class NTGreekWordsController < ApplicationController
+class NTGreekWordsController < NavigationController
   def index
   end
 

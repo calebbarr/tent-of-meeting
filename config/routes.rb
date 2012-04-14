@@ -1,5 +1,5 @@
 TentOfMeeting::Application.routes.draw do  
-
+;
   get "messages/index"
 
   get "messages/create"
@@ -50,6 +50,9 @@ TentOfMeeting::Application.routes.draw do
   
   get "/hebrew/:id", :controller => :OT_hebrew_words, :action => :show
   get "/greek/:id", :controller => :NT_greek_words, :action => :show
+  
+  #root
+  match "/", controller: :verses, action: :random
   
   
   # activity URLs

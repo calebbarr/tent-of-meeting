@@ -18,10 +18,6 @@
 				 }
 			});
 		#verse_text{:align => "center"}
-		%font{:size => "1"}
-			=  -> {return  @verse.has_quiz? ?  link_to("take quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("create quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
-			,
-			= link_to "related", "/verses/related?verse="+@verse.id.to_s
 :css
 	.highlighted{
 		color: blue;
