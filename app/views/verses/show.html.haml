@@ -1,6 +1,8 @@
+/the following used to be in the js
+/$("#verse_audio").dialog({position:['center',330], height: 100});
+/ dont do this automatically unless the user has it specified in their settings
 :javascript
 	$(document).ready(function(){
-		$("#verse_audio").dialog({position:['center',330], height: 100});
 		$("#main_header").html("#{@verse.link}")
 	});	
 
@@ -12,17 +14,18 @@
 / 	#verse_link{align: "center"}
 / 		= @verse.link
 %div{style: "display:block"}
-	#verse_text{style: "padding-left:10%; padding-right:10%;", align: "center"}
-		-if @translations == nil then
-			=@verse_text
-		-else
-			-tokens = @verse_text.split()
-			-tokens.each_with_index do |token,index|
-				%span{title: @translations[index]}
-					- if index < @strong_ids.length then
-						=link_to token, ->{ @verse.id > NUM_STRONGS_HEBREW ? "/greek/" :  "/hebrew/"}.call + @strong_ids[index]
-					- else 
-						= token
-	#verse_audio				
-		- audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
-		%embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :wmode => "transparent"}
+	#verse_text{style: "padding-left:10%; padding-right:10%; vertical-align:middle;", align: "center"}
+		%font{size: "4"}
+			-if @translations == nil then
+				=@verse_text
+			-else
+				-tokens = @verse_text.split()
+				-tokens.each_with_index do |token,index|
+					%span{title: @translations[index]}
+						- if index < @strong_ids.length then
+							=link_to token, ->{ @verse.id > NUM_STRONGS_HEBREW ? "/greek/" :  "/hebrew/"}.call + @strong_ids[index]
+						- else 
+							= token
+		#verse_audio{style: "display:none"}
+			- audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
+			%embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :wmode => "transparent"}

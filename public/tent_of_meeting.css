@@ -1,7 +1,7 @@
 @charset "UTF-8";
 body {
 	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
-	background: #42413C;
+/*	background: #42413C;*/
 	margin: 0;
 	padding: 0;
 	color: #000;
@@ -33,13 +33,20 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 }
 /* ~~ This fixed width container surrounds all other blocks ~~ */
 .container {
+	border-radius: 20px;
 	width: 960px;
 	background: #FFFFFF;
 	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout */
+/*	opacity: .93;
+	filter: alpha(opacity=93);*/
+/*	background-color: rgba(153, 153, 153, 0.5);*/
+	
 }
 /* ~~ The header is not given a width. It will extend the full width of your layout. ~~ */
 header {
 	background: #ADB96E;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
 /* ~~ These are the columns for the layout. ~~ 
 
@@ -55,10 +62,12 @@ header {
 .sidebar1 {
 	float: left;
 	width: 180px;
-	background: #EADCAE;
+/*	background: #EADCAE;*/
 	padding-bottom: 10px;
+/*	background-color: rgba(153, 153, 153, 0.2)*/
 }
 .content {
+	/*border-radius: 20px;*/
 	padding: 10px 0;
 	width: 600px;
 	float: left;
@@ -66,7 +75,8 @@ header {
 aside {
 	float: left;
 	width: 180px;
-	background: #EADCAE;
+/*	background: #EADCAE;*/
+/*	background-color: rgba(153, 153, 153, 0.2)*/
 	padding: 10px 0;
 }
 
@@ -84,6 +94,16 @@ nav ul {
 nav ul li {
 	border-bottom: 1px solid #666; /* this creates the button separation */
 }
+.sidebar_nav_menu_item {
+	border-bottom: 1px solid #666;
+}
+
+.sidebar_nav_menu_item:hover{
+/*	background-color: rgba(54, 134, 214, 0.5);*/
+	background-color: rgba(153, 153, 153, 0.2);
+/*	color: #FFF;*/
+}
+
 nav ul a, nav ul a:visited { /* grouping these selectors makes sure that your links retain their button look even after being visited */
 	padding: 5px 5px 5px 15px;
 	display: block; /* this gives the link block properties causing it to fill the whole LI containing it. This causes the entire area to react to a mouse click. */
@@ -101,7 +121,7 @@ nav ul a:hover, nav ul a:active, nav ul a:focus { /* this changes the background
 	border-right: 1px solid #666;
 }
 
-.user_navigation a:hover {
+.user_navigation_menu_item:hover {
 	background: #C6D580;
 	color: #FFF;
 }
@@ -110,8 +130,9 @@ nav ul a:hover, nav ul a:active, nav ul a:focus { /* this changes the background
 /* ~~ The footer ~~ */
 footer {
 	padding: 10px 0;
-	background: #CCC49F;
+/*	background: #CCC49F;*/
 	position: relative;/* this gives IE6 hasLayout to properly clear */
+	background-color: rgba(54, 134, 214, 0.5);
 	clear: both; /* this clear property forces the .container to understand where the columns end and contain them */
 }
 /* ~~ Miscellaneous float/clear classes ~~ */

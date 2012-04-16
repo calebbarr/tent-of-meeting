@@ -10,68 +10,99 @@
 		%meta{:charset => "UTF-8"}
 			= stylesheet_link_tag "http://cbarr.dyndns.org/tent_of_meeting.css"
 			= stylesheet_link_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/css/smoothness/jquery-ui-1.8.18.custom.css"
-	%body
-		.container
-			%header
-				%a{:href => "#"}
-					%img#Insert_logo{:alt => "Insert Logo Here", :height => "90", :src => "", :style => "background: #C6D580; display:block;", :width => "180"}/
-				%h1{id: "main_header", align: "center"}
-				%nav
-					.user_navigation{align: "center"}
-						%span
-							= link_to "Profile", profile_path
-						%span
-							= link_to "Settings", settings_path
-						%span
-							= if user_signed_in? then link_to "Logout", destroy_user_session_path, :method => :delete else link_to "Sign in", new_user_session_path, :method => :get end
-			.sidebar1
-				%nav
-					%ul
-						%li
-							%a.action1{:href => "#verse_text"} show verse
-						%li
-							= link_to("memorize", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize")
-						%li
-							=  -> {return  @verse.has_quiz? ?  link_to("take quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz") : link_to("create quiz", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")}.call
-						%li
-							= link_to "related", "/verses/related?verse="+@verse.id.to_s
-						%li
-							= -> {return @verse.is_favorite?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("\u2665", controller: :verses, action: :remove_favorite_verse,  id: @verse.id) : link_to("\u2661", controller: :verses, action: :add_favorite_verse,  id: @verse.id) }.call
-							/the 1 here is just a stand-in for session-based code if not authenticated
-						%li
-							/the 1 here is just a stand-in for session-based code if not authenticated
-							= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id) }.call
+	%body{background: "http://cbarr.dyndns.org/mountains.jpg"}
+		%br
+		#containercontainer{align: "center", style: "padding: 20px; background-color: rgba(153, 153, 153, 0.5); border-radius: 20px;width:78%;margin: 0 auto;"}
+			
+			.container
+				%header
+					%a{:href => "#"}
+					/ 	%img#Insert_logo{:alt => "Insert Logo Here", :height => "90", :src => "", :style => "background: #C6D580; display:block;", :width => "180"}/
+					%h1{id: "main_header", align: "center"}
+					%nav					
+						.user_navigation{align: "right", style:"padding-right:5px"}
+							%span{class: "user_navigation_menu_item"}
+								%a{href: profile_path, title: "profile"}
+									%img{src: "http://cbarr.dyndns.org/icons/16x16/user.png"}
+							%span{class: "user_navigation_menu_item"}
+								%a{href: settings_path, title: "settings"}
+									%img{src: "http://cbarr.dyndns.org/icons/16x16/folder.png"}
+							/@TODO
+							/fix because it uses the link_to REST stuff
+							%span{class: "user_navigation_menu_item"}
+								%a{href: "#", title:"sign in/ out"}
+									%img{src: "http://cbarr.dyndns.org/icons/16x16/house.png"}
+									= if user_signed_in? then link_to "_", destroy_user_session_path, :method => :delete else link_to "_", new_user_session_path, :method => :get end
+							#search-field{style:"padding-right:5px"}
+								= form_tag verse_search_url, :controller => :verses, :action => :search do
+									=search_field_tag(:query, value="", :id => 'search_box')
+									= submit_tag nil, :hidden => true
+				.sidebar1{style: "height:300px;"}
+					%nav{align: "right"}
+						%a{href:"#", title: "audio", onClick: "show_verse_audio()"}
+							.sidebar_nav_menu_item
+								%img{src: "http://cbarr.dyndns.org/icons2/32x32/sound.png"}
+						%a{href:"/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize", title: "memorize"}
+							.sidebar_nav_menu_item
+								%img{src: "http://cbarr.dyndns.org/icons/32x32/magnifier.png"}
+						%a{href: -> { return @verse.has_quiz? ? "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz" : "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new"}.call, title: -> {return  @verse.has_quiz? ?  "take quiz" : "create quiz"}.call}
+							.sidebar_nav_menu_item
+								%img{src: "http://cbarr.dyndns.org/icons/32x32/check_mark.png"}
+						/@TODO 		
+						/gotta fix these two, they're weird because need to turn the link_to helper stuff into the href tag
+						%a
+							.sidebar_nav_menu_item{title: "favorite / unfavorite"}
+								= -> {return @verse.is_favorite?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :verses, action: :remove_favorite_verse,  id: @verse.id) : link_to("_", controller: :verses, action: :add_favorite_verse,  id: @verse.id) }.call
+								%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
+						%a
+							.sidebar_nav_menu_item{title: "notes / new note"}
+								/the 1 here is just a stand-in for session-based code if not authenticated
+								= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("_", controller: :notes, action: :new, :verse_id => @verse.id) }.call
+								%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
+						/ %ul
+						/ 	%li
+						/ 		= link_to "related", "/verses/related?verse="+@verse.id.to_s
+						/ 	%li
+						/ 		= -> {return @verse.is_favorite?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("\u2665", controller: :verses, action: :remove_favorite_verse,  id: @verse.id) : link_to("\u2661", controller: :verses, action: :add_favorite_verse,  id: @verse.id) }.call
+						/ 		/the 1 here is just a stand-in for session-based code if not authenticated
+						/ 	%li
+						/ 		/the 1 here is just a stand-in for session-based code if not authenticated
+						/ 		= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id) }.call
+					%aside{style: "height:115px; overflow:scroll;"}
+						%p
+							my friends notes
+						%p etc
+						%p updates i'd be interested in about this page
+						%p testing the scroll
+						%p testing
+						%p 1
+					/ end .sidebar1
+				%article.content{align: "center" }
+					#stage
+						= yield
+					%br
 				%aside
-					%p
-						lorem ipsum
-				/ end .sidebar1
-			%article.content{align: "center" }
-				#stage
-					= yield
-				%br
-			%aside{style: "height:300px; overflow:scroll"}
-				#chat
-					= render_cell :chat , :show
-			%footer{ align: "center"}
-				.block
-					%p
-						[
-						=link_to "<<<",prev_book_path
-						|
-						=link_to "<<",prev_chapter_path
-						|
-						=link_to "<",prev_verse_path
-						|
-						=link_to "*",random_verse_path
-						|
-						=link_to ">",next_verse_path
-						|
-						=link_to ">>",next_chapter_path
-						|
-						=link_to ">>>",next_book_path
-						]
-			#flash
-				.flash{:align => "center", :style => "min-height:20px"}
-					- flash.each do |type, message|
-						%div{:class => "message #{type}"}
-							%p= message							
+					#chat{style: "height:300px; overflow:scroll"}
+						= render_cell :chat , :show
+				%footer{align: "center"}
+					.block
+						#navigation_bar
+							%button{onClick: "prev_book()", title: "previous book"}
+								%img{src: 'http://cbarr.dyndns.org/icons/32x32/up_arrow.png'}
+							%button{onClick: "prev_chapter()", title: "previous chapter"}
+								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/skip_backward.png'}
+							%button{onClick: "prev_verse()", title: "previous verse"}
+								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/rewind.png'}
+							%button{onClick: "random_verse()", title: "random verse"}
+								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/refresh.png'}
+							%button{onClick: "next_verse()", title: "next verse"}
+								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/fast_forward.png'}
+							%button{onClick: "next_chapter()", title: "next chapter"}
+								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/skip_forward.png'}														
+							%button{onClick: "next_book()", title: "next book"}
+								%img{src: 'http://cbarr.dyndns.org/icons/32x32/down_arrow.png'}
+				#flash
+					.flash{:align => "center", :style => "min-height:20px"}
+						- flash.each do |type, message|
+							%div{:class => "message #{type}"}
+								%p= message							

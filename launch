@@ -1,0 +1,3 @@
+rvmsudo rails s -p 80 > dev_rails_server.out &
+cd faye_server && 
+bundle exec rackup ./config.ru -E production -s thin -p 9292 > dev_faye_server.out &
