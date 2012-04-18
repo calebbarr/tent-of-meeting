@@ -1,0 +1,2 @@
+module StrongsHelper
+end

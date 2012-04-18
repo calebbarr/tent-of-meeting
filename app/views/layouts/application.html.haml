@@ -22,6 +22,8 @@
 					%nav					
 						.user_navigation{align: "right", style:"padding-right:5px"}
 							%span{class: "user_navigation_menu_item"}
+								= link_to "Strongs", "/strongs"
+							%span{class: "user_navigation_menu_item"}
 								%a{href: profile_path, title: "profile"}
 									%img{src: "http://cbarr.dyndns.org/icons/16x16/user.png"}
 							%span{class: "user_navigation_menu_item"}
@@ -78,7 +80,7 @@
 						%p 1
 					/ end .sidebar1
 				%article.content{align: "center" }
-					#stage
+					#stage{style:"height:300px; overflow:scroll;"}
 						= yield
 					%br
 				%aside

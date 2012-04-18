@@ -1,4 +1,30 @@
 --- 
-cursor_positions: []
-
+cursor_positions: 
+  - :path: app/views/layouts/application.html.haml
+    :cursor_offset: 5009
+    :timestamp: 2012-04-17 18:48:12 -07:00
+  - :path: app/models/verse_text.rb
+    :cursor_offset: 201
+    :timestamp: 2012-03-16 12:31:10 -07:00
+  - :path: app/models/verse.rb
+    :cursor_offset: 84
+    :timestamp: 2012-04-07 13:04:48 -07:00
+  - :path: app/models/original_verse.rb
+    :cursor_offset: 79
+    :timestamp: 2012-04-17 17:35:20 -07:00
+  - :path: app/models/ot_hebrew_word.rb
+    :cursor_offset: 47
+    :timestamp: 2012-03-16 12:31:10 -07:00
+  - :path: app/views/strongs/hebrew.html.haml
+    :cursor_offset: 21
+    :timestamp: 2012-04-17 19:17:08 -07:00
+  - :path: app/views/verses/_result.html.haml
+    :cursor_offset: 47
+    :timestamp: 2012-04-17 17:50:05 -07:00
+  - :path: app/controllers/verses_controller.rb
+    :cursor_offset: 4841
+    :timestamp: 2012-04-07 13:04:48 -07:00
+  - :path: app/controllers/strongs_controller.rb
+    :cursor_offset: 224
+    :timestamp: 2012-04-17 19:14:46 -07:00
 files_to_retain: 0

@@ -1,0 +1,14 @@
+%title Tent of Meeting - Strongs Greek
+%table{align: "left", style:"padding-left:10%;"}
+	= paginate @greek_words
+	- @greek_words.each do |w|
+		- strong_id = w.strong_id
+		- form = w.form
+		- short_def = w.short_definition
+		%tr
+			%td
+				=link_to strong_id.to_s, "/greek/"+strong_id.to_s
+			%td
+				=form
+			%td
+				=short_def

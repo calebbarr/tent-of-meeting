@@ -1,5 +1,6 @@
 TentOfMeeting::Application.routes.draw do  
-;
+  match "/strongs", controller: :strongs, action: :index
+  
   get "messages/index"
 
   get "messages/create"
@@ -66,6 +67,10 @@ TentOfMeeting::Application.routes.draw do
   get "notes/show/:id", action: :show, controller: :notes
   get "notes/show/:verse_id", action: :show, controller: :notes
   get "/notes/delete/:id", :controller => :notes, :action => :delete
+  
+  match "/greek", controller: :strongs, action: :greek
+  match "/hebrew", controller: :strongs, action: :hebrew
+  
   
   ## Bible Reference URLs
   #these need to be manually specified because each book is a "controller" level specification
