@@ -104,6 +104,13 @@ nav ul li {
 /*	color: #FFF;*/
 }
 
+.strongs_row:hover{
+	background-color: rgba(153, 153, 153, 0.2);
+}
+.bible_verse_row:hover{
+	background-color: rgba(153, 153, 153, 0.2);
+}
+
 nav ul a, nav ul a:visited { /* grouping these selectors makes sure that your links retain their button look even after being visited */
 	padding: 5px 5px 5px 15px;
 	display: block; /* this gives the link block properties causing it to fill the whole LI containing it. This causes the entire area to react to a mouse click. */

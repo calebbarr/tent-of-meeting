@@ -1,22 +1,21 @@
+:javascript
+	$(document).ready(function(){
+		$("#main_header").html("#{@verse.link}")
+	});
 %title
 	Tent of Meeting -
 	Related to
 	= @book.name.to_s
 	= @chapter.name.to_s + "\:"+@verse.name.to_s
-
-%h1
-	= link_to @book.name.to_s, "/"+@book.name
-	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
-	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
-#related_verses{:align => :center, :style => "width:50%"}
+#related_verses{:align => :center}
 	= paginate @related
 	%table
 		-@related.each do |verse|
 			- content = verse.verse_texts[0].content
 			- chapter = verse.chapter
 			- book = chapter.book
-			%tr
-				%td{:valign => "top", :align => "left", :width => "25%"}
+			%tr{:class => "bible_verse_row", onClick: "location.href='#{verse.path}'"}
+				%td{:valign => "top", :align => "left", :width => "35%", style: "padding-left:10%"}
 					= link_to book.name.to_s, "/"+book.name
 					= link_to chapter.name.to_s + "\:", "/"+book.name+"/"+chapter.name.to_s
 					= link_to verse.name, "/"+book.name+"/"+chapter.name.to_s+"/"+verse.name.to_s

@@ -1,15 +1,16 @@
+:javascript
+	$(document).ready(function(){
+		$("#main_header").html("#{@verse.link}")
+		var quizlink = "#{@verse.path}";
+		quizlink += "/quiz/new"
+		$('#main_header').append("<a href='"+quizlink+"'>+</a>")
+	});
 %title
 	Tent of Meeting -
 	= @book.name.to_s
 	= @chapter.name.to_s + "\:"+@verse.name.to_s
 	\- Quiz
-	
-%h1
-	= link_to @book.name.to_s, "/"+@book.name
-	= link_to @chapter.name.to_s + "\:", "/"+@book.name+"/"+@chapter.name.to_s
-	= link_to @verse.name, "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
-	= link_to("+", "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new")
-	
+		
 #quiz{:align => "left", :style => "padding-left:33%", :width => "22%"}
 	%table{:width => "80%"}
 		- q = @verse.multiple_choice_questions[Random.new.rand(0...@verse.multiple_choice_questions.length)]

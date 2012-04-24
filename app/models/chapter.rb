@@ -25,4 +25,12 @@ class Chapter < ActiveRecord::Base
   def islast?
     return id == NUMBER_OF_CHAPTERS
   end
+  
+  def link
+    link = ""
+  	link += "<a href='/"+book.name+"'>"+book.name.to_s+"</a>"
+  	link += " <a href='/"+book.name+"/"+name.to_s+"'>"+name.to_s+"</a>"
+    return link.html_safe
+  end
+  
 end

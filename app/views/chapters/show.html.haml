@@ -1,11 +1,17 @@
+:javascript
+	$(document).ready(function(){
+		$("#main_header").html("#{@chapter.link}");
+	});
+	
 %title
 	Tent of Meeting -
 	= @book.name.to_s
 	= @chapter.name.to_s
 	
-%h1
-	= link_to @book.name.to_s, "/"+@book.name
-	= link_to @chapter.name.to_s, "/"+@book.name+"/"+@chapter.name.to_s
-%p{:style => "width:50%"}
+%table
 	- @verses.each do |verse|
-		= link_to verse.name, "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s
+		%tr{:class => "bible_verse_row", onclick: "location.href='#{verse.path}'"}
+			%td{:style => "padding-left:10%"}
+				= link_to verse.name, "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s
+			%td{:style => "padding-left:15%"}
+				= VerseText.find(verse.id).content

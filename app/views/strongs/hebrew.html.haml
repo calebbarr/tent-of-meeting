@@ -1,14 +1,14 @@
 %title Tent of Meeting - Strongs Hebrew
-%table{align: "left", style:"padding-left:10%;"}
+%table{align: "left"}
 	= paginate @hebrew_words
 	- @hebrew_words.each do |w|
 		- strong_id = w.strong_id
 		- form = w.form
 		- short_def = w.short_definition
-		%tr
-			%td
+		%tr{align:"left", :class => "strongs_row"}
+			%td{style:"padding-left:5%;"}
 				=link_to strong_id.to_s, "/hebrew/"+strong_id.to_s
-			%td
-				=form
-			%td
+			%td{style:"padding-left:10%;"}
+				=link_to form, "/hebrew/"+strong_id.to_s
+			%td{style:"padding-left:10%;"}
 				=short_def

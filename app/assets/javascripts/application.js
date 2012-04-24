@@ -35,3 +35,7 @@ random_verse = function(){
 show_verse_audio = function() {
 	$("#verse_audio").dialog({position:['center',330], height: 100});
 }
+show_related = function(id) {
+	var verse_url = "/verses/related?verse="+id;
+	$.colorbox({href : verse_url, iframe : true});
+}

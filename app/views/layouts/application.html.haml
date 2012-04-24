@@ -10,6 +10,7 @@
 		%meta{:charset => "UTF-8"}
 			= stylesheet_link_tag "http://cbarr.dyndns.org/tent_of_meeting.css"
 			= stylesheet_link_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/css/smoothness/jquery-ui-1.8.18.custom.css"
+			= stylesheet_link_tag "http://cbarr.dyndns.org/colorbox/colorbox.css"
 	%body{background: "http://cbarr.dyndns.org/mountains.jpg"}
 		%br
 		#containercontainer{align: "center", style: "padding: 20px; background-color: rgba(153, 153, 153, 0.5); border-radius: 20px;width:78%;margin: 0 auto;"}
@@ -22,7 +23,7 @@
 					%nav					
 						.user_navigation{align: "right", style:"padding-right:5px"}
 							%span{class: "user_navigation_menu_item"}
-								= link_to "Strongs", "/strongs"
+								= link_to "ע/η", "/strongs"
 							%span{class: "user_navigation_menu_item"}
 								%a{href: profile_path, title: "profile"}
 									%img{src: "http://cbarr.dyndns.org/icons/16x16/user.png"}
@@ -61,6 +62,10 @@
 								/the 1 here is just a stand-in for session-based code if not authenticated
 								= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("_", controller: :notes, action: :new, :verse_id => @verse.id) }.call
 								%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
+						%a{href:"/verses/related?verse="+@verse.id.to_s}
+							/ onClick: "show_related(#{@verse.id})"
+							.sidebar_nav_menu_item{title: "related"}
+								%img{src:"http://cbarr.dyndns.org/icons/32x32/placemark.png"}
 						/ %ul
 						/ 	%li
 						/ 		= link_to "related", "/verses/related?verse="+@verse.id.to_s
@@ -70,7 +75,7 @@
 						/ 	%li
 						/ 		/the 1 here is just a stand-in for session-based code if not authenticated
 						/ 		= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id) }.call
-					%aside{style: "height:115px; overflow:scroll;"}
+					%aside{style: "height:110px; overflow:scroll;"}
 						%p
 							my friends notes
 						%p etc
@@ -80,13 +85,13 @@
 						%p 1
 					/ end .sidebar1
 				%article.content{align: "center" }
-					#stage{style:"height:300px; overflow:scroll;"}
+					#stage{style:"height:310px; overflow:scroll;"}
 						= yield
-					%br
 				%aside
-					#chat{style: "height:300px; overflow:scroll"}
+					#chat{style: "height:310px; overflow:scroll"}
 						= render_cell :chat , :show
 				%footer{align: "center"}
+					#controls2
 					.block
 						#navigation_bar
 							%button{onClick: "prev_book()", title: "previous book"}
@@ -104,7 +109,7 @@
 							%button{onClick: "next_book()", title: "next book"}
 								%img{src: 'http://cbarr.dyndns.org/icons/32x32/down_arrow.png'}
 				#flash
-					.flash{:align => "center", :style => "min-height:20px"}
+					.flash{:align => "center"}
 						- flash.each do |type, message|
 							%div{:class => "message #{type}"}
 								%p= message							
