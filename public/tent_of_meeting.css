@@ -44,7 +44,21 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 }
 /* ~~ The header is not given a width. It will extend the full width of your layout. ~~ */
 header {
-	background: #ADB96E;
+/*	background: #ADB96E;*/
+	background-image: linear-gradient(top, rgb(88,245,120) 47%, rgb(206,217,202) 74%, rgb(184,230,196) 87%);
+	background-image: -o-linear-gradient(top, rgb(88,245,120) 47%, rgb(206,217,202) 74%, rgb(184,230,196) 87%);
+	background-image: -moz-linear-gradient(top, rgb(88,245,120) 47%, rgb(206,217,202) 74%, rgb(184,230,196) 87%);
+	background-image: -webkit-linear-gradient(top, rgb(88,245,120) 47%, rgb(206,217,202) 74%, rgb(184,230,196) 87%);
+	background-image: -ms-linear-gradient(top, rgb(88,245,120) 47%, rgb(206,217,202) 74%, rgb(184,230,196) 87%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0.47, rgb(88,245,120)),
+		color-stop(0.74, rgb(206,217,202)),
+		color-stop(0.87, rgb(184,230,196))
+	);
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 }
@@ -100,7 +114,7 @@ nav ul li {
 
 .sidebar_nav_menu_item:hover{
 /*	background-color: rgba(54, 134, 214, 0.5);*/
-	background-color: rgba(153, 153, 153, 0.2);
+/*	background-color: rgba(153, 153, 153, 0.2);*/
 /*	color: #FFF;*/
 }
 
@@ -108,6 +122,14 @@ nav ul li {
 	background-color: rgba(153, 153, 153, 0.2);
 }
 .bible_verse_row:hover{
+	background-color: rgba(153, 153, 153, 0.2);
+}
+
+.note_row {
+	border-left:1px;
+	border-bottom:1px;
+}
+.note_row:hover{
 	background-color: rgba(153, 153, 153, 0.2);
 }
 
@@ -139,7 +161,25 @@ footer {
 	padding: 10px 0;
 /*	background: #CCC49F;*/
 	position: relative;/* this gives IE6 hasLayout to properly clear */
-	background-color: rgba(54, 134, 214, 0.5);
+/*	background-color: rgba(54, 134, 214, 0.5);*/
+	
+	background-image: linear-gradient(bottom, rgb(86,189,245) 47%, rgb(219,219,202) 74%, rgb(184,214,230) 87%);
+	background-image: -o-linear-gradient(bottom, rgb(86,189,245) 47%, rgb(219,219,202) 74%, rgb(184,214,230) 87%);
+	background-image: -moz-linear-gradient(bottom, rgb(86,189,245) 47%, rgb(219,219,202) 74%, rgb(184,214,230) 87%);
+	background-image: -webkit-linear-gradient(bottom, rgb(86,189,245) 47%, rgb(219,219,202) 74%, rgb(184,214,230) 87%);
+	background-image: -ms-linear-gradient(bottom, rgb(86,189,245) 47%, rgb(219,219,202) 74%, rgb(184,214,230) 87%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		right bottom,
+		color-stop(0.47, rgb(86,189,245)),
+		color-stop(0.74, rgb(219,219,202)),
+		color-stop(0.87, rgb(184,214,230))
+	);
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	
 	clear: both; /* this clear property forces the .container to understand where the columns end and contain them */
 }
 /* ~~ Miscellaneous float/clear classes ~~ */

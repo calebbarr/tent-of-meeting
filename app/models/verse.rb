@@ -1,4 +1,5 @@
 class Verse < ActiveRecord::Base
+  
   belongs_to :chapter
   has_many :verse_texts
   has_many :multiple_choice_questions
@@ -7,6 +8,8 @@ class Verse < ActiveRecord::Base
   has_one :original_verse
   has_many :notes
   paginates_per VERSE_SEARCH_RESULTS_PER_PAGE
+  
+  
   
   def self.lookup(book_id,chapter_name,verse_name)
     return Book.find(book_id).verses.joins(:chapter).where("chapters.name=?",chapter_name).where(:name => verse_name).first
@@ -58,7 +61,6 @@ class Verse < ActiveRecord::Base
   end
   
   def is_favorite?(user_id)
-    #redo this code later, client code needs to authenticate user
     return FavoriteVerseRelationship.where("user_id=?",user_id).where("favorite_id=?",id).all.length > 0
   end
   

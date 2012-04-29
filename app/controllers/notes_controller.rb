@@ -3,6 +3,12 @@ class NotesController < ApplicationController
     @note = Note.new
     @verse = Verse.find(params[:verse_id])
     @verse_text = VerseText.find(params[:verse_id])
+    
+    respond_to do |format|
+      format.html
+      # format.json { render json: @verse_text}
+    end
+    
   end
 
   def create
@@ -22,6 +28,10 @@ class NotesController < ApplicationController
     user_id = -> {signed_in? ? current_user.id : 1}.call
     # 1 is just a stand in for un-authenticated functionality
     @notes = @verse.notes_per_user(user_id)
+    respond_to do |format|
+      format.html
+      format.json { render json: @notes}
+    end
   end
   
   def delete
@@ -35,6 +45,10 @@ class NotesController < ApplicationController
         redirect_to @verse.path, :notice => "you can only delete notes that belong to you."
       end
     else
+      #just for testing, @TODO remove later
+      if @note.user_id == 1 then
+        Note.destroy(params[:id])
+      end
       redirect_to @verse.path, :notice => "if you are the owner of this note, please log in to delete it."
     end
   end

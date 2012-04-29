@@ -1,6 +1,8 @@
-%h4
-	= @verse.link	
-#verse_text{:style => "width:50%;"}
+:javascript
+	$(document).ready(function(){
+		$("#main_header").html("#{@verse.link}")
+	});
+#verse_text{:style => "padding:5%;", align: "center"}
 	=@verse_text.content
 	
 %h3

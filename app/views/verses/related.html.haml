@@ -7,6 +7,8 @@
 	Related to
 	= @book.name.to_s
 	= @chapter.name.to_s + "\:"+@verse.name.to_s
+#relatee{style:"padding-left:5%", align: "center"}
+	= @verse.verse_texts[0].content
 #related_verses{:align => :center}
 	= paginate @related
 	%table
@@ -21,4 +23,3 @@
 					= link_to verse.name, "/"+book.name+"/"+chapter.name.to_s+"/"+verse.name.to_s
 				%td
 					=content
-				

@@ -76,9 +76,14 @@ class VersesController < NavigationController
   
   def related
     @verse = Verse.find(params[:verse])
+    @related_unpaged = @verse.related
     @related =  @verse.related.page(params[:page])
     @chapter = @verse.chapter
     @book = @chapter.book
+    respond_to do |format|
+      format.html
+      format.json { render json: @related_unpaged}
+    end
   end
   
   def random
@@ -165,5 +170,5 @@ class VersesController < NavigationController
       #implement some session-based behavior for unauthenticated users
     end
   end
-  
+    
 end

@@ -54,19 +54,22 @@ TentOfMeeting::Application.routes.draw do
   
   #root
   match "/", controller: :verses, action: :random
-  
+  # this will change later, maybe last visited verse or something
   
   # activity URLs
   get "/quiz/:q_id/:answer", :controller => :quizzes, :action => :answer, :as => :multiple_choice_check_answer
   get "memorize/next", :controller => :memorize, :action => :next
-  resources :notes
+  
   resources :messages
-  get "notes/new"
-  get "notes/create"
-  get "notes/index"
-  get "notes/show/:id", action: :show, controller: :notes
-  get "notes/show/:verse_id", action: :show, controller: :notes
+  get "/notes/new"
+  get "/notes/create"
+  get "/notes/index"
+  get "/notes/show/:id", action: :show, controller: :notes
+  get "/notes/show"
+  get "/notes/show/:verse_id", action: :show, controller: :notes
   get "/notes/delete/:id", :controller => :notes, :action => :delete
+  get "/notes/delete"
+  # resources :notes
   
   match "/greek", controller: :strongs, action: :greek
   match "/hebrew", controller: :strongs, action: :hebrew
