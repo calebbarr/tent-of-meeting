@@ -170,5 +170,24 @@ class VersesController < NavigationController
       #implement some session-based behavior for unauthenticated users
     end
   end
+  
+  def toggle_original_languages
+    
+    @response = "ok so far!"
+    if params[:nt] != nil then
+      if params[:nt] == "true" then
+        session[:nt_lg] == "eng" ? session[:nt_lg] = "nt_grk" : session[:nt_lg] =  "eng"
+        @response = "changed nt_lg"
+      else
+        session[:ot_lg] == "eng" ? session[:ot_lg] = "ot_heb" : session[:ot_lg] =  "eng"        
+        @response = "changed ot_lg"
+      end
+    else
+    end
+    respond_to do |format|
+      format.json { render json: @response}
+    end
+    
+  end
     
 end

@@ -76,4 +76,13 @@ class Verse < ActiveRecord::Base
   def notes_per_user(user_id)
     return notes.where("user_id=?",user_id)
   end
+  
+  def ot?
+    return id < FIRST_NT_VERSE
+  end
+  
+  def nt?
+    return id >= FIRST_NT_VERSE
+  end
+  
 end

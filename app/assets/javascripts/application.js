@@ -126,3 +126,27 @@ verseNotes = function(verse_id, new_note){
 quiz = function(url){
 	window.location.href = url;	
 }
+
+toggle_original_language = function(nt){
+	var url = nt ? "/verses/toggle_original_languages.json?nt=true" : "/verses/toggle_original_languages.json?nt=false";
+	//@TODO
+	//for some reason .done() is is not working?  need to fix
+	$.ajax(url).error(function(){
+		// $("#stage").load();
+		//@TODO
+		//this needs to be redone with ajax on the div only, rather than refreshing the page
+		location.reload();
+	});
+}
+
+browseStrongs = function() {
+	window.location.href = "/strongs";	
+}
+
+profile = function() {
+	window.location.href = "/profile";	
+}
+
+settings = function() {
+	window.location.href = "/profile/settings";	
+}

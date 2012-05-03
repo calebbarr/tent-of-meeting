@@ -1,5 +1,4 @@
                                          
-	
 !!!
 %html
 	%head
@@ -15,12 +14,19 @@
 			= stylesheet_link_tag "http://cbarr.dyndns.org/colorbox/colorbox.css"
 			:javascript
 				$(document).ready(function(){
-					bindLayoutButtons(); //should have code to get the object, ... maybe defaults should just be here and this shouldnt be called
+					bindLayoutButtons(); //should have code to get the object, ... maybe defaults should just be here and this shouldn't be called
+					
 					$( ".navigation_button" ).button();
 					$( ".sidebar_button" ).button();
 					$( ".user_navigation_menu_item" ).button();
 					$( "#favorite_button" ).button();
-
+					$("#strongs_button").next()
+									.button( {
+										text: false,
+										icons: {
+											primary: "ui-icon-triangle-1-s"
+										}
+									}).parent().buttonset();
 				}) ;
 	%body{background: "http://cbarr.dyndns.org/mountains.jpg"}
 		%br
@@ -32,14 +38,14 @@
 					%h1{id: "main_header", align: "center"}
 					%nav
 						.user_navigation{align: "right", style:"padding-right:5px", :class => "ui-widget-header ui-corner-all"}
-							%span{class: "user_navigation_menu_item"}
-								= link_to "ע/η", "/strongs"
-							%span{class: "user_navigation_menu_item"}
-								%a{href: profile_path, title: "profile"}
-									%img{src: "http://cbarr.dyndns.org/icons/16x16/user.png"}
-							%span{class: "user_navigation_menu_item"}
-								%a{href: settings_path, title: "settings"}
-									%img{src: "http://cbarr.dyndns.org/icons/16x16/folder.png"}
+							%span{id: "strongs_parent"}
+								%span{id: "strongs_button", class: "user_navigation_menu_item", onClick: toggle_original_languages_script, title: "toggle original language"}
+									η/ע
+								%span{id: "strongs_dropdown", height:"100%", title: "browse strong's", onClick: "browseStrongs()"}
+							%span{class: "user_navigation_menu_item", onClick: "profile()"}
+								%img{src: "http://cbarr.dyndns.org/icons/16x16/user.png"}
+							%span{class: "user_navigation_menu_item", onClick: "settings()"}
+								%img{src: "http://cbarr.dyndns.org/icons/16x16/folder.png"}
 							/@TODO
 							/fix because it uses the link_to REST stuff
 							%span{class: "user_navigation_menu_item"}

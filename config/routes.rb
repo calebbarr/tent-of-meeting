@@ -38,6 +38,7 @@ TentOfMeeting::Application.routes.draw do
   post "verses/search", :controller => :verses, :action => :search, as: "verse_search"
   get "verses/search", :controller => :verses, :action => :search
   get "verses/related", :controller => :verses, :action => :related
+  get "/verses/toggle_original_languages", :controller => :verses, :action => :toggle_original_languages
     
   ### Bible navigation  
   get "verses/random", :controller => :verses, :action => :random, :as => "random_verse"
