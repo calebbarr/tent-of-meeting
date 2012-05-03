@@ -23,5 +23,5 @@ module VersesHelper
     book_prefix = book_id_string + "_" + book_stem
     return VERSE_AUDIO_URL_STEM + "/" + book_prefix + "/" + book_prefix + "_" + chapter_name + "_" + verse_name +".MP3"
   end
-  
+    
 end

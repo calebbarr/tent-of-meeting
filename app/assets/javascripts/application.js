@@ -7,6 +7,24 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+bindLayoutButtons = function(buttonSettings){
+	if(buttonSettings != undefined){
+		if(buttonSettings["audio"] != undefined){
+			bind_audio_button(buttonSettings["audio"])
+		}	
+	}
+}
+
+bind_audio_button = function(mode){
+	if(mode === "verse"){
+		// also need to set image? through .html("img src")??
+		$("#sidebar_button_1").click("show_verse_audio();");
+	} else if(mode === "chapter"){
+		$("#sidebar_button_1").attr("onClick","show_chapter_audio();");
+	}
+}
+
 prev_book = function(){
 	window.location.href = "/books/prev";
 }
@@ -35,6 +53,12 @@ random_verse = function(){
 show_verse_audio = function() {
 	$("#verse_audio").dialog({position:['center',330], height: 100});
 }
+
+show_chapter_audio = function() {
+	$("#chapter_audio").dialog({position:['center',330], height: 100});
+}
+
+
 show_related = function(id) {
 	$("#related").dialog({position:['center',260],height: 200, width: 550});
 }

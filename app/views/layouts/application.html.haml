@@ -15,9 +15,12 @@
 			= stylesheet_link_tag "http://cbarr.dyndns.org/colorbox/colorbox.css"
 			:javascript
 				$(document).ready(function(){
+					bindLayoutButtons(); //should have code to get the object, ... maybe defaults should just be here and this shouldnt be called
 					$( ".navigation_button" ).button();
 					$( ".sidebar_button" ).button();
+					$( ".user_navigation_menu_item" ).button();
 					$( "#favorite_button" ).button();
+
 				}) ;
 	%body{background: "http://cbarr.dyndns.org/mountains.jpg"}
 		%br
@@ -28,7 +31,7 @@
 					%a{:href => "#"}
 					%h1{id: "main_header", align: "center"}
 					%nav
-						.user_navigation{align: "right", style:"padding-right:5px", class: "ui-widget-header ui-corner-all"}
+						.user_navigation{align: "right", style:"padding-right:5px", :class => "ui-widget-header ui-corner-all"}
 							%span{class: "user_navigation_menu_item"}
 								= link_to "ע/η", "/strongs"
 							%span{class: "user_navigation_menu_item"}
@@ -43,9 +46,9 @@
 								%a{href: "#", title:"sign in/ out"}
 									%img{src: "http://cbarr.dyndns.org/icons/16x16/house.png"}
 									= if user_signed_in? then link_to "_", destroy_user_session_path, :method => :delete else link_to "_", new_user_session_path, :method => :get end
-							#search-field{style:"padding-right:5px"}
+							%span{class: "user_navigation_menu_item"}
 								= form_tag verse_search_url, :controller => :verses, :action => :search do
-									=search_field_tag(:query, value="", :id => 'search_box')
+									= search_field_tag(:query, value="", :id => 'search_box')
 									= submit_tag nil, :hidden => true
 				.sidebar1{style: "height:325px;overflow:scroll;"}
 					%nav{align: "right"}
@@ -92,9 +95,9 @@
 					#chat{style: "height:325px; overflow:scroll"}
 						= render_cell :chat , :show
 				%footer{align: "center"}
-					#controls2
-					.block
-						#navigation_bar
+					.block{:class => "ui-widget-header ui-corner-all", style:"width:60%; padding: 10px 4px; border-radius:20px;", align: "center"}
+						#controls2{align: "center"}
+						%div{id:"navigation_bar", align: "center"}
 							%button{:class => "navigation_button", onClick: "prev_book()", title: "previous book"}
 								%img{src: 'http://cbarr.dyndns.org/icons/32x32/up_arrow.png'}
 							%button{:class => "navigation_button", onClick: "prev_chapter()", title: "previous chapter"}
