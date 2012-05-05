@@ -1,0 +1,1 @@
+MultipleChoiceQuestion.create({ verse_id: 19132 , content: "According to Jeremiah 7:12, where did God set His name at the first?", a: "Jerusalem", b: "Shiloh", c: "Judea", d: "Samaria", correct: "b" })

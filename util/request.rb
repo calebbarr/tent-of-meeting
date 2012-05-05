@@ -140,6 +140,6 @@ end
 
 # /td[2]/table[2]/tbody/tr/td[2]/table/tbody/tr/td/p/b/a
 # response = Typhoeus::Request.head("http://www.pauldix.net")
-# response = Typhoeus::Request.put("http://cbarr.dyndns.org:3000/posts/1", :body => "whoo, a body")
-# response = Typhoeus::Request.post("http://cbarr.dyndns.org:3000/posts", :params => {:title => "test post", :content => "this is my test"})
-# response = Typhoeus::Request.delete("http://cbarr.dyndns.org:3000/posts/1")
+# response = Typhoeus::Request.put("http://localhost:3000/posts/1", :body => "whoo, a body")
+# response = Typhoeus::Request.post("http://localhost:3000/posts", :params => {:title => "test post", :content => "this is my test"})
+# response = Typhoeus::Request.delete("http://localhost:3000/posts/1")

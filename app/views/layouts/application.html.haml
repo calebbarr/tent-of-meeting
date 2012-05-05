@@ -4,14 +4,14 @@
 	%head
 		/ %title Tent of Meeting 
 		= javascript_include_tag 'application'
-		= javascript_include_tag "http://cbarr.dyndns.org:9292/faye.js"
-		= javascript_include_tag "http://cbarr.dyndns.org/colorbox/jquery.colorbox.js"
-		= javascript_include_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/js/jquery-ui-1.8.18.custom.min.js"
+		= javascript_include_tag "http://localhost:9292/faye.js"
+		= javascript_include_tag "http://localhost/colorbox/jquery.colorbox.js"
+		= javascript_include_tag "http://localhost/jquery-ui-1.8.18.custom/js/jquery-ui-1.8.18.custom.min.js"
 		= csrf_meta_tag
 		%meta{:charset => "UTF-8"}
-			= stylesheet_link_tag "http://cbarr.dyndns.org/tent_of_meeting.css"
-			= stylesheet_link_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/css/smoothness/jquery-ui-1.8.18.custom.css"
-			= stylesheet_link_tag "http://cbarr.dyndns.org/colorbox/colorbox.css"
+			= stylesheet_link_tag "http://localhost/tent_of_meeting.css"
+			= stylesheet_link_tag "http://localhost/jquery-ui-1.8.18.custom/css/smoothness/jquery-ui-1.8.18.custom.css"
+			= stylesheet_link_tag "http://localhost/colorbox/colorbox.css"
 			:javascript
 				$(document).ready(function(){
 					bindLayoutButtons(); //should have code to get the object, ... maybe defaults should just be here and this shouldn't be called
@@ -28,7 +28,7 @@
 										}
 									}).parent().buttonset();
 				}) ;
-	%body{background: "http://cbarr.dyndns.org/mountains.jpg"}
+	%body{background: "http://localhost/mountains.jpg"}
 		%br
 		#containercontainer{align: "center", style: "padding: 20px; background-color: rgba(153, 153, 153, 0.5); border-radius: 20px;width:78%;margin: 0 auto;"}
 			
@@ -43,15 +43,13 @@
 									η/ע
 								%span{id: "strongs_dropdown", height:"100%", title: "browse strong's", onClick: "browseStrongs()"}
 							%span{class: "user_navigation_menu_item", onClick: "profile()"}
-								%img{src: "http://cbarr.dyndns.org/icons/16x16/user.png"}
+								%img{src: "http://localhost/icons/16x16/user.png"}
 							%span{class: "user_navigation_menu_item", onClick: "settings()"}
-								%img{src: "http://cbarr.dyndns.org/icons/16x16/folder.png"}
+								%img{src: "http://localhost/icons/16x16/folder.png"}
 							/@TODO
 							/fix because it uses the link_to REST stuff
-							%span{class: "user_navigation_menu_item"}
-								%a{href: "#", title:"sign in/ out"}
-									%img{src: "http://cbarr.dyndns.org/icons/16x16/house.png"}
-									= if user_signed_in? then link_to "_", destroy_user_session_path, :method => :delete else link_to "_", new_user_session_path, :method => :get end
+							%span{class: "user_navigation_menu_item", title: -> {user_signed_in? ? "logout" : "login" }.call, onClick: -> { user_signed_in? ?  "logout('" + destroy_user_session_path + "')" : "login('" + new_user_session_path + "')" }.call }
+								%img{src: "http://localhost/icons/16x16/house.png"}
 							%span{class: "user_navigation_menu_item"}
 								= form_tag verse_search_url, :controller => :verses, :action => :search do
 									= search_field_tag(:query, value="", :id => 'search_box')
@@ -60,24 +58,24 @@
 					%nav{align: "right"}
 						.sidebar_item
 							%button{id: "sidebar_button_1", :class => "sidebar_button", href:"#", title: "audio", onClick: "show_verse_audio()"}
-								%img{src: "http://cbarr.dyndns.org/icons2/32x32/sound.png"}
+								%img{src: "http://localhost/icons2/32x32/sound.png"}
 						.sidebar_item
 							%button{id: "sidebar_button_2", :class => "sidebar_button", onClick: "memorize('"+"/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize"+"')", title: "memorize"}
-								%img{src: "http://cbarr.dyndns.org/icons/32x32/magnifier.png"}
+								%img{src: "http://localhost/icons/32x32/magnifier.png"}
 						.sidebar_item
 							%button{id: "sidebar_button_3", :class => "sidebar_button", onClick: "quiz('"+ -> { return @verse.has_quiz? ? "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz" : "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new"}.call + "')" , title: -> {return  @verse.has_quiz? ?  "take quiz" : "create quiz"}.call }
-								%img{src: "http://cbarr.dyndns.org/icons/32x32/check_mark.png"}
+								%img{src: "http://localhost/icons/32x32/check_mark.png"}
 						.sidebar_item
 							%input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call)}.call, onClick: "toggleFavorite("+@verse.id.to_s+", "+ ->{signed_in? ? current_user.id.to_s : "1" }.call+","+ @verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call).to_s+")"}
 							%label{for: "favorite_button", title: " "+ -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call) ? "unfavorite" : "favorite"}.call+ " "}
-								%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
+								%img{src: "http://localhost/icons/32x32/heart.png"}
 						%button{id: "sidebar_button_4", :class => "sidebar_button", title: -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? "notes" : "new note"}.call, onClick: "verseNotes("+@verse.id.to_s+", "+ -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? 'false)' : 'true)'}.call }
 							/the 1 here is just a stand-in for session-based code if not authenticated
 							/= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("_", controller: :notes, action: :new, :verse_id => @verse.id) }.call
-							%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
+							%img{src: "http://localhost/icons/32x32/pencil.png"}
 						.sidebar_item
 							%button{:class => "sidebar_button", onClick: "show_related(#{@verse.id})", title: "related"}
-								%img{src:"http://cbarr.dyndns.org/icons/32x32/placemark.png"}
+								%img{src:"http://localhost/icons/32x32/placemark.png"}
 
 						/ 	%li
 						/ 		/the 1 here is just a stand-in for session-based code if not authenticated
@@ -105,19 +103,19 @@
 						#controls2{align: "center"}
 						%div{id:"navigation_bar", align: "center"}
 							%button{:class => "navigation_button", onClick: "prev_book()", title: "previous book"}
-								%img{src: 'http://cbarr.dyndns.org/icons/32x32/up_arrow.png'}
+								%img{src: 'http://localhost/icons/32x32/up_arrow.png'}
 							%button{:class => "navigation_button", onClick: "prev_chapter()", title: "previous chapter"}
-								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/skip_backward.png'}
+								%img{src: 'http://localhost/icons2/32x32/skip_backward.png'}
 							%button{:class => "navigation_button", onClick: "prev_verse()", title: "previous verse"}
-								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/rewind.png'}
+								%img{src: 'http://localhost/icons2/32x32/rewind.png'}
 							%button{:class => "navigation_button", onClick: "random_verse()", title: "random verse"}
-								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/refresh.png'}
+								%img{src: 'http://localhost/icons2/32x32/refresh.png'}
 							%button{:class => "navigation_button", onClick: "next_verse()", title: "next verse"}
-								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/fast_forward.png'}
+								%img{src: 'http://localhost/icons2/32x32/fast_forward.png'}
 							%button{:class => "navigation_button", onClick: "next_chapter()", title: "next chapter"}
-								%img{src: 'http://cbarr.dyndns.org/icons2/32x32/skip_forward.png'}														
+								%img{src: 'http://localhost/icons2/32x32/skip_forward.png'}														
 							%button{:class => "navigation_button", onClick: "next_book()", title: "next book"}
-								%img{src: 'http://cbarr.dyndns.org/icons/32x32/down_arrow.png'}
+								%img{src: 'http://localhost/icons/32x32/down_arrow.png'}
 				#flash
 					.flash{:align => "center"}
 						- flash.each do |type, message|

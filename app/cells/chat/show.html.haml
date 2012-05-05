@@ -1,7 +1,7 @@
 :javascript
 	$(function() {
 		// Create a new client to connect to Faye
-		var client = new Faye.Client('http://cbarr.dyndns.org:9292/faye');
+		var client = new Faye.Client('http://localhost:9292/faye');
 		// Subscribe to the public channel
 		var public_subscription = client.subscribe('/messages/public', function(data) {
 			$('<p></p>').html("<b>"+ data.username + "</b>" + ": " + data.msg + " (" + data.timestamp +")").prependTo('#chat_room');

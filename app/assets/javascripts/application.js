@@ -97,7 +97,7 @@ verseNotes = function(verse_id, new_note){
 				div_content += note["content"];
 				div_content += "</td>";
 				div_content += "<td style:'float:top'>";
-				div_content += "<img id='delete"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://cbarr.dyndns.org/close_x.gif'/>"
+				div_content += "<img id='delete"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://localhost/close_x.gif'/>"
 				div_content += "</td>";
 				// div_content += "<td>";
 				// div_content += note["created_at"];
@@ -116,7 +116,7 @@ verseNotes = function(verse_id, new_note){
 			div_content +="</table>";
 			$("#verse_notes").html(div_content);
 		});
-		return "<img src='http://cbarr.dyndns.org/loader2.gif'></img>";
+		return "<img src='http://localhost/loader2.gif'></img>";
 	};
 	
 	$("#verse_notes").html(new_note ? "<h3> new note: </h3> <form accept-charset='UTF-8' action='/notes' class='new_note' id='new_note' method='post'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='&#x2713;' /></div> <label for='note_name'>Name</label> <br> <input id='note_name' name='note[name]' size='30' type='text' /> <br> <label for='note_content'>Content</label> <br> <textarea cols='40' id='note_content' name='note[content]' rows='20'></textarea> <br> <input id='note_verse_id' name='note[verse_id]' type='hidden' value='1' /> <!-- the 1 here is just a stand-in for session-based code if not authenticated --> <input id='note_user_id' name='note[user_id]' type='hidden' value='1' /> <input name='commit' type='submit' value='Create Note' /> <br> </form>	</div>" : showNotes());
@@ -127,6 +127,7 @@ quiz = function(url){
 	window.location.href = url;	
 }
 
+
 toggle_original_language = function(nt){
 	var url = nt ? "/verses/toggle_original_languages.json?nt=true" : "/verses/toggle_original_languages.json?nt=false";
 	//@TODO
@@ -135,7 +136,8 @@ toggle_original_language = function(nt){
 		// $("#stage").load();
 		//@TODO
 		//this needs to be redone with ajax on the div only, rather than refreshing the page
-		location.reload();
+		location.reload(true);
+		$("#stage").fadeOut('fast');
 	});
 }
 
@@ -149,4 +151,22 @@ profile = function() {
 
 settings = function() {
 	window.location.href = "/profile/settings";	
+}
+
+login = function(url) {
+	$.ajax({
+		url: url,
+		type: "GET"
+	}).done(function(){
+		window.location.href = url;	
+	});
+}
+
+logout = function(url) {
+	$.ajax({
+		url: url,
+		type: "DELETE"
+	}).done(function(){
+		window.location.href = "/";
+	});
 }

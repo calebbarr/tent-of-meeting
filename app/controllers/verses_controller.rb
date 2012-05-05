@@ -1,5 +1,6 @@
 class VersesController < NavigationController
   def show
+    puts "SHOW  ~~~"
     if params[:book] != nil then
       book_id = params[:book]
       if params[:chapter] != nil then
@@ -14,7 +15,7 @@ class VersesController < NavigationController
             session[:ot_lg] = nil
             session[:nt_lg] = nil
             #set language according to user's preference.
-            if @verse.id < FIRST_NT_VERSE then
+            if @verse.ot? then
               if current_user.ot_lg == "eng" then
                 @verse_text = VerseText.find(@verse.id).content
               elsif current_user.ot_lg == "ot_heb" then
@@ -26,6 +27,8 @@ class VersesController < NavigationController
                 @verse_text = VerseText.find(@verse.id).content
               end
             else
+                puts "LOOKING AT LANGUAGE"
+                puts current_user.nt_lg
                 if current_user.nt_lg == "eng" then
                   @verse_text = VerseText.find(@verse.id).content
                 elsif current_user.nt_lg == "nt_grk" then
@@ -172,14 +175,30 @@ class VersesController < NavigationController
   end
   
   def toggle_original_languages
-    
+    puts "TOGGLING"
     @response = "ok so far!"
     if params[:nt] != nil then
       if params[:nt] == "true" then
-        session[:nt_lg] == "eng" ? session[:nt_lg] = "nt_grk" : session[:nt_lg] =  "eng"
+        if signed_in? then
+          puts "SIGNED IN"
+          current_user.nt_lg = current_user.nt_lg == "eng"  ? "nt_grk" :  "eng"
+          current_user.save
+          puts "NT LG IS NOW"
+          puts current_user.nt_lg
+        else
+          session[:nt_lg] == "eng" ? session[:nt_lg] = "nt_grk" : session[:nt_lg] =  "eng"
+        end
         @response = "changed nt_lg"
       else
-        session[:ot_lg] == "eng" ? session[:ot_lg] = "ot_heb" : session[:ot_lg] =  "eng"        
+        if signed_in? then
+          puts "SIGNED IN"
+          current_user.ot_lg = current_user.ot_lg == "eng" ? "ot_heb" :  "eng"
+          current_user.save
+          puts "OT LG IS NOW"
+          puts current_user.ot_lg
+        else
+          session[:ot_lg] == "eng" ? session[:ot_lg] = "ot_heb" : session[:ot_lg] =  "eng"
+        end
         @response = "changed ot_lg"
       end
     else
