@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 NUMBER_OF_VERSES = 31102
 NUMBER_OF_CHAPTERS = 1189
 NUMBER_OF_BOOKS = 66
@@ -11,7 +13,7 @@ VERSE_AUDIO_BOOK_ABBREV ={
 }
 CHAPTER_AUDIO_URL_STEM = "http://www.mp3bible.org/kjv/audio/"
 CHAPTER_AUDIO_BOOK_ABBREV={
-  
+  #to be filled in later if necessary
 }
 VERSE_SEARCH_RESULTS_PER_PAGE = 5
 FIRST_NT_VERSE = 23146
@@ -22,3 +24,7 @@ LANGUAGE_ABBREVIATIONS = {
 }
 NUM_STRONGS_HEBREW = 8674
 NUM_STRONGS_GREEK = 5624
+
+HEBREW_CONSONANTS = Set.new ["א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט", "י", "ך", "כ", "ל","ם","מ","ן", "נ", "ס", "ע", "ף", "פ", "ץ", "צ", "ק", "ר", "ש","ת"]
+GREEK_LETTERS = Set.new ["Α", "α", "Β", "β", "Γ", "γ", "Δ", "δ", "Ε", "ε", "Ζ", "ζ", "Η", "η", "Θ", "θ", "Ι", "ι", "Κ", "κ", "Λ", "λ", "Μ", "μ", "Ν", "ν", "Ξ", "ξ", "Ο", "ο", "Π", "π", "Ρ", "ρ", "Σ", "σ", "ς", "Τ", "τ", "Υ", "υ", "Φ", "φ", "Χ", "χ", "Ψ", "ψ", "Ω", "ω"]
+#@TODO need to add the accented greek characters in

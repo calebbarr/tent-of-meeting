@@ -1,6 +1,5 @@
 class VersesController < NavigationController
   def show
-    puts "SHOW  ~~~"
     if params[:book] != nil then
       book_id = params[:book]
       if params[:chapter] != nil then
@@ -27,8 +26,6 @@ class VersesController < NavigationController
                 @verse_text = VerseText.find(@verse.id).content
               end
             else
-                puts "LOOKING AT LANGUAGE"
-                puts current_user.nt_lg
                 if current_user.nt_lg == "eng" then
                   @verse_text = VerseText.find(@verse.id).content
                 elsif current_user.nt_lg == "nt_grk" then
@@ -126,10 +123,58 @@ class VersesController < NavigationController
     end
   end
 
+  # @TODO
+  # this is now starting to include all search functionality and
+  # should be factored out of verses controller
   def search
-    if params[:query] != nil then
+    @results = []
+    if params[:query] != nil
       @query = params[:query]
-      @results =  VerseText.search(@query).page(params[:page])
+      
+      if is_number?(@query)
+        puts "asd"
+      elsif is_englishish?(@query)
+        @search = VerseText.search do
+          fulltext params[:query]
+        end
+        @results = @search.results
+        if @results.length == 0 then
+          @results =  VerseText.regex_search(@query).page(params[:page])
+        end
+      elsif is_hebrew?(@query)
+        #needs to come back with strongs entries, too, and display them
+        @search = OTHebrewVerse.search do
+          fulltext params[:query]
+        end
+        puts @search
+        @results = @search.results
+        puts @results
+      elsif is_greek?(@query)
+        @search = NTGreekVerse.search do
+          fulltext params[:query]
+        end
+        puts @search
+        @results = @search.results
+      end
+      
+
+      
+      
+      
+      # strongs_num = -> {
+      #   begin
+      #     if Integer(self) then
+      #       return true
+      #     end
+      #   rescue
+      #     return false
+      #   end
+      # }.call
+      # 
+      # if strongs_num then
+      #   
+      # else
+      # end
     end
   end
   
@@ -175,27 +220,20 @@ class VersesController < NavigationController
   end
   
   def toggle_original_languages
-    puts "TOGGLING"
     @response = "ok so far!"
     if params[:nt] != nil then
       if params[:nt] == "true" then
         if signed_in? then
-          puts "SIGNED IN"
           current_user.nt_lg = current_user.nt_lg == "eng"  ? "nt_grk" :  "eng"
           current_user.save
-          puts "NT LG IS NOW"
-          puts current_user.nt_lg
         else
           session[:nt_lg] == "eng" ? session[:nt_lg] = "nt_grk" : session[:nt_lg] =  "eng"
         end
         @response = "changed nt_lg"
       else
         if signed_in? then
-          puts "SIGNED IN"
           current_user.ot_lg = current_user.ot_lg == "eng" ? "ot_heb" :  "eng"
           current_user.save
-          puts "OT LG IS NOW"
-          puts current_user.ot_lg
         else
           session[:ot_lg] == "eng" ? session[:ot_lg] = "ot_heb" : session[:ot_lg] =  "eng"
         end
@@ -205,8 +243,19 @@ class VersesController < NavigationController
     end
     respond_to do |format|
       format.json { render json: @response}
-    end
+    end 
+  end
+  
+  def current
     
+    @response = "ok so far!"
+    if params[:id] != nil then
+      id = params[:id]
+      session[:verse] = id
+    end
+    respond_to do |format|
+      format.json { render json: @response}
+    end    
   end
     
 end

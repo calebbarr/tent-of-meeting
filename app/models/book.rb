@@ -22,4 +22,10 @@ class Book < ActiveRecord::Base
     return id == NUMBER_OF_BOOKS
   end
   
+  def link
+    link = ""
+  	link += "<a href='/"+name+"'>"+name.to_s+"</a>"
+    return link.html_safe
+  end
+  
 end

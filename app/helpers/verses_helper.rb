@@ -23,5 +23,21 @@ module VersesHelper
     book_prefix = book_id_string + "_" + book_stem
     return VERSE_AUDIO_URL_STEM + "/" + book_prefix + "/" + book_prefix + "_" + chapter_name + "_" + verse_name +".MP3"
   end
+  
+  def highlight( result_string, query_string )
+    highlighted_html = ""
+    result_string.split(/\s+/).each do |token|
+      #@TODO
+      # needs to be a better helper method
+      #testing against more possibilities more thoroughly
+      # and accounting for non-english
+      if (token == query_string ) or (token == query_string+"'s") or (token == query_string+",") or (token == query_string+"'d") or (token == query_string+"s") or (token == query_string+".") or (token == query_string+"\"")
+        highlighted_html += "<b>"+token+" </b>"
+      else
+        highlighted_html += token+" "
+      end
+    end
+    return highlighted_html.html_safe
+  end
     
 end

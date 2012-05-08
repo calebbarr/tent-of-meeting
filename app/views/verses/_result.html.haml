@@ -1,12 +1,17 @@
-- @results.each do |vt|
-	- verse = vt.verse
+- @results.each do |result|
+	/@TODO
+	/assumes only one kind of result, should be remade to support
+	/original words / verses / strongs searches, etc
+	/ possibly use cells
+	/ possibly render partials in accordion view
+	- verse = result.verse
 	- chapter = verse.chapter
 	- book = chapter.book
-	%tr
+	%tr{:class => "bible_verse_row", onClick: "location.href='#{verse.path}'"}
 		%td{:valign => "top", :align => "left", :width => "25%"}
 			= link_to book.name, "/"+book.name
 			= link_to chapter.name, "/"+book.name+"/"+chapter.name.to_s
 			\:
 			= link_to verse.name, "/"+book.name+"/"+chapter.name.to_s+"/"+verse.name.to_s
-		%td
-			=vt.content
+		%td	
+			= highlight(result.content,@query)

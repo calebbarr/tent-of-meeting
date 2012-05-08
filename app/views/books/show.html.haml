@@ -1,10 +1,19 @@
+:javascript
+	$(document).ready(function(){
+		$("#main_header").html("#{@book.link}");
+		$("#book").accordion();
+		
+	});
+	
 %title
 	Tent of Meeting -
 	= @book.name.to_s
-%h1
-	= link_to @book.name.to_s, "/"+@book.name
 	
-%p{:style => "width:50%"}
+#book
 	- @chapters.each do |chapter|
-		- puts chapter.name
-		= link_to chapter.name, "/"+@book.name.to_s+"/"+chapter.name.to_s
+		%h3{:style => "padding-left:10%", onClick: "setCurrChapter('#{chapter.id}')"}
+			= link_to chapter.name, "/"+@book.name.to_s+"/"+chapter.name.to_s
+		%div{:class => "bible_chapter_row", onclick: "location.href='#{chapter.path}'"}
+			//kinda hacky, and shouldn't be done in the view anyway
+			/ = VerseText.find((chapter.verses[0].id)).content
+			= chapter.text

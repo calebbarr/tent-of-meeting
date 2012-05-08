@@ -12,9 +12,20 @@ bindLayoutButtons = function(buttonSettings){
 	if(buttonSettings != undefined){
 		if(buttonSettings["audio"] != undefined){
 			bind_audio_button(buttonSettings["audio"])
+		}
+		if(buttonSettings["view"] != undefined){
+			if(buttonSettings["view"] != undefined){
+				if(buttonSettings["view"] == "chapter"){
+					// bindChapterButtons();
+				}
+			}
 		}	
 	}
 }
+
+// bindChapterButtons = function(){
+// 	$(".bible_verse_row").hover()
+// }
 
 bind_audio_button = function(mode){
 	if(mode === "verse"){
@@ -169,4 +180,20 @@ logout = function(url) {
 	}).done(function(){
 		window.location.href = "/";
 	});
+}
+
+setCurrVerse = function(id){
+	var url = "/verses/current.json?id="+id;
+	$.ajax({
+		url: url,
+		type: "POST"
+		});
+}
+
+setCurrChapter = function(id){
+	var url = "/chapters/current.json?id="+id;
+	$.ajax({
+		url: url,
+		type: "POST"
+		});
 }

@@ -14,7 +14,6 @@ db_config = YAML::load(File.open("../config/database.yml"))
 ActiveRecord::Base.establish_connection(db_config['development'])
 require '../app/models/original_word'
 require '../app/models/nt_greek_word'
-require '../app/models/nt_greek_word'
 
 def process_uninflected(strongs_num)
   begin

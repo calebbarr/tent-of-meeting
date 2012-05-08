@@ -125,6 +125,10 @@ nav ul li {
 	background-color: rgba(153, 153, 153, 0.2);
 }
 
+.bible_chapter_row {
+	max-height:100px
+}
+
 .note_row {
 	border-left:1px;
 	border-bottom:1px;

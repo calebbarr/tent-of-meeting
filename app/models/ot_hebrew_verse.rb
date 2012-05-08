@@ -1,3 +1,3 @@
 class OTHebrewVerse < OriginalVerse
-  
+
 end

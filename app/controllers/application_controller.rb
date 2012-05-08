@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  #assumes the rest of the code has been updating the instance variables
+  #and that the session data might be old
+  #so it updates the session with the instance variables
+  #desirable??
   def store_navigation_in_session
     session[:navigation] = {:book => nil, :chapter => nil, :verse => nil}
     if @book == nil then
@@ -42,6 +46,30 @@ class ApplicationController < ActionController::Base
   
   def clear_q_id
     session[:q_id] = nil
+  end
+  
+  #PARSING STRINGS , FIGURE OUT WHERE TO PUT THIS LATER
+  
+  def is_englishish?(query)
+    return (!is_hebrew?(query) and !is_number?(query) and !is_greek?(query))
+  end
+  
+  def is_hebrew?(query)
+    (0...query.length).each do |index|
+      return true if HEBREW_CONSONANTS.include?(query[index])
+    end
+    return false
+  end
+  
+  def is_greek?(query)
+    (0...query.length).each do |index|
+      return true if GREEK_LETTERS.include?(query[index])
+    end
+    return false
+  end
+  
+  def is_number?(query)
+    return true if Integer(query) rescue false
   end
       
 end

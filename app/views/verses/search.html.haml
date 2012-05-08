@@ -2,7 +2,7 @@
 	Tent of Meeting - Search
 -if @results.length > 0 then
 	= paginate @results
-	%table{:align => "center", :width => "50%"}
+	%table{:align => "center"}
 		= render "verses/result.html.haml"
 
 -else

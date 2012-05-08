@@ -33,4 +33,17 @@ class Chapter < ActiveRecord::Base
     return link.html_safe
   end
   
+  def path
+    return "/"+book.name+"/"+name.to_s
+  end
+  
+  def text
+    text = ""
+    verses.each do |verse|
+      text += VerseText.find(verse.id).content + " "
+    end
+    return text
+  end
+
+  
 end
