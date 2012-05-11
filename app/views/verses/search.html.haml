@@ -1,10 +1,35 @@
+:javascript
+	$(document).ready(function(){
+		 $("#results").accordion();
+		
+	});
+
 %title
 	Tent of Meeting - Search
--if @results.length > 0 then
-	= paginate @results
-	%table{:align => "center"}
-		= render "verses/result.html.haml"
 
+
+- if @search_results[:empty] == false then
+	#results
+		- if @search_results[:verses] != nil 
+			-if @search_results[:verses].length > 0 then
+				%h3
+					%b
+						verses
+				#verses{:class => "accordion_row"}
+					= paginate @search_results[:verses]
+					%table{:align => "center"}
+						= render "verses/result.html.haml"
+			
+		- if @search_results[:words] != nil
+			-if @search_results[:words].length > 0 then
+				%h3
+					%b
+						words
+				#words{:class => "accordion_row"}
+					/ = paginate @results[:words]
+					%table{:align => "center"}
+						= render "verses/strongs_result.html.haml"
+		/ -if @search_results
 -else
 	%p
 		no results for - "

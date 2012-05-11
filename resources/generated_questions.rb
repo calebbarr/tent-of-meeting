@@ -1,1 +1,3 @@
 MultipleChoiceQuestion.create({ verse_id: 19132 , content: "According to Jeremiah 7:12, where did God set His name at the first?", a: "Jerusalem", b: "Shiloh", c: "Judea", d: "Samaria", correct: "b" })
+MultipleChoiceQuestion.create({ verse_id: 15863 , content: "According to Psalms 116:14, when will the Psalmist pay his vows unto the LORD?", a: "now", b: "at the appointed time", c: "in the Jubilee", d: "in that day", correct: "a" })
+MultipleChoiceQuestion.create({ verse_id: 15863 , content: "According to Psalms 116:14, in what context will I now pay my vows unto the LORD?", a: "according to his lovingkindness", b: "because of his mercy", c: "in his steadfast love", d: "in the presence of all his people", correct: "d" })

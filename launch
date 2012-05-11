@@ -1,3 +1,4 @@
+rake sunspot:solr:start
 rm dev_rails_server.out &&
 touch dev_rails_server.out &&
 rvmsudo rails s -p 80 > dev_rails_server.out &

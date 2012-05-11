@@ -1,0 +1,16 @@
+- @search_results[:words].each do |result|
+	- form = result.form
+	- short_def = result.short_definition
+	- medium_def = result.medium_definition
+	- long_def = result.long_definition
+	- strong_id = result.strong_id
+	%tr{:class => "strongs_row", onClick: "location.href='#{result.path}'"}
+		%td{:valign => "top", :align => "left", :width => "25%"}
+			#id_and_form
+				%span{id: "strong_id", align:"left"}
+					= link_to strong_id, result.path
+				%span{id: "form", align: "center"}
+					%b
+						= form
+			#def{align: "center"}
+				= short_def

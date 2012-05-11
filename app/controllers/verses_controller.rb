@@ -126,55 +126,76 @@ class VersesController < NavigationController
   # @TODO
   # this is now starting to include all search functionality and
   # should be factored out of verses controller
+  
+  #@TODO debug... @result... @search_results
   def search
-    @results = []
+    puts "GOT INTO THE CONTROLLER"
+    @search_results = {:empty => true}
     if params[:query] != nil
       @query = params[:query]
-      
+    #   
       if is_number?(@query)
+    #     # @TODO FINISH
+        @search_results[:original_words] = []
         puts "asd"
       elsif is_englishish?(@query)
+        @results = []
+        @search_results[:verses] = [] if @search_results[:verses] == nil
         @search = VerseText.search do
           fulltext params[:query]
         end
         @results = @search.results
+        @search_results[:verses] = @results
         if @results.length == 0 then
-          @results =  VerseText.regex_search(@query).page(params[:page])
+          @results = VerseText.regex_search(@query).page(params[:page])
+          @search_results[:verses] =  @results
+        end
+        if @results.length > 0
+          @search_results[:empty] = false
         end
       elsif is_hebrew?(@query)
-        #needs to come back with strongs entries, too, and display them
-        @search = OTHebrewVerse.search do
-          fulltext params[:query]
-        end
-        puts @search
-        @results = @search.results
-        puts @results
-      elsif is_greek?(@query)
-        @search = NTGreekVerse.search do
-          fulltext params[:query]
-        end
-        puts @search
-        @results = @search.results
+          @search_results[:verses] = [] if @search_results[:verses] == nil
+          #needs to come back with strongs entries, too, and display them
+          @search = OTHebrewVerse.search do
+            fulltext params[:query]
+          end
+          @results = @search.results
+          @search_results[:verses] = @results
+          if @results.length > 0
+            @search_results[:empty] = false
+          end
+          @search = OTHebrewWord.search do
+            fulltext params[:query]
+          end
+          @results = @search.results
+          @search_results[:words] = @results
+          if @results.length > 0
+            @search_results[:empty] = false
+          end
+        elsif is_greek?(@query)
+          @search_results[:verses] = [] if @search_results[:verses] == nil
+          @search = NTGreekVerse.search do
+            fulltext params[:query]
+          end
+          @results = @search.results
+          @search_results[:verses] = @results
+          if @results.length > 0
+            @search_results[:empty] = false
+          end
+          @search = NTGreekWord.search do
+            fulltext params[:query]
+          end
+          @results = @search.results
+          @search_results[:words] = @results
+          if @results.length > 0
+            @search_results[:empty] = false
+          end
+    #     # @regex_results = NTGreekWord.regex_search(:query)
+    #     # @results[:words] += @regex_results
+    #     # @TODO the list concatenation doesn't seem to work
+    #     # either make new dictionary key and corresponding view logic
+    #     # once the regex search works, or figure out how to include it
       end
-      
-
-      
-      
-      
-      # strongs_num = -> {
-      #   begin
-      #     if Integer(self) then
-      #       return true
-      #     end
-      #   rescue
-      #     return false
-      #   end
-      # }.call
-      # 
-      # if strongs_num then
-      #   
-      # else
-      # end
     end
   end
   
