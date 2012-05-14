@@ -91,7 +91,7 @@ class VersesController < NavigationController
     @verse_text = VerseText.find(@verse.id)
     @chapter = @verse.chapter
     @book = @chapter.book
-    verse_path = "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+    verse_path = "/"+@book.name.to_s.gsub(/\s+/, "")+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
     redirect_to verse_path
   end
   

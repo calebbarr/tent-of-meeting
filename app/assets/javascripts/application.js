@@ -16,16 +16,23 @@ bindLayoutButtons = function(buttonSettings){
 		if(buttonSettings["view"] != undefined){
 			if(buttonSettings["view"] != undefined){
 				if(buttonSettings["view"] == "chapter"){
-					// bindChapterButtons();
+					bindChapterButtons();
+				}
+				if(buttonSettings["view"] == "verse"){
+					bindVerseButtons();
 				}
 			}
 		}	
 	}
 }
 
-// bindChapterButtons = function(){
-// 	$(".bible_verse_row").hover()
-// }
+bindChapterButtons = function(){
+	// alert($("#skip_forward_nav").attr("onClick"));
+	$("#skip_forward_nav").attr("onClick",'next_chapter("chapter");');
+	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
+	$("#down_arrow_nav").attr("onClick",'next_book("chapter");');
+	$("#up_arrow_nav").attr("onClick",'prev_book("chapter");');
+}
 
 bind_audio_button = function(mode){
 	if(mode === "verse"){
@@ -36,19 +43,39 @@ bind_audio_button = function(mode){
 	}
 }
 
-prev_book = function(){
-	window.location.href = "/books/prev";
+prev_book = function(mode){
+	url = "/books/prev";
+	if(mode != null){
+		url+="?mode="+mode
+	}
+	// alert($("#skip_forward_nav").attr("onClick"));
+	window.location.href = url;
 }
-next_book = function(){
-	window.location.href = "/books/next";
+next_book = function(mode){
+	url = "/books/next";
+	if(mode != null){
+		url+="?mode="+mode
+	}
+	// alert($("#skip_forward_nav").attr("onClick"));
+	window.location.href = url;
 }
 
-prev_chapter = function(){
-	window.location.href = "/chapters/prev";
+prev_chapter = function(mode){
+	url = "/chapters/prev";
+	if(mode != null){
+		url+="?mode="+mode
+	}
+	// alert($("#skip_forward_nav").attr("onClick"));
+	window.location.href = url;
 }
 
-next_chapter = function(){
-	window.location.href = "/chapters/next";
+next_chapter = function(mode){
+	var url = "/chapters/next"
+	if(mode != null){
+		url+="?mode="+mode
+	}
+	// alert($("#skip_forward_nav").attr("onClick"));
+	window.location.href = url;
 }
 
 prev_verse = function(){

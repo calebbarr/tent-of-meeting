@@ -20,7 +20,7 @@
 					$( ".sidebar_button" ).button();
 					$( ".user_navigation_menu_item" ).button();
 					$( "#favorite_button" ).button();
-					$("#strongs_button").next()
+					$("#strongs_dropdown")
 									.button( {
 										text: false,
 										icons: {
@@ -58,7 +58,7 @@
 					%nav{align: "right"}
 						.sidebar_item
 							%button{id: "sidebar_button_1", :class => "sidebar_button", href:"#", title: "audio", onClick: "show_verse_audio()"}
-								%img{src: "http://localhost/icons2/32x32/sound.png"}
+								%img{src: "http://localhost/icons2/32x32/sound.png"}						
 						.sidebar_item
 							%button{id: "sidebar_button_2", :class => "sidebar_button", onClick: "memorize('"+"/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize"+"')", title: "memorize"}
 								%img{src: "http://localhost/icons/32x32/magnifier.png"}
@@ -102,19 +102,19 @@
 					.block{:class => "ui-widget-header ui-corner-all", style:"width:60%; padding: 10px 4px; border-radius:20px;", align: "center"}
 						#controls2{align: "center"}
 						%div{id:"navigation_bar", align: "center"}
-							%button{:class => "navigation_button", onClick: "prev_book()", title: "previous book"}
+							%button{:id => "up_arrow_nav", :class => "navigation_button", onClick: "prev_book()", title: "previous book"}
 								%img{src: 'http://localhost/icons/32x32/up_arrow.png'}
-							%button{:class => "navigation_button", onClick: "prev_chapter()", title: "previous chapter"}
+							%button{:id => "skip_backward_nav",:class => "navigation_button", onClick: "prev_chapter()", title: "previous chapter"}
 								%img{src: 'http://localhost/icons2/32x32/skip_backward.png'}
-							%button{:class => "navigation_button", onClick: "prev_verse()", title: "previous verse"}
+							%button{:id => "rewind_nav",:class => "navigation_button", onClick: "prev_verse()", title: "previous verse"}
 								%img{src: 'http://localhost/icons2/32x32/rewind.png'}
-							%button{:class => "navigation_button", onClick: "random_verse()", title: "random verse"}
+							%button{:id => "random_nav",:class => "navigation_button", onClick: "random_verse()", title: "random verse"}
 								%img{src: 'http://localhost/icons2/32x32/refresh.png'}
-							%button{:class => "navigation_button", onClick: "next_verse()", title: "next verse"}
+							%button{:id => "fast_forward_nav",:class => "navigation_button", onClick: "next_verse()", title: "next verse"}
 								%img{src: 'http://localhost/icons2/32x32/fast_forward.png'}
-							%button{:class => "navigation_button", onClick: "next_chapter()", title: "next chapter"}
+							%button{:id => "skip_forward_nav",:class => "navigation_button", onClick: "next_chapter()", title: "next chapter"}
 								%img{src: 'http://localhost/icons2/32x32/skip_forward.png'}														
-							%button{:class => "navigation_button", onClick: "next_book()", title: "next book"}
+							%button{:id => "down_arrow_nav",:class => "navigation_button", onClick: "next_book()", title: "next book"}
 								%img{src: 'http://localhost/icons/32x32/down_arrow.png'}
 				#flash
 					.flash{:align => "center"}

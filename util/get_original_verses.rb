@@ -76,11 +76,13 @@ Verse.all.each do |verse|
     translations = translations_array.slice(1..-1).join("|")
     index += 1
     if verse.id < 23146 then
-      original_verses_file.puts "OTHebrewVerse.create({ strong_ids: \"" + strong_ids + "\" , content: \"" + content + "\" , verse_id: "+index.to_s+" , translations: \"" + translations + "\"})"
-      OTHebrewVerse.create(content: content, strong_ids: strong_ids, verse_id: index, translations: translations)
+      # original_verses_file.puts "OTHebrewVerse.create({ strong_ids: \"" + strong_ids + "\" , content: \"" + content + "\" , verse_id: "+index.to_s+" , translations: \"" + translations + "\"})"
+        puts "OTHebrewVerse.create({ strong_ids: \"" + strong_ids + "\" , content: \"" + content + "\" , verse_id: "+index.to_s+" , translations: \"" + translations + "\"})"
+      # OTHebrewVerse.create(content: content, strong_ids: strong_ids, verse_id: index, translations: translations)
     else
-      original_verses_file.puts "NTGreekVerse.create({ strong_ids: \"" + strong_ids + "\" , content: \"" + content + "\" , verse_id: "+index.to_s+" , translations: \"" + translations + "\"})"
-      NTGreekVerse.create(content: content, strong_ids: strong_ids, verse_id: index, translations: translations)
+      # original_verses_file.puts "NTGreekVerse.create({ strong_ids: \"" + strong_ids + "\" , content: \"" + content + "\" , verse_id: "+index.to_s+" , translations: \"" + translations + "\"})"
+      # NTGreekVerse.create(content: content, strong_ids: strong_ids, verse_id: index, translations: translations)
+      puts "NTGreekVerse.create({ strong_ids: \"" + strong_ids + "\" , content: \"" + content + "\" , verse_id: "+index.to_s+" , translations: \"" + translations + "\"})"
     end
   rescue
     exceptions << {verse_id: verse.id, book_name: book_name, chapter_name: chapter.name, verse_name: verse.name, book_id: book.id.to_s, url: url}

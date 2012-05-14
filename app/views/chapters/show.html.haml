@@ -1,8 +1,9 @@
 :javascript
 	$(document).ready(function(){
 		$("#main_header").html("#{@chapter.link}");
+		bindLayoutButtons({"audio" : "chapter", "view" : "chapter"})
 	});
-	bindLayoutButtons({"audio" : "chapter", "view" : "chapter"})
+	
 
 	
 %title
@@ -15,8 +16,9 @@
 		%tr{:class => "bible_verse_row", onclick: "location.href='#{verse.path}'", onMouseOver: "setCurrVerse('#{verse.id}')"}
 			%td{:style => "padding-left:10%"}
 				= link_to verse.name, "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s
-			%td{:style => "padding-left:15%"}
+			%td{:style => "padding-left:15%;padding-right:5%;"}
 				= VerseText.find(verse.id).content
 #chapter_audio{style: "display:none"}
 	- audio_url = chapter_audio_url(@book.id.to_s,@book.name,@chapter.name.to_s)
 	%embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :wmode => "transparent"}
+	%input{type: "checkbox", title: "read to me"}

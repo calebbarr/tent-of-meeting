@@ -24,11 +24,19 @@ class ChaptersController < NavigationController
       chapter_id = navigation[:chapter]
       @chapter = Chapter.next(chapter_id)
       @book = @chapter.book
-      @verse = Verse.lookup(@book.id,@chapter.name, verse_name = -> {return  chapter_id == NUMBER_OF_CHAPTERS ? LAST_VERSE_NAME : 1}.call)
-      ## chapter_id, not @chapter.id, because we want to know if the chapter was *already* last before being incremented
-      @verse_text = VerseText.find(@verse.id)
-      verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
-      redirect_to verse_url
+      if params[:mode] != nil
+        if params[:mode] == "chapter"
+          chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
+          redirect_to chapter_url
+        end
+      else
+        #else
+        @verse = Verse.lookup(@book.id,@chapter.name, verse_name = -> {return  chapter_id == NUMBER_OF_CHAPTERS ? LAST_VERSE_NAME : 1}.call)
+        ## chapter_id, not @chapter.id, because we want to know if the chapter was *already* last before being incremented
+        @verse_text = VerseText.find(@verse.id)
+        verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+        redirect_to verse_url
+      end
     end
   end
   
@@ -38,10 +46,17 @@ class ChaptersController < NavigationController
       chapter_id = navigation[:chapter]
       @chapter = Chapter.prev(chapter_id)
       @book = @chapter.book
-      @verse = Verse.lookup(@book.id,@chapter.name,1)
-      @verse_text = VerseText.find(@verse.id)
-      verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
-      redirect_to verse_url
+      if params[:mode] != nil
+        if params[:mode] == "chapter"
+          chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
+          redirect_to chapter_url
+        end
+      else
+        @verse = Verse.lookup(@book.id,@chapter.name,1)
+        @verse_text = VerseText.find(@verse.id)
+        verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+        redirect_to verse_url
+      end
     end
   end
   

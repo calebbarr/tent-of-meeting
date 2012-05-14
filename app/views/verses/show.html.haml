@@ -28,3 +28,4 @@
 		#verse_audio{style: "display:none"}
 			- audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
 			%embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :wmode => "transparent"}
+			%input{type: "checkbox", title: "read to me"}
