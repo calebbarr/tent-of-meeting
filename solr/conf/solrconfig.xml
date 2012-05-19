@@ -192,7 +192,7 @@
 		e.g. <jmx agentId="myAgent" />
 
 		If you want to start a new MBeanServer, specify the serviceUrl
-		e.g <jmx serviceUrl="service:jmx:rmi:///jndi/rmi://localhost:9999/solr"/>
+		e.g <jmx serviceUrl="service:jmx:rmi:///jndi/rmi://cbarr.dyndns.org:9999/solr"/>
 
 		For more details see http://wiki.apache.org/solr/SolrJmx
   -->
@@ -454,7 +454,7 @@
       <str name="confFiles">schema.xml,stopwords.txt</str>
     </lst>
     <lst name="slave">
-      <str name="masterUrl">http://localhost:8983/solr/replication</str>
+      <str name="masterUrl">http://cbarr.dyndns.org:8983/solr/replication</str>
       <str name="pollInterval">00:00:60</str>
     </lst>
 </requestHandler>-->

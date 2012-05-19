@@ -1,5 +1,5 @@
 class OriginalWord < ActiveRecord::Base
-  paginates_per 100
+  paginates_per 500
   searchable do
     text :normalized_form
     text :form

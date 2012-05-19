@@ -1,3 +1,7 @@
+:javascript
+	$(document).ready(function(){
+		$("#favorite_verses").accordion();
+	});
 %title
 	Tent of Meeting -
 	Profile
@@ -11,20 +15,26 @@
 	= @user[:nt_lg]
 	%br
 	= link_to "[edit]", settings_path
-	
+
+%h2
+	%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
+	Favorite Verses	
 #favorite_verses
 	- if signed_in? then
-		Favorite Verses:
-		%p
-			- current_user.favorite_verses.each do |verse|
-				- chapter = verse.chapter
-				- book = chapter.book
-				%p
-					= verse.link
-					
+		- current_user.favorite_verses.each do |verse|
+			- chapter = verse.chapter
+			- book = chapter.book
+			%h3
+				= link_to book.name + " " + chapter.name.to_s + ":" + verse.name.to_s, "/" + book.name.to_s + "/" + chapter.name.to_s + "/" + verse.name.to_s
+			%div{onclick: "location.href='#{verse.path}'"}
+				/so many bad things here it's not even funny
+				= VerseText.find(verse.id).content
+				
+%h2
+	%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
+	Notes
 #notes
 	- if signed_in? then
-		Notes:
 		%table
 			- current_user.notes.each do |note|
 				- verse = note.verse

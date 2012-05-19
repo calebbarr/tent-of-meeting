@@ -15,10 +15,13 @@ bindLayoutButtons = function(buttonSettings){
 		}
 		if(buttonSettings["view"] != undefined){
 			if(buttonSettings["view"] != undefined){
-				if(buttonSettings["view"] == "chapter"){
+				if(buttonSettings["view"] == "book"){
+					bindBookButtons();
+				}
+				else if(buttonSettings["view"] == "chapter"){
 					bindChapterButtons();
 				}
-				if(buttonSettings["view"] == "verse"){
+				else if(buttonSettings["view"] == "verse"){
 					bindVerseButtons();
 				}
 			}
@@ -32,6 +35,14 @@ bindChapterButtons = function(){
 	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
 	$("#down_arrow_nav").attr("onClick",'next_book("chapter");');
 	$("#up_arrow_nav").attr("onClick",'prev_book("chapter");');
+}
+
+bindBookButtons = function(){
+	// alert($("#skip_forward_nav").attr("onClick"));
+	$("#skip_forward_nav").attr("onClick",'next_chapter("chapter");');
+	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
+	$("#down_arrow_nav").attr("onClick",'next_book("book");');
+	$("#up_arrow_nav").attr("onClick",'prev_book("book");');
 }
 
 bind_audio_button = function(mode){
@@ -135,7 +146,7 @@ verseNotes = function(verse_id, new_note){
 				div_content += note["content"];
 				div_content += "</td>";
 				div_content += "<td style:'float:top'>";
-				div_content += "<img id='delete"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://localhost/close_x.gif'/>"
+				div_content += "<img id='delete"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://cbarr.dyndns.org/close_x.gif'/>"
 				div_content += "</td>";
 				// div_content += "<td>";
 				// div_content += note["created_at"];
@@ -154,7 +165,7 @@ verseNotes = function(verse_id, new_note){
 			div_content +="</table>";
 			$("#verse_notes").html(div_content);
 		});
-		return "<img src='http://localhost/loader2.gif'></img>";
+		return "<img src='http://cbarr.dyndns.org/loader2.gif'></img>";
 	};
 	
 	$("#verse_notes").html(new_note ? "<h3> new note: </h3> <form accept-charset='UTF-8' action='/notes' class='new_note' id='new_note' method='post'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='&#x2713;' /></div> <label for='note_name'>Name</label> <br> <input id='note_name' name='note[name]' size='30' type='text' /> <br> <label for='note_content'>Content</label> <br> <textarea cols='40' id='note_content' name='note[content]' rows='20'></textarea> <br> <input id='note_verse_id' name='note[verse_id]' type='hidden' value='1' /> <!-- the 1 here is just a stand-in for session-based code if not authenticated --> <input id='note_user_id' name='note[user_id]' type='hidden' value='1' /> <input name='commit' type='submit' value='Create Note' /> <br> </form>	</div>" : showNotes());
@@ -214,6 +225,9 @@ setCurrVerse = function(id){
 	$.ajax({
 		url: url,
 		type: "POST"
+		}).error(function(){
+			//why do i keep having to do things on error instead of on done
+			$("#related_button").attr("onClick","show_related("+id+");")
 		});
 }
 

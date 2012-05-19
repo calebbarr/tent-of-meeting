@@ -15,7 +15,8 @@
 	- @verses.each do |verse|
 		%tr{:class => "bible_verse_row", onclick: "location.href='#{verse.path}'", onMouseOver: "setCurrVerse('#{verse.id}')"}
 			%td{:style => "padding-left:10%"}
-				= link_to verse.name, "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s
+				%a{name: verse.name, href: "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s}
+					= verse.name 
 			%td{:style => "padding-left:15%;padding-right:5%;"}
 				= VerseText.find(verse.id).content
 #chapter_audio{style: "display:none"}

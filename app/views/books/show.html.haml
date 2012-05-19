@@ -2,7 +2,7 @@
 	$(document).ready(function(){
 		$("#main_header").html("#{@book.link}");
 		$("#book").accordion();
-		
+		bindLayoutButtons({"view" : "book"});
 	});
 	
 %title
@@ -14,6 +14,4 @@
 		%h3{:style => "padding-left:10%", onClick: "setCurrChapter('#{chapter.id}')"}
 			= link_to chapter.name, "/"+@book.name.to_s+"/"+chapter.name.to_s
 		%div{:class => "accordion_row", onclick: "location.href='#{chapter.path}'"}
-			//kinda hacky, and shouldn't be done in the view anyway
-			/ = VerseText.find((chapter.verses[0].id)).content
 			= chapter.text

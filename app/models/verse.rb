@@ -68,7 +68,7 @@ class Verse < ActiveRecord::Base
     book = chapter.book
     link = ""
   	link += "<a href='/"+book.name+"'>"+book.name.to_s+"</a>"
-  	link += " <a href='/"+book.name+"/"+chapter.name.to_s+"'>"+chapter.name.to_s+":</a>"
+  	link += " <a href='/"+book.name+"/"+chapter.name.to_s+"#"+name.to_s+"'>"+chapter.name.to_s+":</a>"
     link += "<a href='/"+book.name+"/"+chapter.name.to_s+"/"+name.to_s+"'>"+name.to_s+"</a>"
     return link.html_safe
   end
