@@ -12,9 +12,7 @@ VERSE_AUDIO_BOOK_ABBREV ={
   "Jude" => "JDE" 
 }
 CHAPTER_AUDIO_URL_STEM = "http://www.mp3bible.org/kjv/audio/"
-CHAPTER_AUDIO_BOOK_ABBREV={
-  #to be filled in later if necessary
-}
+
 VERSE_SEARCH_RESULTS_PER_PAGE = 5
 FIRST_NT_VERSE = 23146
 LANGUAGE_ABBREVIATIONS = {
