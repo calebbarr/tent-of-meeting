@@ -93,7 +93,6 @@
 					#stage{style:"height:325px; overflow:scroll;"}
 						= yield
 						#related{align:"center", style: "display:none"}
-							= render_cell(:related_verses_cell, :show, {:id => @verse.id})
 						#verse_notes{align: "center"}
 				%aside
 					#chat{style: "height:325px; overflow:scroll"}

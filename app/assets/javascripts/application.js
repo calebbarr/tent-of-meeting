@@ -109,6 +109,30 @@ show_chapter_audio = function() {
 
 
 show_related = function(id) {
+	url = "/verses/related.json?verse="+id
+	$("#related").html("<img src='http://cbarr.dyndns.org/loader2.gif'></img>");
+	$.ajax(url).done(function(related){
+		var related_table = "<table>";
+		if(related.length == 0){
+			$("#related").html("No related verses yet");
+		} else {
+			for(var i = 0; i < related.length; i++){
+				var related = related[i]
+				// related_table +="<tr class='bible_verse_row', onclick='location.href='/"+book+"/"+chapter+"/"+verse+"'>";
+				related_table +="<tr class='bible_verse_row', onclick='location.href='"+related["path"]+"'>";
+				related_table +="<td>";
+				related_table += related["link"]
+				related_table +="</td>";
+				related_table +="<td>";
+				related_table += related["content"]
+				related_table +="</td>";
+				related_table +="</tr>";
+			}
+			related_table+="</table>";
+			$("#related").html(related_table);	
+		}
+	});
+	
 	$("#related").dialog({position:['center',260],height: 200, width: 550});
 }
 

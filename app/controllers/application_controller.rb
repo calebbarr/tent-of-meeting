@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   
   def get_instance_variables
     if session[:navigation] != nil then
-      if session[:verse] != nil then
-        @verse = Verse.find(session[:verse])
+      if session[:navigation][:verse] != nil then
+        @verse = Verse.find(session[:navigation][:verse])
       else
         # @TODO
         @verse = Verse.find(1)

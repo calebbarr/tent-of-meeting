@@ -82,7 +82,15 @@ class VersesController < NavigationController
     @book = @chapter.book
     respond_to do |format|
       format.html
-      format.json { render json: @related_unpaged}
+      format.json { 
+        @results = []
+        @related_unpaged.each do |related_verse|
+          # maybe this is how languages can be done.  people
+          # can rearrange their top N choices or something
+          @results << {content: related_verse.verse_texts[0].content, path: related_verse.path.html_safe, link: related_verse.link}
+        end
+        render json: @results
+        }
     end
   end
   
@@ -268,15 +276,14 @@ class VersesController < NavigationController
   end
   
   def current
-    
     @response = "ok so far!"
     if params[:id] != nil then
       id = params[:id]
-      session[:verse] = id
+      session[:navigation][:verse] = id
     end
     respond_to do |format|
       format.json { render json: @response}
-    end    
+    end
   end
-    
+  
 end
