@@ -27,5 +27,8 @@
 							= token
 		#verse_audio{style: "display:none"}
 			- audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
-			%embed{:height => "27", :src => "http://www.google.com/reader/ui/3523697345-audio-player.swf?audioUrl="+audio_url, :type => "application/x-shockwave-flash", :wmode => "transparent"}
+			%object{:data => "http://flash-mp3-player.net/medias/player_mp3_maxi.swf", :height => "20", :type => "application/x-shockwave-flash", :width => "200"}
+				%param{:name => "movie", :value => "http://flash-mp3-player.net/medias/player_mp3_maxi.swf"}/
+				%param{:name => "bgcolor", :value => "#ffffff"}/
+				%param{:name => "FlashVars", :value => "mp3="+audio_url+"&&showvolume=1&&showslider=1"}/
 			%input{type: "checkbox", title: "read to me"}

@@ -51,6 +51,8 @@ bind_audio_button = function(mode){
 		$("#sidebar_button_1").click("show_verse_audio();");
 	} else if(mode === "chapter"){
 		$("#sidebar_button_1").attr("onClick","show_chapter_audio();");
+	} else if(mode === "book"){
+		$("#sidebar_button_1").attr("onClick","show_book_audio();");
 	}
 }
 
@@ -105,6 +107,10 @@ show_verse_audio = function() {
 
 show_chapter_audio = function() {
 	$("#chapter_audio").dialog({position:['center',330], height: 100});
+}
+
+show_book_audio = function() {
+	$("#book_audio").dialog({position:['center',330], height: 100});
 }
 
 
