@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507040732) do
+ActiveRecord::Schema.define(:version => 20120522194619) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -147,6 +147,8 @@ ActiveRecord::Schema.define(:version => 20120507040732) do
     t.integer  "verse_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "chapter_id"
+    t.integer  "book_id"
   end
 
   create_table "verses", :force => true do |t|

@@ -1,9 +1,3 @@
-:javascript
-	$(document).ready(function(){
-		 $("#results").accordion();
-		
-	});
-
 %title
 	Tent of Meeting - Search
 
@@ -29,6 +23,10 @@
 					/ = paginate @results[:words]
 					%table{:align => "center"}
 						= render "verses/strongs_result.html.haml"
+			:javascript
+				$(document).ready(function(){
+					 $("#results").accordion();
+				});
 		/ -if @search_results
 -else
 	%p

@@ -71,5 +71,5 @@ class ApplicationController < ActionController::Base
   def is_number?(query)
     return true if Integer(query) rescue false
   end
-      
+        
 end

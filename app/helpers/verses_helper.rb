@@ -39,5 +39,5 @@ module VersesHelper
     end
     return highlighted_html.html_safe
   end
-    
+      
 end

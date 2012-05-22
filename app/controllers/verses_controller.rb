@@ -151,6 +151,9 @@ class VersesController < NavigationController
         @search_results[:verses] = [] if @search_results[:verses] == nil
         @search = VerseText.search do
           fulltext params[:query]
+          order_by(:book_id, :asc)
+          order_by(:chapter_id, :asc)
+          order_by(:verse_id, :asc)
         end
         @results = @search.results
         @search_results[:verses] = @results
