@@ -1,7 +1,11 @@
+- audio_url = chapter_audio_url(@book.id.to_s,@book.name,@chapter.name.to_s)
 :javascript
+	var audio_html = '<object type="application/x-shockwave-flash" data="http://flash-mp3-player.net/medias/player_mp3_maxi.swf" width="200" height="20"> <param name="movie" value="player_mp3_maxi.swf" /> <param name="FlashVars" value="mp3=#{audio_url}&&showvolume=1&&showslider=1"/> <param name = "bgcolor" value = "ffffff"/> </object>';
 	$(document).ready(function(){
 		$("#main_header").html("#{@chapter.link}");
-		bindLayoutButtons({"audio" : "chapter", "view" : "chapter"})
+		// bindLayoutButtons({"audio" : "chapter", "view" : "chapter"})
+		$("#audio").html(audio_html);
+		$("#audio").show();
 	});
 	
 
@@ -19,10 +23,3 @@
 					= verse.name 
 			%td{:style => "padding-left:15%;padding-right:5%;"}
 				= VerseText.find(verse.id).content
-#chapter_audio{style: "display:none"}
-	- audio_url = chapter_audio_url(@book.id.to_s,@book.name,@chapter.name.to_s)
-	%object{:data => "http://flash-mp3-player.net/medias/player_mp3_maxi.swf", :height => "20", :type => "application/x-shockwave-flash", :width => "200"}
-		%param{:name => "movie", :value => "http://flash-mp3-player.net/medias/player_mp3_maxi.swf"}/
-		%param{:name => "bgcolor", :value => "#ffffff"}/
-		%param{:name => "FlashVars", :value => "mp3="+audio_url+"&&showvolume=1&&showslider=1"}/
-	%input{type: "checkbox", title: "read to me"}

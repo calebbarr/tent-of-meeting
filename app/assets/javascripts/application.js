@@ -10,9 +10,9 @@
 
 bindLayoutButtons = function(buttonSettings){
 	if(buttonSettings != undefined){
-		if(buttonSettings["audio"] != undefined){
-			bind_audio_button(buttonSettings["audio"])
-		}
+		// if(buttonSettings["audio"] != undefined){
+		// 	bind_audio_button(buttonSettings["audio"])
+		// }
 		if(buttonSettings["view"] != undefined){
 			if(buttonSettings["view"] != undefined){
 				if(buttonSettings["view"] == "book"){
@@ -45,16 +45,16 @@ bindBookButtons = function(){
 	$("#up_arrow_nav").attr("onClick",'prev_book("book");');
 }
 
-bind_audio_button = function(mode){
-	if(mode === "verse"){
-		// also need to set image? through .html("img src")??
-		$("#sidebar_button_1").click("show_verse_audio();");
-	} else if(mode === "chapter"){
-		$("#sidebar_button_1").attr("onClick","show_chapter_audio();");
-	} else if(mode === "book"){
-		$("#sidebar_button_1").attr("onClick","show_book_audio();");
-	}
-}
+// bind_audio_button = function(mode){
+// 	if(mode === "verse"){
+// 		// also need to set image? through .html("img src")??
+// 		$("#sidebar_button_1").click("show_verse_audio();");
+// 	} else if(mode === "chapter"){
+// 		$("#sidebar_button_1").attr("onClick","show_chapter_audio();");
+// 	} else if(mode === "book"){
+// 		$("#sidebar_button_1").attr("onClick","show_book_audio();");
+// 	}
+// }
 
 prev_book = function(mode){
 	url = "/books/prev";
@@ -101,17 +101,17 @@ random_verse = function(){
 	window.location.href = "/verses/random";
 }
 
-show_verse_audio = function() {
-	$("#verse_audio").dialog({position:['center',330], height: 100});
-}
+// show_verse_audio = function() {
+// 	$("#verse_audio").dialog({position:['center',330], height: 100});
+// }
 
-show_chapter_audio = function() {
-	$("#chapter_audio").dialog({position:['center',330], height: 100});
-}
+// show_chapter_audio = function() {
+// 	$("#chapter_audio").dialog({position:['center',330], height: 100});
+// }
 
-show_book_audio = function() {
-	$("#book_audio").dialog({position:['center',330], height: 100});
-}
+// show_book_audio = function() {
+// 	$("#book_audio").dialog({position:['center',330], height: 100});
+// }
 
 
 show_related = function(id) {
@@ -124,8 +124,7 @@ show_related = function(id) {
 		} else {
 			for(var i = 0; i < related.length; i++){
 				var related = related[i]
-				// related_table +="<tr class='bible_verse_row', onclick='location.href='/"+book+"/"+chapter+"/"+verse+"'>";
-				related_table +="<tr class='bible_verse_row', onclick='location.href='"+related["path"]+"'>";
+				related_table +="<tr class='bible_verse_row', onclick=\"location.href='"+ related["path"] + "\'\">";
 				related_table +="<td>";
 				related_table += related["link"]
 				related_table +="</td>";
