@@ -3,7 +3,13 @@
 	Profile
 	
 %h1
-	= user = -> {return  current_user != nil ? current_user.email : "Profile"}.call
+	= user = -> {return  current_user != nil ? current_user.name : "Profile"}.call
+	- if signed_in?
+		- @user = current_user
+		= form_for @user do |f|
+			= f.label :image 
+			= f.file_field :image
+
 %p
 	Edit user information here.
 	= link_to "[done]", profile_path

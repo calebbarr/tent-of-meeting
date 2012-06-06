@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120522234110) do
+ActiveRecord::Schema.define(:version => 20120603010615) do
 
   create_table "books", :force => true do |t|
     t.string   "name"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20120522234110) do
     t.string   "nt_lg"
     t.string   "ot_lg"
     t.string   "name"
+    t.string   "image"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

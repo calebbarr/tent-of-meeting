@@ -6,7 +6,11 @@
 	Tent of Meeting -
 	Profile
 %h1
-	= user_email = -> {return  current_user != nil ? current_user.email : "Anonymous User"}.call
+	= user_name = -> {return  current_user != nil ? current_user.name : "Anonymous User"}.call
+	- if signed_in?
+		= image_tag current_user.image_url(:thumb) if current_user.image?
+		%br
+		= link_to "[edit profile]", profile_edit_path
 %p
 	Old Testament Language:
 	= @user[:ot_lg]

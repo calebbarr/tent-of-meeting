@@ -267,3 +267,13 @@ setCurrChapter = function(id){
 		type: "POST"
 		});
 }
+
+expandChapter = function(id) {
+	//re-show all the other chapter_id_previews
+	$(".chapter_preview").show();
+	//hide this one
+	$("#chapter_"+id+"_preview").hide();
+	//set chapter
+	setCurrChapter(id);
+}
+

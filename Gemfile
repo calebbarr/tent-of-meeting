@@ -16,6 +16,8 @@ gem 'typhoeus'
 gem 'sunspot_rails'
 gem 'sunspot_solr' 
 gem 'progress_bar'
+gem 'rmagick'
+gem 'carrierwave'
 
 # Gems used only for assets and not required
 # in production environments by default.

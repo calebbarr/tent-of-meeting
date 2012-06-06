@@ -7,6 +7,7 @@
 		// bindLayoutButtons({"view" : "book", "audio" : "book"});
 		$("#audio").html(audio_html);
 		$("#audio").show();
+		expandChapter(1);
 	});
 	
 %title
@@ -15,8 +16,11 @@
 	
 #book
 	- @chapters.each do |chapter|
-		%h3{:style => "padding-left:10%", onClick: "setCurrChapter('#{chapter.id}')"}
+		%h3{:style => "padding-left:10%", onClick: "expandChapter('#{chapter.name}')"}
 			= link_to chapter.name, "/"+@book.name.to_s+"/"+chapter.name.to_s
+			- vt = Verse.lookup(@book.id,chapter.name,1).verse_texts[0].content #really bad division of labor and also uses the VerseText hack
+			%p.chapter_preview{id: "chapter_"+chapter.name.to_s+"_preview"}
+				=  vt[0, [100,vt.length].max] + "...."
 		%div{:class => "accordion_row", onclick: "location.href='#{chapter.path}'"}
 			= chapter.text
 #book_audio{style: "display:none"}

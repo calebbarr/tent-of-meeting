@@ -4,14 +4,15 @@
 		var client = new Faye.Client('http://cbarr.dyndns.org:9292/faye');
 		// Subscribe to the public channel
 		var public_subscription = client.subscribe('/messages/public', function(data) {
-			$('<p></p>').html("<b>"+ data.username + "</b>" + ": " + data.msg + " (" + data.timestamp +")").prependTo('#chat_room');
+			$('<p class = "message" title=""' + data.timestamp +'"></p>').html("<img src=" + data.image +"></img>" + ": " + data.msg + " (" + data.timestamp +")").prependTo('#chat_room');
 		});
  
 		// Handle form submissions and post messages to faye
 		$('#new_message_form').submit(function(){
 			// Publish the message to the public channel
 			client.publish('/messages/public', {
-				username: "#{@username}" , 
+				username: "#{@user[:name]}" ,
+				image: "#{ @user[:image_url] }",
 				msg: $('#message').val(),
 				timestamp : "#{-> {Time.now.strftime("%I:%M:%S%p")}.call.to_s}"
 			});
@@ -25,9 +26,9 @@
 	});
 .chat_container
 	%p.alert
-		username:
+		%img{src: @user[:image_url] }
 		%b
-			= @username
+			= @user[:name]
 	%form#new_message_form
 		%input#message{:name => "message", :type => "text"}
 			%input{:type => "submit", :value => "Send"}
