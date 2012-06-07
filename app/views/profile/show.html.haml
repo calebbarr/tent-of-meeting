@@ -16,6 +16,7 @@
 - headline_verse = -> {return  current_user != nil ? current_user.headline.verse : Verse.random }.call
 %h4{onClick: "document.location='#{headline_verse.path}'"}
 	= headline = -> {return  current_user != nil ? current_user.headline.content : headline_verse.verse_texts[0].content }.call
+	%br
 	\-
 	= headline_verse.link
 
