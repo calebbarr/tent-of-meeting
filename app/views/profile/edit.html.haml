@@ -6,9 +6,9 @@
 	= user = -> {return  current_user != nil ? current_user.name : "Profile"}.call
 	- if signed_in?
 		- @user = current_user
-		= form_for @user do |f|
-			= f.label :image 
-			= f.file_field :image
+		= form_tag controller: :profile, action: :update, method: :post
+		= file_field_tag :image
+		= submit_tag
 
 %p
 	Edit user information here.

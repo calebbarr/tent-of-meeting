@@ -5,12 +5,20 @@
 %title
 	Tent of Meeting -
 	Profile
+	
+#edit{align: "right"}
+	/ = link_to "[edit profile]", profile_edit_path
+	= link_to "[edit profile]", edit_user_registration_path
 %h1
+	%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://cbarr.dyndns.org/icons/64x64/user.png"}.call }
 	= user_name = -> {return  current_user != nil ? current_user.name : "Anonymous User"}.call
-	- if signed_in?
-		= image_tag current_user.image_url(:thumb) if current_user.image?
-		%br
-		= link_to "[edit profile]", profile_edit_path
+
+- headline_verse = -> {return  current_user != nil ? current_user.headline.verse : Verse.random }.call
+%h4{onClick: "document.location='#{headline_verse.path}'"}
+	= headline = -> {return  current_user != nil ? current_user.headline.content : headline_verse.verse_texts[0].content }.call
+	\-
+	= headline_verse.link
+
 %p
 	Old Testament Language:
 	= @user[:ot_lg]

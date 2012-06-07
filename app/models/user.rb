@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :ot_lg, :nt_lg, :name, :image
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :ot_lg, :nt_lg, :name, :image, :headline_id
   has_many :favorite_verse_relationships, :foreign_key => "user_id", :class_name => "FavoriteVerseRelationship" 
   has_many :favorite_verses, :through => :favorite_verse_relationships, :source => :favorite, :class_name => "Verse"
   has_many :notes
@@ -22,5 +22,9 @@ class User < ActiveRecord::Base
   # def favorites
   #   return FavoriteVerse.where("user_id=?",id).all
   # end
+  
+  def headline
+    return VerseText.find(headline_id)
+  end
   
 end

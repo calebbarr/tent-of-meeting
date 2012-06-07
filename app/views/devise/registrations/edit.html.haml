@@ -1,0 +1,37 @@
+%h2
+	%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://cbarr.dyndns.org/icons/64x64/user.png"}.call }
+	Edit
+	= -> { resource_name.to_s.humanize == "User" ? "Profile" : resource_name.to_s.humanize }.call
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+	= devise_error_messages!
+	%div
+		= f.label :name, "Username"
+		%br/
+		= f.text_field :name
+	%div
+		= f.label :image
+		%br/
+		= f.file_field :image
+	%div
+		= f.label :email
+		%br/
+		= f.email_field :email
+	%div
+		= f.label :password
+		%i (leave blank if you don't want to change it)
+		%br/
+		= f.password_field :password, :autocomplete => "off"
+	%div
+		= f.label :password_confirmation
+		%br/
+		= f.password_field :password_confirmation
+	%div
+		= f.label :current_password
+		%i (we need your current password to confirm your changes)
+		%br/
+		= f.password_field :current_password
+	%div= f.submit "Update"
+%h3 Cancel my account
+%p
+	Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete}.
+= link_to "Back", :back

@@ -6,7 +6,7 @@
 		$("#book").accordion();
 		// bindLayoutButtons({"view" : "book", "audio" : "book"});
 		$("#audio").html(audio_html);
-		$("#audio").show();
+		//$("#audio").show();
 		expandChapter(1);
 	});
 	
@@ -23,13 +23,3 @@
 				=  vt[0, [100,vt.length].max] + "...."
 		%div{:class => "accordion_row", onclick: "location.href='#{chapter.path}'"}
 			= chapter.text
-#book_audio{style: "display:none"}
-	- audio_url = book_audio_url(@book.id.to_s,@book.name)
-	/ %object{:data => "http://flash-mp3-player.net/medias/player_mp3_maxi.swf", :height => "20", :type => "application/x-shockwave-flash", :width => "200"}
-	/ 	%param{:name => "movie", :value => "http://flash-mp3-player.net/medias/player_mp3_maxi.swf"}/
-	/ 	%param{:name => "bgcolor", :value => "#ffffff"}/
-	/ 	%param{:name => "FlashVars", :value => "mp3="+audio_url+"&&showvolume=1&&showslider=1"}/
-	%object{:data => "http://flash-mp3-player.net/medias/player_mp3_multi.swf", :height => "20", :type => "application/x-shockwave-flash", :width => "200"}
-		%param{:name => "movie", :value => "http://flash-mp3-player.net/medias/player_mp3_multi.swf"}/
-		%param{:name => "FlashVars", :value => "playlist="+audio_url+"&&showvolume=1&&showslider=1"}/
-	%input{type: "checkbox", title: "read to me"}

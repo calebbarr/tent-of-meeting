@@ -39,9 +39,18 @@ class ProfileController < ApplicationController
   end
   
   def update
+    puts params
     if signed_in? then
-       current_user.ot_lg = params[:ot_lg]
-       current_user.nt_lg = params[:nt_lg]
+      if params[:ot_lg] != nil
+        current_user.ot_lg = params[:ot_lg]
+      end
+      if params[:nt_lg] != nil
+       current_user.nt_lg = params[:nt_lg] 
+      end
+       if params[:image] != nil
+         uploader = CarrierWave::Uploader::Base::ImageUploader.new
+         uploader.store!(params[:image])
+      end
        current_user.save
     else
       session[:ot_lg] = params[:ot_lg]

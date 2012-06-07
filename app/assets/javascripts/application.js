@@ -101,6 +101,11 @@ random_verse = function(){
 	window.location.href = "/verses/random";
 }
 
+toggle_audio = function() {
+	$("#audio").toggle();
+	$("#audio_placeholder").toggle();
+}
+
 // show_verse_audio = function() {
 // 	$("#verse_audio").dialog({position:['center',330], height: 100});
 // }
@@ -277,3 +282,6 @@ expandChapter = function(id) {
 	setCurrChapter(id);
 }
 
+clearFlash = function() {
+	$("#flash").fadeIn("slow").delay(2500).fadeOut("slow");
+}

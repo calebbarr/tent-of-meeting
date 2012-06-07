@@ -1,9 +1,9 @@
 %title
 	Tent of Meeting -
-	Profile
+	Settings
 
 %h1
-	= user = -> {return  current_user != nil ? current_user.email : "Profile"}.call
+	Settings
 
 #language-settings
 	= form_tag controller: :profile, action: :update, method: :post
