@@ -15,28 +15,34 @@
  
 		// Handle form submissions and post messages to faye
 		$('#new_message_form').submit(function(){
+			// if the message is not blank
+			var message = $("#message").val();
+			if(message.match(/\s+/) || message.length < 1){
+				//perhaps do some appropriate GUI thing if message is blank
+			} else {
 			// Publish the message to the public channel
 			client.publish('/messages/public', {
 				username: "#{ signed_in? ? current_user.name : 'anonymous'}" ,
 				image: "#{ signed_in? ? current_user.image_url(:icon) : 'http://cbarr.dyndns.org/icons/16x16/user.png' }",
-				msg: $('#message').val(),
+				msg: message,
 				timestamp : "#{-> {Time.now.strftime("%I:%M:%S%p")}.call.to_s}"
 			});
 
 			// Clear the message box
 			$('#message').val('');
- 
+			}
 			// Don't actually submit the form, otherwise the page will refresh.
 			return false;
 		});
 	});
-.chat_control{style: "height:75px;"}
-	%p.alert
-		%img{src: -> {signed_in? ? current_user.image_url(:icon) : 'http://cbarr.dyndns.org/icons/16x16/user.png' }.call }
-		%b
-			= -> {signed_in? ? current_user.name : 'anonymous' }.call
+.chat_control{style: "height:95px;"}
+	%img{src: -> {signed_in? ? current_user.image_url(:large_icon) : 'http://cbarr.dyndns.org/icons/32x32/user.png' }.call, title: -> {signed_in?  ?  current_user.headline_text : Verse.random.verse_texts[0].content }.call, onclick: "document.location='#{profile_path}'"}
+	%b
+		= -> {signed_in? ? current_user.name : 'anonymous' }.call
+	#channel{style: "height:25px;"}
+		= @verse.link
 	%form#new_message_form
 		%input#message{:name => "message", :type => "text"}
 			%input{:type => "submit", :value => "Send", style: "display:none;"}
 
-#chat_room{style:"overflow:scroll;height:250px;"}
+#chat_room{style:"overflow:scroll;height:252px;"}

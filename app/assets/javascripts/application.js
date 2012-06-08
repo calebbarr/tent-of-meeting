@@ -8,6 +8,17 @@
 //= require jquery_ujs
 //= require_tree .
 
+// $(document).ready(function(){
+// 	$.ajax({
+// 		// url: "/nav",
+// 		// type: "GET"
+// 	}).done(function(data){
+// 		// $("#channel").html(data["link"]);
+// 		// $("#main_header").html(data["link"]);
+// 	}
+// 	);
+// });
+
 bindLayoutButtons = function(buttonSettings){
 	if(buttonSettings != undefined){
 		// if(buttonSettings["audio"] != undefined){
@@ -31,6 +42,7 @@ bindLayoutButtons = function(buttonSettings){
 
 bindChapterButtons = function(){
 	// alert($("#skip_forward_nav").attr("onClick"));
+	$.ajax( {url: "/currVerse?mode=chapter"})
 	$("#skip_forward_nav").attr("onClick",'next_chapter("chapter");');
 	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
 	$("#down_arrow_nav").attr("onClick",'next_book("chapter");');
@@ -211,18 +223,44 @@ quiz = function(url){
 }
 
 
+// toggle_original_language = function(nt){
+// 	var url = nt ? "/verses/toggle_original_languages.json?nt=true" : "/verses/toggle_original_languages.json?nt=false";
+// 	//@TODO
+// 	//for some reason .done() is is not working?  need to fix
+// 	$.ajax(url).error(function(){
+// 		// $("#stage").load();
+// 		//@TODO
+// 		//this needs to be redone with ajax on the div only, rather than refreshing the page
+// 		location.reload(true);
+// 		$("#stage").fadeOut('fast');
+// 	});
+// }
+
 toggle_original_language = function(nt){
 	var url = nt ? "/verses/toggle_original_languages.json?nt=true" : "/verses/toggle_original_languages.json?nt=false";
 	//@TODO
 	//for some reason .done() is is not working?  need to fix
+
 	$.ajax(url).error(function(){
 		// $("#stage").load();
 		//@TODO
 		//this needs to be redone with ajax on the div only, rather than refreshing the page
-		location.reload(true);
-		$("#stage").fadeOut('fast');
+		var currPath = $(location).attr('pathname').replace(/%20/g," ");
+		$.ajax({
+			url : "/nav",
+			method : "GET"
+		}).done(function(data){
+			if( currPath != data["path"]){
+				window.location.href = data["path"];
+				$("#stage").fadeOut('fast');
+			} else {
+				location.reload(true);
+				$("#stage").fadeOut('fast');
+			}
+		});		
 	});
 }
+
 
 browseStrongs = function() {
 	window.location.href = "/strongs";	
@@ -254,14 +292,41 @@ logout = function(url) {
 	});
 }
 
+highlightCurrVerse = function(name, id){
+	$(".highlighted_bible_verse_row").each(function(){
+		$(this).removeClass("highlighted_bible_verse_row")
+		$(this).addClass("bible_verse_row")
+		//for some reason this isn't working
+		// $(this).switchClass("highlighted_bible_verse_row", "bible_verse_row", 200)
+	});
+	$("#"+name).switchClass("bible_verse_row", "highlighted_bible_verse_row", 200)
+	setCurrVerse(id);
+}
+
+transitionFromCurrVerse = function(row_name){
+	//maybe do something graphical later
+	// $("#"+row_name).removeClass("highlighted_bible_verse_row")
+	// $("#"+row_name).addClass("bible_verse_row")
+	//$("#"+name).switchClass("highlighted_bible_verse_row", "bible_verse_row", 200)
+	// $("#"+row_name).removeClass("highlighted_bible_verse_row")
+}
+
 setCurrVerse = function(id){
 	var url = "/verses/current.json?id="+id;
 	$.ajax({
 		url: url,
 		type: "POST"
-		}).error(function(){
+		}).done(function(data){
 			//why do i keep having to do things on error instead of on done
 			$("#related_button").attr("onClick","show_related("+id+");")
+			// $.ajax({
+			// 	url: "/currVerse.json"
+			// }).done(function(data){
+			// 	$("#channel").html(data["link"]);
+			// }
+			// );
+			$("#channel").html(data["link"]);
+			$("#chat_room").fadeOut("slow").html("").show();
 		});
 }
 
@@ -270,14 +335,17 @@ setCurrChapter = function(id){
 	$.ajax({
 		url: url,
 		type: "POST"
+		}).done(function(data){
+			$("#channel").html(data["link"]);
+			$("#chat_room").fadeOut("slow").html("").show();
 		});
 }
 
-expandChapter = function(id) {
+expandChapter = function(name,id) {
 	//re-show all the other chapter_id_previews
 	$(".chapter_preview").show();
 	//hide this one
-	$("#chapter_"+id+"_preview").hide();
+	$("#chapter_"+name+"_preview").hide();
 	//set chapter
 	setCurrChapter(id);
 }

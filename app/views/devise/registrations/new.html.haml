@@ -1,3 +1,22 @@
+:javascript
+	$(document).ready(function(){
+		bindLayoutButtons(); //should have code to get the object, ... maybe defaults should just be here and this shouldn't be called
+		
+		$( ".navigation_button" ).button();
+		$( ".sidebar_button" ).button();
+		$( ".user_navigation_menu_item" ).button();
+		$( "#favorite_button" ).button();
+		$("#strongs_dropdown")
+						.button( {
+							text: false,
+							icons: {
+								primary: "ui-icon-triangle-1-s"
+							}
+						}).parent().buttonset();
+		clearFlash();
+		$("#stage").show("blind")
+	}) ;
+	
 %h2 Sign up
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:multipart => true} ) do |f|
 	= devise_error_messages!

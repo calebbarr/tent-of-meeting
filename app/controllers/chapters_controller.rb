@@ -1,4 +1,5 @@
 class ChaptersController < NavigationController
+  
   def show
     if params[:book] != nil then
       book_id = params[:book]
@@ -75,6 +76,7 @@ class ChaptersController < NavigationController
     
     @response = "ok so far!"
     if params[:id] != nil then
+      @response = {}
       id = params[:id]
       @chapter = Chapter.find(id)
       @book = @chapter.book
@@ -83,6 +85,7 @@ class ChaptersController < NavigationController
       session[:book] = @book.id
       @verse = Verse.lookup(@book.id,@chapter.name,1)
       session[:verse] = @verse.id
+      @response[:link] = @verse.link
     end
     respond_to do |format|
       format.json { render json: @response}

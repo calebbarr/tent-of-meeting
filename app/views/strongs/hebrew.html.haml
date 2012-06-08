@@ -5,7 +5,7 @@
 		- strong_id = w.strong_id
 		- form = w.form
 		- short_def = w.short_definition
-		%tr{align:"left", :class => "strongs_row"}
+		%tr{align:"left", :class => "strongs_row", onclick: "location.href='/hebrew/" + strong_id.to_s + "'"}
 			%td{style:"padding-left:5%;"}
 				=link_to strong_id.to_s, "/hebrew/"+strong_id.to_s
 			%td{style:"padding-left:10%;"}

@@ -1,64 +1,81 @@
 :javascript
 	$(document).ready(function(){
+		$( "#tabs" ).tabs({
+				collapsible: true
+			});
 		$("#favorite_verses").accordion();
+		$("#stage").show("blind")
 	});
 %title
 	Tent of Meeting -
 	Profile
 	
-#edit{align: "right"}
-	/ = link_to "[edit profile]", profile_edit_path
-	= link_to "[edit profile]", edit_user_registration_path
-%h1
-	%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://cbarr.dyndns.org/icons/64x64/user.png"}.call }
-	= user_name = -> {return  current_user != nil ? current_user.name : "Anonymous User"}.call
-
-- headline_verse = -> {return  current_user != nil ? current_user.headline.verse : Verse.random }.call
-%h4{onClick: "document.location='#{headline_verse.path}'"}
-	= headline = -> {return  current_user != nil ? current_user.headline.content : headline_verse.verse_texts[0].content }.call
+.profile_headline
+	#edit{align: "right", style: "padding-right:2%;"}
+		= link_to "[edit profile]", edit_user_registration_path
 	%br
-	\-
-	= headline_verse.link
+	%h1
+		%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://cbarr.dyndns.org/icons/64x64/user.png"}.call }
+		= user_name = -> {return  current_user != nil ? current_user.name : "Anonymous User"}.call
 
-%p
-	Old Testament Language:
-	= @user[:ot_lg]
-	%br
-	New Testament Language:
-	= @user[:nt_lg]
-	%br
-	= link_to "[edit]", settings_path
+	- headline_verse = -> {return  current_user != nil ? current_user.headline.verse : Verse.random }.call
+	%h4{onClick: "document.location='#{headline_verse.path}'"}
+		= headline = -> {return  current_user != nil ? current_user.headline_text : headline_verse.verse_texts[0].content }.call
+		%br
+		\-
+		= headline_verse.link
 
-%h2
-	%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
-	Favorite Verses	
-#favorite_verses
-	- if signed_in? then
-		- current_user.favorite_verses.each do |verse|
-			- chapter = verse.chapter
-			- book = chapter.book
-			%h3
-				= link_to book.name + " " + chapter.name.to_s + ":" + verse.name.to_s, "/" + book.name.to_s + "/" + chapter.name.to_s + "/" + verse.name.to_s
-			%div{onclick: "location.href='#{verse.path}'"}
-				/so many bad things here it's not even funny
-				= VerseText.find(verse.id).content
-				
-%h2
-	%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
-	Notes
-#notes
-	- if signed_in? then
-		%table
-			- current_user.notes.each do |note|
-				- verse = note.verse
-				- chapter = verse.chapter
-				- book = chapter.book
-				%tr
-					%td
-						= verse.link
-					%td
-						%b
-							= link_to note.name, :controller => :notes, :action => :show, :id => note.id, :verse_id => verse.id
-					%td
-						= note.content
-						
+%br
+#tabs
+	%ul
+		%li
+			%a{href: "#favorites_tab", title: "Favorite Verses"}
+				%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
+		%li
+			%a{href: "#notes_tab", title: "Notes"}
+				%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
+		%li
+			%a{href: "#settings_tab", title: "Settings"}
+				%img{src: "http://cbarr.dyndns.org/icons/32x32/folder.png"}
+	#favorites_tab
+		%h4
+			Favorite Verses
+		#favorite_verses
+			- if signed_in? then
+				- current_user.favorite_verses.each do |verse|
+					- chapter = verse.chapter
+					- book = chapter.book
+					%h3
+						= link_to book.name + " " + chapter.name.to_s + ":" + verse.name.to_s, "/" + book.name.to_s + "/" + chapter.name.to_s + "/" + verse.name.to_s
+					%div{onclick: "location.href='#{verse.path}'"}
+						/so many bad things here it's not even funny
+						= VerseText.find(verse.id).content
+	#notes_tab
+		#notes
+			%h4
+				Notes
+			- if signed_in? then
+				%table
+					- current_user.notes.each do |note|
+						- verse = note.verse
+						- chapter = verse.chapter
+						- book = chapter.book
+						%tr
+							%td
+								= verse.link
+							%td
+								%b
+									= link_to note.name, :controller => :notes, :action => :show, :id => note.id, :verse_id => verse.id
+							%td
+								= note.content
+	#settings_tab
+		%h4
+			Settings
+		%p
+			Old Testament Language:
+			= @user[:ot_lg]
+			%br
+			New Testament Language:
+			= @user[:nt_lg]
+			%br
+			= link_to "[edit]", settings_path

@@ -6,6 +6,7 @@
 		= javascript_include_tag "http://cbarr.dyndns.org:9292/faye.js"
 		= javascript_include_tag "http://cbarr.dyndns.org/colorbox/jquery.colorbox.js"
 		= javascript_include_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/js/jquery-ui-1.8.18.custom.min.js"
+		= javascript_include_tag "http://cbarr.dyndns.org/jquery-ui-1.8.18.custom/js/jquery.hoverIntent.js"
 		= csrf_meta_tag
 		%meta{:charset => "UTF-8"}
 			= stylesheet_link_tag "http://cbarr.dyndns.org/tent_of_meeting.css"
@@ -36,11 +37,11 @@
 	%body{background: "http://cbarr.dyndns.org/mountains.jpg"}
 		%br
 		#containercontainer{align: "center", style: "padding: 20px; background-color: rgba(153, 153, 153, 0.5); border-radius: 20px;width:78%;margin: 0 auto;"}
-			
 			.container
 				%header
 					%a{:href => "#"}
 					%h1{id: "main_header", align: "center"}
+						=@verse.link
 					%nav
 						
 						.user_navigation{align: "right", style:"padding-right:5px", :class => "ui-widget-header ui-corner-all"}
@@ -49,7 +50,8 @@
 									η/ע
 								%span{id: "strongs_dropdown", height:"100%", title: "browse strong's", onClick: "browseStrongs()"}
 							%span{title: "profile", class: "user_navigation_menu_item", onClick: "profile()"}
-								%img{src: -> { signed_in?  ? current_user.image_url(:icon) : "http://cbarr.dyndns.org/icons/16x16/user.png"}.call }
+								/ %img{src: -> { signed_in?  ? current_user.image_url(:icon) : "http://cbarr.dyndns.org/icons/16x16/user.png"}.call }
+								%img{src: "http://cbarr.dyndns.org/icons/16x16/user.png"}
 							%span{title: "settings", class: "user_navigation_menu_item", onClick: "settings()"}
 								%img{src: "http://cbarr.dyndns.org/icons/16x16/folder.png"}
 							/@TODO
@@ -98,14 +100,14 @@
 					/ 						%p 1
 					/ end .sidebar1
 				%article.content{align: "center" }
-					.stage{style:"height:325px; overflow:scroll;"}
+					#stage.stage{style:"height:325px; overflow:scroll;padding:2%;display:none;"}
 						#audio{style: "height:25px;display:none"}
 						#audio_placeholder{style: "height:25px;display:block;"}
 						= yield
 						#related{align:"center", style: "display:none"}
 						#verse_notes{align: "center"}
 				%aside
-					.chat{style: "height:325px; overflow:scroll"}
+					.chat{style: "height:355px;"}
 						/ = render_cell :chat , :show
 						= render "sidebar"
 				%footer{align: "center"}

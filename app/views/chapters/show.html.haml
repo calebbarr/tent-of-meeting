@@ -3,9 +3,15 @@
 	var audio_html = '<object type="application/x-shockwave-flash" data="http://flash-mp3-player.net/medias/player_mp3_maxi.swf" width="200" height="20"> <param name="movie" value="player_mp3_maxi.swf" /> <param name="FlashVars" value="mp3=#{audio_url}&&showvolume=1&&showslider=1"/> <param name = "bgcolor" value = "ffffff"/> </object>';
 	$(document).ready(function(){
 		$("#main_header").html("#{@chapter.link}");
-		// bindLayoutButtons({"audio" : "chapter", "view" : "chapter"})
+		bindLayoutButtons({"view" : "chapter"})
+		$(".bible_verse_row").each(function(){
+			var verse_id = $(this).data("verse_id");
+			var row_name = $(this).attr("id");
+			$(this).hoverIntent( function(){highlightCurrVerse(row_name,verse_id);}, function(){transitionFromCurrVerse(row_name); });
+		})		
 		$("#audio").html(audio_html);
 		//$("#audio").show();
+		$("#stage").show("slide");
 	});
 
 	
@@ -16,7 +22,9 @@
 	
 %table
 	- @verses.each do |verse|
-		%tr{:class => "bible_verse_row", onclick: "location.href='#{verse.path}'", onMouseOver: "setCurrVerse('#{verse.id}')"}
+		%tr{id: "verse_#{verse.name}", :class => "bible_verse_row", onclick: "location.href='#{verse.path}'"}
+			:javascript
+				$("#verse_#{verse.name}").data("verse_id",#{verse.id})
 			%td{:style => "padding-left:10%"}
 				%a{name: verse.name, href: "/"+@book.name.to_s+"/"+@chapter.name.to_s+"/"+verse.name.to_s}
 					= verse.name 

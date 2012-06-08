@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   validates_uniqueness_of :name, :email
+  validates_length_of :name, :within => 3..10, :too_long => "pick a shorter name", :too_short => "pick a longer name"
   mount_uploader :image, ImageUploader
 
   # Setup accessible (or protected) attributes for your model
@@ -25,6 +26,10 @@ class User < ActiveRecord::Base
   
   def headline
     return VerseText.find(headline_id)
+  end
+  
+  def headline_text
+    return VerseText.find(headline_id).content
   end
   
 end

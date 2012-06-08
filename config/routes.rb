@@ -1,6 +1,9 @@
 TentOfMeeting::Application.routes.draw do  
   match "/strongs", controller: :strongs, action: :index
   
+  get "/nav", controller: :navigation, action: :get_nav
+  post "/nav", controller: :navigation, action: :set_nav
+  
   get "messages/index"
 
   get "messages/create"

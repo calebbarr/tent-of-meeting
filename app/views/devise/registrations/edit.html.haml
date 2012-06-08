@@ -1,4 +1,8 @@
-#back{align: "right"}
+:javascript
+	$(document).ready(function(){
+		$("#stage").show("blind")
+	});
+#back{align: "right", style: "padding-right:2%;"}
 	= link_to "Back", :back
 %h2
 	%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://cbarr.dyndns.org/icons/64x64/user.png"}.call }

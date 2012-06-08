@@ -280,12 +280,21 @@ class VersesController < NavigationController
   
   def current
     @response = "ok so far!"
-    if params[:id] != nil then
+    if params[:id] != nil then      
+      @response = {}
       id = params[:id]
+      verse = Verse.find(id)
+      @response[:link] = verse.link
+      @response[:id] = verse.id
       session[:navigation][:verse] = id
-    end
-    respond_to do |format|
-      format.json { render json: @response}
+      session[:navigation][:chapter] = verse.chapter.id
+      session[:navigation][:book] = verse.chapter.book.id
+      # puts "STORED IN SESSION"
+      # puts session[:navigation]
+      respond_to do |format|
+        format.json { render json: @response }
+      end
+      
     end
   end
   

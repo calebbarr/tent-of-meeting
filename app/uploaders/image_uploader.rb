@@ -19,6 +19,10 @@ class ImageUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [16, 16]
   end
   
+  version :large_icon do
+    process :resize_to_fill => [32, 32]
+  end
+  
   version :thumb do
     process :resize_to_fill => [64, 64]
   end
