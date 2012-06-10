@@ -1,5 +1,6 @@
-class ProfileController < ApplicationController
+class ProfileController < NavigationController
   def show
+    set_mode(:profile)
     @user = {}
     if signed_in? then
       @user[:ot_lg] = LANGUAGE_ABBREVIATIONS[current_user.ot_lg]

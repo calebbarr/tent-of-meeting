@@ -15,7 +15,7 @@
 					%p= message
 	%body{ background: "http://cbarr.dyndns.org:3000/mountains.jpg" }
 		%br
-		#containercontainer{align: "center", style: "padding: 20px; background-color: rgba(153, 153, 153, 0.5); border-radius: 20px;width:78%;margin: 0 auto;"}
+		#containercontainer{align: "center"}
 			.container
 				%header
 					= render "header"
@@ -23,7 +23,8 @@
 						= render "user_nav"
 				= render "sidebar"
 				%article.content{align: "center" }
-					= render "stage"
+					.backdrop
+						= render "stage"
 				%aside
 					.chat{style: "height:355px;"}
 						= render "chat_sidebar"

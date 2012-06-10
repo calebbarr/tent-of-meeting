@@ -1,5 +1,7 @@
 class VersesController < NavigationController
+  
   def show
+    set_mode(:verse)
     if params[:book] != nil then
       book_id = params[:book]
       if params[:chapter] != nil then
@@ -95,6 +97,7 @@ class VersesController < NavigationController
   end
   
   def random
+    set_direction(:random)
     @verse = Verse.random
     @verse_text = VerseText.find(@verse.id)
     @chapter = @verse.chapter
@@ -104,7 +107,7 @@ class VersesController < NavigationController
   end
   
   def next
-    puts "INTO NEXT, MAKING SURE THIS TIME"
+    set_direction(:next)
     navigation = get_navigation_from_session
     if navigation[:verse] != nil then
       verse_id = navigation[:verse]
@@ -119,6 +122,7 @@ class VersesController < NavigationController
   end
   
   def prev
+    set_direction(:prev)
     navigation = get_navigation_from_session
     if navigation[:verse] != nil then
       verse_id = navigation[:verse]
@@ -138,7 +142,6 @@ class VersesController < NavigationController
   
   #@TODO debug... @result... @search_results
   def search
-    puts "GOT INTO THE CONTROLLER"
     @search_results = {:empty => true}
     if params[:query] != nil
       @query = params[:query]
@@ -146,7 +149,6 @@ class VersesController < NavigationController
       if is_number?(@query)
     #     # @TODO FINISH
         @search_results[:original_words] = []
-        puts "asd"
       elsif is_englishish?(@query)
         @results = []
         @search_results[:verses] = [] if @search_results[:verses] == nil
@@ -290,8 +292,6 @@ class VersesController < NavigationController
       session[:navigation][:verse] = id
       session[:navigation][:chapter] = verse.chapter.id
       session[:navigation][:book] = verse.chapter.book.id
-      # puts "STORED IN SESSION"
-      # puts session[:navigation]
       respond_to do |format|
         format.json { render json: @response }
       end

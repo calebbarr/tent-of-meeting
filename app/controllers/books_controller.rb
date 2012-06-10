@@ -1,5 +1,6 @@
 class BooksController < NavigationController
   def show
+    set_mode(:book)
     @book = Book.find(params[:id])
     @chapters = @book.chapters
     @chapter = @chapters[0]
@@ -11,6 +12,7 @@ class BooksController < NavigationController
   end
   
   def next
+    set_direction(:next)
     navigation = get_navigation_from_session
     if navigation[:book] != nil then
       book_id = navigation[:book]
@@ -36,6 +38,7 @@ class BooksController < NavigationController
   end
   
   def prev
+    set_direction(:prev)
     navigation = get_navigation_from_session
     if navigation[:book] != nil then
       book_id = navigation[:book]

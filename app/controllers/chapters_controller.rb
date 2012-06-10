@@ -1,6 +1,7 @@
 class ChaptersController < NavigationController
   
   def show
+    set_mode(:chapter)
     if params[:book] != nil then
       book_id = params[:book]
       if params[:chapter] != nil then
@@ -20,6 +21,7 @@ class ChaptersController < NavigationController
   end
   
   def next
+    set_direction(:next)
     navigation = get_navigation_from_session
     if navigation[:chapter] != nil then
       chapter_id = navigation[:chapter]
@@ -42,6 +44,7 @@ class ChaptersController < NavigationController
   end
   
   def prev
+    set_direction(:prev)
     navigation = get_navigation_from_session
     if navigation[:chapter] != nil then
       chapter_id = navigation[:chapter]

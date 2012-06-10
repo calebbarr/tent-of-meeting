@@ -51,7 +51,7 @@
 			// Publish the message to the public channel
 			client.publish('/messages/public', {
 				username: "#{ signed_in? ? current_user.name : 'anonymous'}" ,
-				image: "#{ signed_in? ? current_user.image_url(:icon) : 'http://localhost:3000/icons/16x16/user.png' }",
+				image: "#{ signed_in? ? current_user.image_url(:icon) : '/icons/16x16/user.png' }",
 				msg: hyphenated_message,
 				timestamp : "#{-> {Time.now.strftime("%I:%M:%S%p")}.call.to_s}"
 			});

@@ -61,6 +61,10 @@ a:hover, a:active, a:focus { /* this group of selectors will give a keyboard nav
 /*	background-color: rgba(153, 153, 153, 0.5);*/
 	
 }
+
+.containercontainer {
+	padding: 20px; background-color: rgba(153, 153, 153, 0.5); border-radius: 20px;width:78%;margin: 0 auto;
+}
 /* ~~ The header is not given a width. It will extend the full width of your layout. ~~ */
 header {
 	background: #b4ddb4; /* Old browsers */
@@ -147,8 +151,8 @@ nav ul li {
 
 }
 
-.accordion_row {
-	max-height:100px
+.bible_chapter_row {
+	height:100px
 }
 
 .note_row {
@@ -205,6 +209,7 @@ nav ul a:hover, nav ul a:active, nav ul a:focus { /* this changes the background
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	
+	/*color*/
 	background: #feffff; /* Old browsers */
 	background: -moz-linear-gradient(top,  #feffff 0%, #ddf1f9 35%, #a0d8ef 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#feffff), color-stop(35%,#ddf1f9), color-stop(100%,#a0d8ef)); /* Chrome,Safari4+ */
@@ -281,6 +286,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', end
 header, section, footer, aside, nav, article, figure {
 	display: block;
 }
-.stage {
+.backdrop {
+	position:absolute;
+	height:325px;
+	width:590px;
 	
+	/*color*/
+	background: rgb(248,248,248); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(248,248,248,1) 0%, rgba(248,248,248,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(248,248,248,1)), color-stop(100%,rgba(248,248,248,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(248,248,248,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(248,248,248,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(248,248,248,1) 100%); /* IE10+ */
+	background: linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(248,248,248,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#f8f8f8',GradientType=0 ); /* IE6-9 */
+	
+
+}
+.stage {
+/*	position:absolute;*/
+	height:325px;
+	width:575px;
+	background: white;
+	overflow:scroll;
+	padding:2%;
+	display:none;
 }
