@@ -311,6 +311,14 @@ header, section, footer, aside, nav, article, figure {
 
 }
 
+.flash {
+	width: 300px;
+	position:absolute;
+	z-index:1000;
+	top: 2em;
+	right: 2em;
+}
+
 .backdrop {
 	position:absolute;
 	height:325px;

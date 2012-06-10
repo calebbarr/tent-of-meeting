@@ -222,7 +222,7 @@ random_verse = function(){
 }
 
 toggle_audio = function() {
-	// creative use of ajax to make a ker-snap visual effect
+	// creative use of ajax to make a "ker-snap" visual effect
 	if( $("#audio").is(":visible") ){
 		$.ajax().done(function(){
 			$("#audio").slideUp("fast");

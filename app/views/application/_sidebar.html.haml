@@ -21,7 +21,6 @@
 		.sidebar_item
 			%button{id: "related_button", :class => "sidebar_button", onClick: "show_related(#{@verse.id})", title: "related"}
 				= image_tag "icons/32x32/placemark.png"
-
 		/ 	%li
 		/ 		/the 1 here is just a stand-in for session-based code if not authenticated
 		/ 		= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id) }.call

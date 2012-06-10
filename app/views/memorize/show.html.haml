@@ -1,7 +1,9 @@
+- audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
 :javascript
+	var audio_html = '<p/><object type="application/x-shockwave-flash" data="http://flash-mp3-player.net/medias/player_mp3_maxi.swf" width="200" height="20"> <param name="movie" value="player_mp3_maxi.swf" /> <param name="FlashVars" value="mp3=#{audio_url}&&showvolume=1&&showslider=1"/> <param name = "bgcolor" value = "ffffff"/> </object><p/>';
 	$(document).ready(function(){
-		$("#main_header").html("#{@verse.link}");
-		$("#controls2").append($("#type_verse"))
+		//$("#main_header").html("#{@verse.link}") // already happening by default in layout
+		$("#audio").html(audio_html);
 	});
 %title
 	Tent of Meeting - Memorize
