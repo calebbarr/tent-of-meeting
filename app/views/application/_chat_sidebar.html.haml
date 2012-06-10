@@ -12,7 +12,7 @@
 		var public_subscription = client.subscribe('/messages/public', function(data) {
 			message_counter += 1; //stand in for message id
 			$('<p style="display:none" id ="message_' + message_counter + '" class = "message" title="' + data.timestamp +'"></p>').html("<img style = 'float:left;' src=" + data.image +" title = '" + data.username+ "'></img>" + data.msg ).prependTo('#chat_room');
-			$("#message_" + message_counter).show("blind");
+			$("#message_" + message_counter).slideDown();
 			$('<p/>').prependTo('#chat_room');
 		});
  
