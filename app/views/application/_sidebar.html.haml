@@ -1,48 +1,36 @@
-:javascript
+.sidebar1{style: "height:325px;"}
+	#sidebar_spacer{style: "height:10px;"}
+	%nav{align: "right"}
+		.sidebar_item
+			%button{id: "sidebar_button_1", :class => "sidebar_button", href:"#", title: "audio", onClick: "toggle_audio()"}
+				= image_tag "icons2/32x32/sound.png"
+		.sidebar_item
+			%button{id: "sidebar_button_2", :class => "sidebar_button", onClick: "memorize('"+"/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize"+"')", title: "memorize"}
+				= image_tag "icons/32x32/magnifier.png"
+		.sidebar_item
+			%button{id: "sidebar_button_3", :class => "sidebar_button", onClick: "quiz('"+ -> { return @verse.has_quiz? ? "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz" : "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new"}.call + "')" , title: -> {return  @verse.has_quiz? ?  "take quiz" : "create quiz"}.call }
+				= image_tag "icons/32x32/check_mark.png"
+		.sidebar_item
+			%input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call)}.call, onClick: "toggleFavorite("+@verse.id.to_s+", "+ ->{signed_in? ? current_user.id.to_s : "1" }.call+","+ @verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call).to_s+")"}
+			%label{for: "favorite_button", title: " "+ -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call) ? "unfavorite" : "favorite"}.call+ " "}
+				= image_tag "icons/32x32/heart.png"
+		%button{id: "sidebar_button_4", :class => "sidebar_button", title: -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? "notes" : "new note"}.call, onClick: "verseNotes("+@verse.id.to_s+", "+ -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? 'false)' : 'true)'}.call }
+			/the 1 here is just a stand-in for session-based code if not authenticated
+			/= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("_", controller: :notes, action: :new, :verse_id => @verse.id) }.call
+			= image_tag "icons/32x32/pencil.png"
+		.sidebar_item
+			%button{id: "related_button", :class => "sidebar_button", onClick: "show_related(#{@verse.id})", title: "related"}
+				= image_tag "icons/32x32/placemark.png"
 
-	var message_counter = 0; //stand in for message id
-
-	$(function() {
-		// Create a new client to connect to Faye
-		var client = new Faye.Client('http://cbarr.dyndns.org:9292/faye');
-		// Subscribe to the public channel
-		var public_subscription = client.subscribe('/messages/public', function(data) {
-			message_counter += 1; //stand in for message id
-			$('<p style="display:none" id ="message_' + message_counter + '" class = "message" title="' + data.timestamp +'"></p>').html("<img style = 'float:left;' src=" + data.image +" title = '" + data.username+ "'></img>" + data.msg ).prependTo('#chat_room');
-			$("#message_" + message_counter).fadeIn("slow");
-			$('<p/>').prependTo('#chat_room');
-		});
- 
-		// Handle form submissions and post messages to faye
-		$('#new_message_form').submit(function(){
-			// if the message is not blank
-			var message = $("#message").val();
-			if(message.match(/\s+/) || message.length < 1){
-				//perhaps do some appropriate GUI thing if message is blank
-			} else {
-			// Publish the message to the public channel
-			client.publish('/messages/public', {
-				username: "#{ signed_in? ? current_user.name : 'anonymous'}" ,
-				image: "#{ signed_in? ? current_user.image_url(:icon) : 'http://cbarr.dyndns.org/icons/16x16/user.png' }",
-				msg: message,
-				timestamp : "#{-> {Time.now.strftime("%I:%M:%S%p")}.call.to_s}"
-			});
-
-			// Clear the message box
-			$('#message').val('');
-			}
-			// Don't actually submit the form, otherwise the page will refresh.
-			return false;
-		});
-	});
-.chat_control{style: "height:95px;"}
-	%img{src: -> {signed_in? ? current_user.image_url(:large_icon) : 'http://cbarr.dyndns.org/icons/32x32/user.png' }.call, title: -> {signed_in?  ?  current_user.headline_text : Verse.random.verse_texts[0].content }.call, onclick: "document.location='#{profile_path}'"}
-	%b
-		= -> {signed_in? ? current_user.name : 'anonymous' }.call
-	#channel{style: "height:25px;"}
-		= @verse.link
-	%form#new_message_form
-		%input#message{:name => "message", :type => "text"}
-			%input{:type => "submit", :value => "Send", style: "display:none;"}
-
-#chat_room{style:"overflow:scroll;height:252px;"}
+		/ 	%li
+		/ 		/the 1 here is just a stand-in for session-based code if not authenticated
+		/ 		= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id) }.call
+	/ %aside{style: "height:107px; overflow:scroll;"}
+	/ 						%p
+	/ 							my friends notes
+	/ 						%p etc
+	/ 						%p updates i'd be interested in about this page
+	/ 						%p testing the scroll
+	/ 						%p testing
+	/ 						%p 1
+	/ end .sidebar1

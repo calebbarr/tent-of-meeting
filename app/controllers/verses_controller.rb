@@ -104,6 +104,7 @@ class VersesController < NavigationController
   end
   
   def next
+    puts "INTO NEXT, MAKING SURE THIS TIME"
     navigation = get_navigation_from_session
     if navigation[:verse] != nil then
       verse_id = navigation[:verse]

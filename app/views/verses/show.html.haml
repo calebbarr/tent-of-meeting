@@ -1,31 +1,25 @@
-/the following used to be in the js
-/$("#verse_audio").dialog({position:['center',330], height: 100});
-/ dont do this automatically unless the user has it specified in their settings
 - audio_url = audio_url(@verse.name.to_s,@chapter.name.to_s,@book.name,@book.id.to_s)
 :javascript
 	var audio_html = '<object type="application/x-shockwave-flash" data="http://flash-mp3-player.net/medias/player_mp3_maxi.swf" width="200" height="20"> <param name="movie" value="player_mp3_maxi.swf" /> <param name="FlashVars" value="mp3=#{audio_url}&&showvolume=1&&showslider=1"/> <param name = "bgcolor" value = "ffffff"/> </object>';
 	$(document).ready(function(){
-		$("#main_header").html("#{@verse.link}")
+		//$("#main_header").html("#{@verse.link}") // already happening by default in layout
 		$("#audio").html(audio_html);
-		$("#stage").show("slide");
-	});	
-
+	});
 %title
 	Tent of Meeting -
 	= @book.name.to_s
 	= @chapter.name.to_s + "\:"+@verse.name.to_s
-%div{style: "display:block"}
-	#verse_text{style: "padding-left:10%; padding-right:10%; vertical-align:middle;", align: "center"}
-		%font{size: "4"}
-			-if @translations == nil then
-				- puts "in the view, translations is nil"
-				=@verse_text
-			-else
-				- puts "in the view, translations is NOT nil"
-				-tokens = @verse_text.split()
-				-tokens.each_with_index do |token,index|
-					%span{title: @translations[index]}
-						- if index < @strong_ids.length then
-							=link_to token, -> { @verse.id >= FIRST_NT_VERSE ? "/greek/" :  "/hebrew/"}.call + @strong_ids[index]
-						- else 
-							= token
+#verse_text{style: "padding-left:10%; padding-right:10%; vertical-align:middle;", align: "center"}
+	%font{size: "4"}
+		-if @translations == nil then
+			- puts "in the view, translations is nil"
+			=@verse_text
+		-else
+			- puts "in the view, translations is NOT nil"
+			-tokens = @verse_text.split()
+			-tokens.each_with_index do |token,index|
+				%span{title: @translations[index]}
+					- if index < @strong_ids.length then
+						=link_to token, -> { @verse.id >= FIRST_NT_VERSE ? "/greek/" :  "/hebrew/"}.call + @strong_ids[index]
+					- else 
+						= token

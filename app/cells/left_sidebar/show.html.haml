@@ -1,30 +1,30 @@
 .sidebar_item
 	%button{:class => "sidebar_button", href:"#", title: "audio", onClick: "show_verse_audio()"}
-		%img{src: "http://cbarr.dyndns.org/icons2/32x32/sound.png"}
+		%img{src: "http://localhost:3000/icons2/32x32/sound.png"}
 .sidebar_item
 	%button{id: "sidebar_button_2", :class => "sidebar_button", href:"/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize", title: "memorize"}
-		%img{src: "http://cbarr.dyndns.org/icons/32x32/magnifier.png"}
+		%img{src: "http://localhost:3000/icons/32x32/magnifier.png"}
 / .sidebar_button
 / 	%button{::class => "sidebar_button", onClick: ""-> { return @verse.has_quiz? ? "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz" : "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new"}.call, title: -> {return  @verse.has_quiz? ?  "take quiz" : "create quiz"}.call}
-/ 		%img{src: "http://cbarr.dyndns.org/icons/32x32/check_mark.png"}
+/ 		%img{src: "http://localhost:3000/icons/32x32/check_mark.png"}
 .sidebar_item
 	%input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?}.call}
 	%label{for: "favorite_button"}
-		%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
+		%img{src: "http://localhost:3000/icons/32x32/heart.png"}
 /@TODO 		
 /gotta fix these two, they're weird because need to turn the link_to helper stuff into the href tag
 / %button{:class => "sidebar_button"}
 / 	{title: "favorite / unfavorite"}
 / 		= -> {return @verse.is_favorite?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :verses, action: :remove_favorite_verse,  id: @verse.id) : link_to("_", controller: :verses, action: :add_favorite_verse,  id: @verse.id) }.call
-/ 		%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
+/ 		%img{src: "http://localhost:3000/icons/32x32/heart.png"}
 / %button{:class => "sidebar_button"}
 / 	{title: "notes / new note"}
 / 		/the 1 here is just a stand-in for session-based code if not authenticated
 / 		= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("_", controller: :notes, action: :new, :verse_id => @verse.id) }.call
-/ 	%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
+/ 	%img{src: "http://localhost:3000/icons/32x32/pencil.png"}
 .sidebar_item
 	%button{:class => "sidebar_button", onClick: "show_related(#{@verse.id})", title: "related"}
-		%img{src:"http://cbarr.dyndns.org/icons/32x32/placemark.png"}
+		%img{src:"http://localhost:3000/icons/32x32/placemark.png"}
 / %ul
 / 	%li
 / 		= link_to "related", "/verses/related?verse="+@verse.id.to_s

@@ -8,16 +8,21 @@
 //= require jquery_ujs
 //= require_tree .
 
-// $(document).ready(function(){
-// 	$.ajax({
-// 		// url: "/nav",
-// 		// type: "GET"
-// 	}).done(function(data){
-// 		// $("#channel").html(data["link"]);
-// 		// $("#main_header").html(data["link"]);
-// 	}
-// 	);
-// });
+$(document).ready(function(){
+	bindLayoutButtons(); //should have code to get the object, ... maybe defaults should just be here and this shouldn't be called
+	$( ".navigation_button" ).button();
+	$( ".sidebar_button" ).button();
+	$( ".user_navigation_menu_item" ).button();
+	$( "#favorite_button" ).button();
+	$("#strongs_dropdown")
+					.button( {
+						text: false,
+						icons: {
+							primary: "ui-icon-triangle-1-s"
+						}
+					}).parent().buttonset();
+	clearFlash();
+});
 
 bindLayoutButtons = function(buttonSettings){
 	if(buttonSettings != undefined){
@@ -42,7 +47,7 @@ bindLayoutButtons = function(buttonSettings){
 
 bindChapterButtons = function(){
 	// alert($("#skip_forward_nav").attr("onClick"));
-	$.ajax( {url: "/currVerse?mode=chapter"})
+	// $.ajax( {url: "/nav?mode=chapter", method: "POST" } )
 	$("#skip_forward_nav").attr("onClick",'next_chapter("chapter");');
 	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
 	$("#down_arrow_nav").attr("onClick",'next_book("chapter");');
@@ -133,7 +138,7 @@ toggle_audio = function() {
 
 show_related = function(id) {
 	url = "/verses/related.json?verse="+id
-	$("#related").html("<img src='http://cbarr.dyndns.org/loader2.gif'></img>");
+	$("#related").html("<img src='http://localhost:3000/loader2.gif'></img>");
 	$.ajax(url).done(function(related){
 		var related_table = "<table>";
 		if(related.length == 0){
@@ -192,7 +197,7 @@ verseNotes = function(verse_id, new_note){
 				div_content += note["content"];
 				div_content += "</td>";
 				div_content += "<td style:'float:top'>";
-				div_content += "<img id='delete"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://cbarr.dyndns.org/close_x.gif'/>"
+				div_content += "<img id='delete"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://localhost:3000/close_x.gif'/>"
 				div_content += "</td>";
 				// div_content += "<td>";
 				// div_content += note["created_at"];
@@ -211,7 +216,7 @@ verseNotes = function(verse_id, new_note){
 			div_content +="</table>";
 			$("#verse_notes").html(div_content);
 		});
-		return "<img src='http://cbarr.dyndns.org/loader2.gif'></img>";
+		return "<img src='http://localhost:3000/loader2.gif'></img>";
 	};
 	
 	$("#verse_notes").html(new_note ? "<h3> new note: </h3> <form accept-charset='UTF-8' action='/notes' class='new_note' id='new_note' method='post'><div style='margin:0;padding:0;display:inline'><input name='utf8' type='hidden' value='&#x2713;' /></div> <label for='note_name'>Name</label> <br> <input id='note_name' name='note[name]' size='30' type='text' /> <br> <label for='note_content'>Content</label> <br> <textarea cols='40' id='note_content' name='note[content]' rows='20'></textarea> <br> <input id='note_verse_id' name='note[verse_id]' type='hidden' value='1' /> <!-- the 1 here is just a stand-in for session-based code if not authenticated --> <input id='note_user_id' name='note[user_id]' type='hidden' value='1' /> <input name='commit' type='submit' value='Create Note' /> <br> </form>	</div>" : showNotes());
@@ -317,14 +322,7 @@ setCurrVerse = function(id){
 		url: url,
 		type: "POST"
 		}).done(function(data){
-			//why do i keep having to do things on error instead of on done
 			$("#related_button").attr("onClick","show_related("+id+");")
-			// $.ajax({
-			// 	url: "/currVerse.json"
-			// }).done(function(data){
-			// 	$("#channel").html(data["link"]);
-			// }
-			// );
 			$("#channel").html(data["link"]);
 			$("#chat_room").fadeOut("slow").html("").show();
 		});

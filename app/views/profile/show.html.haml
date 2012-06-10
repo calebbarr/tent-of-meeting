@@ -15,7 +15,7 @@
 		= link_to "[edit profile]", edit_user_registration_path
 	%br
 	%h1
-		%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://cbarr.dyndns.org/icons/64x64/user.png"}.call }
+		%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://localhost:3000/icons/64x64/user.png"}.call }
 		= user_name = -> {return  current_user != nil ? current_user.name : "Anonymous User"}.call
 
 	- headline_verse = -> {return  current_user != nil ? current_user.headline.verse : Verse.random }.call
@@ -30,13 +30,13 @@
 	%ul
 		%li
 			%a{href: "#favorites_tab", title: "Favorite Verses"}
-				%img{src: "http://cbarr.dyndns.org/icons/32x32/heart.png"}
+				%img{src: "http://localhost:3000/icons/32x32/heart.png"}
 		%li
 			%a{href: "#notes_tab", title: "Notes"}
-				%img{src: "http://cbarr.dyndns.org/icons/32x32/pencil.png"}
+				%img{src: "http://localhost:3000/icons/32x32/pencil.png"}
 		%li
 			%a{href: "#settings_tab", title: "Settings"}
-				%img{src: "http://cbarr.dyndns.org/icons/32x32/folder.png"}
+				%img{src: "http://localhost:3000/icons/32x32/folder.png"}
 	#favorites_tab
 		%h4
 			Favorite Verses

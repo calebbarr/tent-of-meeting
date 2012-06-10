@@ -1,0 +1,18 @@
+.user_navigation{align: "right", style:"padding-right:5px", :class => "ui-widget-header ui-corner-all"}
+	%span{id: "strongs_parent"}
+		%span{id: "strongs_button", class: "user_navigation_menu_item", onClick: toggle_original_languages_script, title: "toggle original language"}
+			η/ע
+		%span{id: "strongs_dropdown", height:"100%", title: "browse strong's", onClick: "browseStrongs()"}
+	%span{title: "profile", class: "user_navigation_menu_item", onClick: "profile()"}
+		/ image_tag -> { signed_in?  ? current_user.image_url(:icon) : "icons/16x16/user.png"}.call }
+		= image_tag "icons/16x16/user.png"
+	%span{title: "settings", class: "user_navigation_menu_item", onClick: "settings()"}
+		= image_tag "icons/16x16/folder.png"
+	/@TODO
+	/fix because it uses the link_to REST stuff
+	%span{class: "user_navigation_menu_item", title: -> {user_signed_in? ? "logout" : "login" }.call, onClick: -> { user_signed_in? ?  "logout('" + destroy_user_session_path + "')" : "login('" + new_user_session_path + "')" }.call }
+		= image_tag "icons/16x16/house.png"
+	%span{class: "user_navigation_menu_item"}
+		= form_tag verse_search_url, :controller => :verses, :action => :search do
+			= search_field_tag(:query, value="", :id => 'search_box')
+			= submit_tag nil, :hidden => true
