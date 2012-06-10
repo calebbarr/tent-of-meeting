@@ -142,6 +142,7 @@ class VersesController < NavigationController
   
   #@TODO debug... @result... @search_results
   def search
+    set_mode(:search)
     @search_results = {:empty => true}
     if params[:query] != nil
       @query = params[:query]

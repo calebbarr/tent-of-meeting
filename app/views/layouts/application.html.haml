@@ -5,7 +5,7 @@
 		= javascript_include_tag 'application'
 		= csrf_meta_tag
 		%meta{:charset => "UTF-8"}
-			= stylesheet_link_tag 'application'
+			= stylesheet_link_tag 'stylesheet'
 			= stylesheet_link_tag 'jqueryui'
 	#flash_container{height:"10px"} 
 		/ should allow flash not to move web app down when appearing
@@ -13,7 +13,7 @@
 			- flash.each do |type, message|
 				%div{:class => "message #{type}"}
 					%p= message
-	%body{ background: "http://cbarr.dyndns.org:3000/mountains.jpg" }
+	%body{ background: "http://cbarr.dyndns.org/mountains.jpg" }
 		%br
 		#containercontainer{align: "center"}
 			.container

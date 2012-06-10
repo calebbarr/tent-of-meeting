@@ -89,6 +89,9 @@ setStage = function(mode) {
 				setProfileStage();
 				$("#stage").show("blind", 500);
 				break;
+			case "search":
+				$("#stage").show("scale", 500);
+				break;
 			default:
 				$("#stage").fadeIn("fast");
 				break;
@@ -140,9 +143,6 @@ clearNavDirection = function() {
 
 bindLayoutButtons = function(buttonSettings){
 	if(buttonSettings != undefined){
-		// if(buttonSettings["audio"] != undefined){
-		// 	bind_audio_button(buttonSettings["audio"])
-		// }
 		if(buttonSettings["view"] != undefined){
 			if(buttonSettings["view"] != undefined){
 				if(buttonSettings["view"] == "book"){
@@ -175,17 +175,6 @@ bindBookButtons = function(){
 	$("#down_arrow_nav").attr("onClick",'next_book("book");');
 	$("#up_arrow_nav").attr("onClick",'prev_book("book");');
 }
-
-// bind_audio_button = function(mode){
-// 	if(mode === "verse"){
-// 		// also need to set image? through .html("img src")??
-// 		$("#sidebar_button_1").click("show_verse_audio();");
-// 	} else if(mode === "chapter"){
-// 		$("#sidebar_button_1").attr("onClick","show_chapter_audio();");
-// 	} else if(mode === "book"){
-// 		$("#sidebar_button_1").attr("onClick","show_book_audio();");
-// 	}
-// }
 
 prev_book = function(mode){
 	url = "/books/prev";
@@ -233,9 +222,20 @@ random_verse = function(){
 }
 
 toggle_audio = function() {
-	$("#audio").toggle();
-	$("#audio_placeholder").toggle();
+	// creative use of ajax to make a ker-snap visual effect
+	if( $("#audio").is(":visible") ){
+		$.ajax().done(function(){
+			$("#audio").slideUp("fast");
+		});
+		$("#audio_placeholder").slideDown("slow");
+	} else {
+		$.ajax().done(function(){
+			$("#audio_placeholder").slideUp("fast");
+		});
+		$("#audio").slideDown("slow");
+	}
 }
+
 
 // show_verse_audio = function() {
 // 	$("#verse_audio").dialog({position:['center',330], height: 100});
