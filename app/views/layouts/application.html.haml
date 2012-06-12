@@ -8,6 +8,7 @@
 			= stylesheet_link_tag 'stylesheet'
 			= stylesheet_link_tag 'jqueryui'
 	#flash.flash{:align => "right"}
+		/@TODO restyle flash, translucent, etc
 		- flash.each do |type, message|
 			%div{:class => "message #{type}"}
 				%p= message

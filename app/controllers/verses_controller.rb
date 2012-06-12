@@ -255,6 +255,23 @@ class VersesController < NavigationController
     end
   end
   
+  def toggle_favorite
+    if params[:id] != nil then
+      verse_id = params[:id]
+      if signed_in?
+        if current_user.favorite?(verse_id) then
+          Verse.unfavorite(current_user.id,verse_id)
+          redirect_to @verse.path, notice: 'Favorite verse removed.'
+        else
+          FavoriteVerseRelationship.create(user_id: current_user.id, favorite_id: verse_id)
+          redirect_to @verse.path, notice: 'Favorite verse added.'
+        end
+      else
+        redirect_to @verse.path, notice: 'You need to be logged in to have favorite verses.'
+      end
+    end
+  end
+  
   def toggle_original_languages
     @response = "ok so far!"
     if params[:nt] != nil then

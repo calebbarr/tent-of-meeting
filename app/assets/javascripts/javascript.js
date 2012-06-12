@@ -12,6 +12,12 @@ $(document).ready(function(){
 						}
 					}).parent().buttonset();
 	clearFlash();
+	var strongs_hover_config = {
+		over: function(){rollDownStrongs();},
+		timeout: 2500,
+		out: function(){rollUpStrongs();}
+	}
+	$("#strongs_dropdown").hoverIntent(strongs_hover_config);
 	setStage();
 });
 
@@ -159,9 +165,25 @@ bindLayoutButtons = function(buttonSettings){
 	}
 }
 
+rollDownStrongs = function() {
+	$.ajax().done(function(){
+		$(".browse_strongs").slideDown("fast");
+	});
+	$("#stage").fadeOut("fast")
+}
+
+rollUpStrongs = function() {
+	$.ajax().done(function(){
+		$("#stage").fadeIn("fast")
+	});
+	$(".browse_strongs").slideUp("fast");
+}
+
+displayStrongs = function() {
+	$(".browse_strongs").show();
+}
+
 bindChapterButtons = function(){
-	// alert($("#skip_forward_nav").attr("onClick"));
-	// $.ajax( {url: "/nav?mode=chapter", method: "POST" } )
 	$("#skip_forward_nav").attr("onClick",'next_chapter("chapter");');
 	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
 	$("#down_arrow_nav").attr("onClick",'next_book("chapter");');
@@ -169,7 +191,6 @@ bindChapterButtons = function(){
 }
 
 bindBookButtons = function(){
-	// alert($("#skip_forward_nav").attr("onClick"));
 	$("#skip_forward_nav").attr("onClick",'next_chapter("chapter");');
 	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
 	$("#down_arrow_nav").attr("onClick",'next_book("book");');
@@ -277,16 +298,30 @@ show_related = function(id) {
 	$("#related").dialog({position:['center',260],height: 200, width: 550});
 }
 
-toggleFavorite = function(verse_id, user_id, is_favorite){
-	url = is_favorite? "/verses/favorites/delete/"+verse_id : "/verses/favorites/add/"+verse_id;
+// toggleFavorite = function(verse_id, user_id, is_favorite){
+// 	url = is_favorite? "/verses/favorites/delete/"+verse_id : "/verses/favorites/add/"+verse_id;
+// 	$.ajax(url);
+// 	// the title of the favorite link might not have changed
+// }
+
+toggleFavorite = function(id) {
+	url = "/verses/favorite?id="+id
 	$.ajax(url);
-	// the title of the favorite link might not have changed
 }
 
 memorize = function(url) {
 	window.location.href = url;
 }
 
+
+showNotes = function(id) {
+	var url = "/notes/show?verse_id="+id
+	window.location.href = url;
+}
+
+/*
+   NOTE:  NOT CURRENTLY BEING USED
+*/
 verseNotes = function(verse_id, new_note){
 	
 	deleteNote = function(id){
@@ -421,10 +456,17 @@ setCurrVerse = function(id){
 		url: url,
 		type: "POST"
 		}).done(function(data){
-			$("#related_button").attr("onClick","show_related("+id+");")
+			updateButtons(id);
 			$("#channel").html(data["link"]);
 			$("#chat_room").fadeOut("slow").html("").show();
 		});
+		
+		updateButtons = function(id) {
+			$("#related_button").attr("onClick","show_related("+id+");")
+			$("#notes_button").attr("onClick","showNotes("+id+");")
+			$("#favorite_button").attr("onClick","toggleFavorite("+id+");")
+		}
+		
 }
 
 setCurrChapter = function(id){

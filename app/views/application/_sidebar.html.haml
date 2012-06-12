@@ -11,13 +11,15 @@
 			%button{id: "sidebar_button_3", :class => "sidebar_button", onClick: "quiz('"+ -> { return @verse.has_quiz? ? "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz" : "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new"}.call + "')" , title: -> {return  @verse.has_quiz? ?  "take quiz" : "create quiz"}.call }
 				= image_tag "icons/32x32/check_mark.png"
 		.sidebar_item
-			%input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call)}.call, onClick: "toggleFavorite("+@verse.id.to_s+", "+ ->{signed_in? ? current_user.id.to_s : "1" }.call+","+ @verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call).to_s+")"}
+			/ %input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call)}.call, onClick: "toggleFavorite("+@verse.id.to_s+", "+ ->{signed_in? ? current_user.id.to_s : "1" }.call+","+ @verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call).to_s+")"}
+			%input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call)}.call, onClick: "toggleFavorite('" + @verse.id.to_s + "')" }
 			%label{for: "favorite_button", title: " "+ -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call) ? "unfavorite" : "favorite"}.call+ " "}
 				= image_tag "icons/32x32/heart.png"
-		%button{id: "sidebar_button_4", :class => "sidebar_button", title: -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? "notes" : "new note"}.call, onClick: "verseNotes("+@verse.id.to_s+", "+ -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? 'false)' : 'true)'}.call }
-			/the 1 here is just a stand-in for session-based code if not authenticated
-			/= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("_", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("_", controller: :notes, action: :new, :verse_id => @verse.id) }.call
-			= image_tag "icons/32x32/pencil.png"
+		/ %button{id: "sidebar_button_4", :class => "sidebar_button", title: -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? "notes" : "new note"}.call, onClick: "verseNotes("+@verse.id.to_s+", "+ -> {return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ? 'false)' : 'true)'}.call }
+		.sidebar_item
+			/- note_url= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  url_for(controller: :notes, action: :show, :verse_id => @verse.id) : url_for(controller: :notes, action: :new, :verse_id => @verse.id) }.call
+			%button{id: "notes_button", :class => "sidebar_button", onclick: "showNotes('#{@verse.id}')"}
+				= image_tag "icons/32x32/pencil.png"
 		.sidebar_item
 			%button{id: "related_button", :class => "sidebar_button", onClick: "show_related(#{@verse.id})", title: "related"}
 				= image_tag "icons/32x32/placemark.png"

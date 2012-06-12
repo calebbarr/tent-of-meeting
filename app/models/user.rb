@@ -20,9 +20,13 @@ class User < ActiveRecord::Base
   #   return FavoriteVerse.where("user_id=?",user_id).all
   # end
   # 
-  # def favorites
-  #   return FavoriteVerse.where("user_id=?",id).all
-  # end
+  def favorites
+    return FavoriteVerse.where("user_id=?",id).all
+  end
+  
+  def favorite?(verse_id)
+    return FavoriteVerseRelationship.where("user_id=?",id).where("favorite_id=?",verse_id).length > 0
+  end
   
   def headline
     return VerseText.find(headline_id)

@@ -36,6 +36,7 @@ TentOfMeeting::Application.routes.draw do
   get "verses/favorites/add/:id", controller: :verses, action: :add_favorite_verse, as: "add_favorite_verse"
   get "verses/favorites", controller: :verses, action: :favorite_verses, as: "get_favorite_verses"
   get "verses/favorites/delete/:id", controller: :verses, action: :remove_favorite_verse, as: "remove_favorite_verse"
+  get "/verses/favorite", controller: :verses, action: :toggle_favorite, as: "toggle_favorite"
   #these need to use the correct HTTP verbs when possible
   
   post "verses/search", :controller => :verses, :action => :search, as: "verse_search"
@@ -68,6 +69,7 @@ TentOfMeeting::Application.routes.draw do
   get "memorize/next", :controller => :memorize, :action => :next
   
   resources :messages
+  resources :notes
   get "/notes/new"
   get "/notes/create"
   get "/notes/index"
