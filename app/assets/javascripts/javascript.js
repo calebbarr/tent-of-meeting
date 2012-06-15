@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    bindLayoutButtons(); //should have code to get the object, ... maybe defaults should just be here and this shouldn't be called
 	$( ".navigation_button" ).button();
 	$( ".sidebar_button" ).button();
 	$( ".user_navigation_menu_item" ).button();
@@ -40,7 +39,7 @@ setStage = function(mode) {
 		//should be last thing done:
 		switch(mode){
 			case "verse":
-				// bindLayoutButtons({view: "verse"}) //already done by default
+				bindLayoutButtons({view: "verse"}) //already done by default
 				switch(direction) {
 					case "next":
 						$("#stage").show("slide", { direction: "left" }, 500);
@@ -88,17 +87,28 @@ setStage = function(mode) {
 				}
 				break;
 			case "profile":
+				bindLayoutButtons();
+				// different functionality can be added here later
+				// idea is to get the user back to the Bible as quickly as possible
 				setProfileStage();
 				$("#stage").show("blind", 500);
 				break;
 			case "strongs":
+				bindLayoutButtons();
 				setProfileStage();
+				// @TODO
+				// this needs to be changed to setStrongsStage (to be written)
 				$("#stage").show("blind", 500);
 				break;
 			case "search":
+				//@TODO it'd be cool to do bindKeys("search") and be able to flip through
+				// search results
+				// layoutButtons, maybe, too
+				bindLayoutButtons();
 				$("#stage").show("scale", 500);
 				break;
 			default:
+				bindLayoutButtons();
 				$("#stage").fadeIn("fast");
 				break;
 		}
@@ -153,15 +163,25 @@ bindLayoutButtons = function(buttonSettings){
 			if(buttonSettings["view"] != undefined){
 				if(buttonSettings["view"] == "book"){
 					bindBookButtons();
+					bindKeys("bible", "book");
+					//because the keys that vary are the same as chapter mode
 				}
 				else if(buttonSettings["view"] == "chapter"){
 					bindChapterButtons();
+					bindKeys("bible", "chapter");
 				}
 				else if(buttonSettings["view"] == "verse"){
 					bindVerseButtons();
+					bindKeys("bible");
 				}
+			} else {
+				bindKeys();
 			}
-		}	
+		}else {
+			bindKeys();
+		}
+	} else{
+		bindKeys();
 	}
 }
 
@@ -195,6 +215,40 @@ bindBookButtons = function(){
 	$("#skip_backward_nav").attr("onClick",'prev_chapter("chapter");');
 	$("#down_arrow_nav").attr("onClick",'next_book("book");');
 	$("#up_arrow_nav").attr("onClick",'prev_book("book");');
+}
+
+/*
+	binds keypresses to navigation functionality
+	@TODO refactor this code, it's verbose
+*/
+bindKeys = function(mode,mode2){
+	switch(mode){
+		case "strongs":
+		// case "bible":
+		default:
+			$(document).keydown(function(e){
+				//left arrow
+			    if (e.keyCode == 37) {
+			    mode2 != null ? prev_verse(mode2) : prev_verse();
+			    return false;
+			    }
+				//right arrow
+			    if (e.keyCode == 39) { 
+			       mode2 != null ? next_verse(mode2) : next_verse();
+			       return false;
+			    }
+				//up arrow
+			    if (e.keyCode == 38) {
+					mode2 != null ? prev_book(mode2)  : prev_book();
+			       return false;
+			    }
+				//down arrow
+			    if (e.keyCode == 40) {
+			       mode2 != null ? next_book(mode2) : next_book();
+			       return false;
+			    }
+			});
+	}
 }
 
 prev_book = function(mode){

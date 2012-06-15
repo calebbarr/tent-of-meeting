@@ -33,6 +33,9 @@ class ChaptersController < NavigationController
         if params[:mode] == "chapter"
           chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
           redirect_to chapter_url
+        elsif params[:mode] == "book"
+          chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
+          redirect_to chapter_url
         end
       else
         #else
@@ -55,6 +58,9 @@ class ChaptersController < NavigationController
         if params[:mode] == "chapter"
           chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
           redirect_to chapter_url
+        elsif params[:mode] == "book"
+          chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
+          redirect_to chapter_url          
         end
       else
         @verse_text = VerseText.find(@verse.id)
