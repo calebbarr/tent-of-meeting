@@ -42,10 +42,10 @@ setStage = function(mode) {
 				bindLayoutButtons({view: "verse"}) //already done by default
 				switch(direction) {
 					case "next":
-						$("#stage").show("slide", { direction: "left" }, 500);
+						$("#stage").show("slide", { direction: "right" }, 500);
 						break;
 					case "prev":
-						$("#stage").show("slide", { direction: "right" }, 500);
+						$("#stage").show("slide", { direction: "left" }, 500);
 						break;
 					case "random":
 						$("#stage").show("explode");
@@ -60,10 +60,10 @@ setStage = function(mode) {
 				setChapterStage();
 				switch(direction) {
 					case "next":
-						$("#stage").show("slide", { direction: "left" }, 500);
+						$("#stage").show("slide", { direction: "right" }, 500);
 						break;
 					case "prev":
-						$("#stage").show("slide", { direction: "right" }, 500);
+						$("#stage").show("slide", { direction: "left" }, 500);
 						break;
 					default:
 						$("#stage").show("blind");
@@ -247,12 +247,26 @@ bindKeys = function(mode,mode2){
 			    }
 				//up arrow
 			    if (e.keyCode == 38) {
-					mode2 != null ? prev_book(mode2)  : prev_book();
+					if(e.shiftKey){
+						// @TODO
+						//should go up to book mode if in chapter mode
+						// so make new method called goUp() or something
+						// that calls curr_chapter or curr_book
+						curr_chapter();
+					 }else {
+						mode2 != null ? prev_book(mode2)  : prev_book();
+				}
 			       return false;
 			    }
 				//down arrow
 			    if (e.keyCode == 40) {
-			       mode2 != null ? next_book(mode2) : next_book();
+					//@TODO handle shift key
+					//make method called drillDown() or something
+					if(e.shiftKey){
+						curr_verse();
+					} else {
+						mode2 != null ? next_book(mode2) : next_book();	
+					}
 			       return false;
 			    }
 			});
@@ -285,6 +299,12 @@ prev_chapter = function(mode){
 	window.location.href = url;
 }
 
+curr_chapter = function(){
+	url = "/chapters/current";
+	window.location.href = url;
+}
+
+
 next_chapter = function(mode){
 	var url = "/chapters/next"
 	if(mode != null){
@@ -297,6 +317,12 @@ next_chapter = function(mode){
 prev_verse = function(){
 	window.location.href = "/verses/prev";
 }
+
+curr_verse = function(){
+	url = "/verses/current";
+	window.location.href = url;
+}
+
 next_verse = function(){
 	window.location.href = "/verses/next";
 }

@@ -71,34 +71,13 @@ class ChaptersController < NavigationController
   end
   
   def current
-    #im going to alter the navigation stuff in here
-    #really, the assumptions of the stuff that handles the navigation stuff
-    #should be correct, but this will force correct behavior
-    
-    #the reason this is different for 'verses', and actually plays well with the assumptions
-    # made by the navigation handling code
-    # is that the before_filter in the navigation code derives everything from the verse
-    # so the verse just has to be set, and thats it
-    # here, i am deriving everything from the chapter and hard coding it
-    # some of the logic in the navigation code was intended to guard against errors 
-    #need to review it and see whats still pertinent
-    
-    @response = "ok so far!"
-    if params[:id] != nil then
-      @response = {}
-      id = params[:id]
-      @chapter = Chapter.find(id)
-      @book = @chapter.book
-      session[:chapter] = id
-      @response = session[:navigation]
-      session[:book] = @book.id
-      @verse = Verse.lookup(@book.id,@chapter.name,1)
-      session[:verse] = @verse.id
-      @response[:link] = @verse.link
+    if @chapter == nil
+      @chapter = Chapter.find(session[:navigation][:chapter])
     end
-    respond_to do |format|
-      format.json { render json: @response}
-    end    
+    if @verse == nil
+      @verse = Chapter.find(session[:navigation][:verse])
+    end
+    redirect_to @chapter.path+"#"+@verse.name.to_s
   end
 
 end

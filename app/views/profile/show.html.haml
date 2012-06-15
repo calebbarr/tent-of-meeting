@@ -7,7 +7,10 @@
 		= link_to "[edit profile]", edit_user_registration_path
 	%br
 	%h1
-		%img{src: -> { signed_in?  ? current_user.image_url(:thumb) : "http://localhost:3000/icons/64x64/user.png"}.call }
+		- if signed_in?
+			%img{src: current_user.image_url(:thumb)}
+		-else
+			= image_tag "icons/64x64/user.png"
 		= user_name = -> {return  current_user != nil ? current_user.name : "Anonymous User"}.call
 
 	- headline_verse = -> {return  current_user != nil ? current_user.headline.verse : Verse.random }.call
@@ -22,13 +25,13 @@
 	%ul
 		%li
 			%a{href: "#favorites_tab", title: "Favorite Verses"}
-				%img{src: "http://localhost:3000/icons/32x32/heart.png"}
+				= image_tag "icons/32x32/heart.png"
 		%li
 			%a{href: "#notes_tab", title: "Notes"}
-				%img{src: "http://localhost:3000/icons/32x32/pencil.png"}
+				= image_tag "icons/32x32/pencil.png"
 		%li
 			%a{href: "#settings_tab", title: "Settings"}
-				%img{src: "http://localhost:3000/icons/32x32/folder.png"}
+				= image_tag "icons/32x32/folder.png"
 	#favorites_tab
 		%h4
 			Favorite Verses
@@ -40,7 +43,7 @@
 					%h3
 						= link_to book.name + " " + chapter.name.to_s + ":" + verse.name.to_s, "/" + book.name.to_s + "/" + chapter.name.to_s + "/" + verse.name.to_s
 					%div{onclick: "location.href='#{verse.path}'"}
-						/so many bad things here it's not even funny
+						/@TODO fix VT hack, calling model from View
 						= VerseText.find(verse.id).content
 	#notes_tab
 		#notes

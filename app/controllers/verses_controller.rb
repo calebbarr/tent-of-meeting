@@ -121,6 +121,13 @@ class VersesController < NavigationController
     end
   end
   
+  def current
+    if @verse == nil
+      @verse = Verse.find(sessoion[:navigation][:verse])
+    end
+    redirect_to @verse.path
+  end
+  
   def prev
     set_direction(:prev)
     navigation = get_navigation_from_session
@@ -299,7 +306,7 @@ class VersesController < NavigationController
     end 
   end
   
-  def current
+  def set_current
     @response = "ok so far!"
     if params[:id] != nil then      
       @response = {}
