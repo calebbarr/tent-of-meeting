@@ -171,7 +171,7 @@ bindLayoutButtons = function(buttonSettings){
 					bindKeys("bible", "chapter");
 				}
 				else if(buttonSettings["view"] == "verse"){
-					bindVerseButtons();
+					//bindVerseButtons();
 					bindKeys("bible");
 				}
 			} else {
@@ -229,12 +229,20 @@ bindKeys = function(mode,mode2){
 			$(document).keydown(function(e){
 				//left arrow
 			    if (e.keyCode == 37) {
-			    mode2 != null ? prev_verse(mode2) : prev_verse();
+					if(e.shiftKey){
+						mode2 != null ? prev_chapter(mode2) : prev_chapter();
+					} else {
+						mode2 != null ? prev_verse(mode2) : prev_verse();
+					}
 			    return false;
 			    }
 				//right arrow
-			    if (e.keyCode == 39) { 
-			       mode2 != null ? next_verse(mode2) : next_verse();
+			    if (e.keyCode == 39) {
+					if(e.shiftKey){
+						mode2 != null ? next_chapter(mode2) : next_chapter();
+					 }else {
+						mode2 != null ? next_verse(mode2) : next_verse();
+					}
 			       return false;
 			    }
 				//up arrow
