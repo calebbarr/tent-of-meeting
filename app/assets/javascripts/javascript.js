@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	checkBrowser();
 	$( ".navigation_button" ).button();
 	$( ".sidebar_button" ).button();
 	$( ".user_navigation_menu_item" ).button();
@@ -19,6 +20,12 @@ $(document).ready(function(){
 	$("#strongs_dropdown").hoverIntent(strongs_hover_config);
 	setStage();
 });
+
+checkBrowser = function(){
+	if(!($.browser.mozilla)){
+			window.location.href = "/firefox_warning.html";
+	}
+}
 
 setStage = function(mode) {
 	$.ajax({
