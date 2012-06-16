@@ -24,9 +24,7 @@ setStage = function(mode) {
 	$.ajax({
 		url: "/nav",
 		type: "GET"
-	}).done(function(nav_hash){
-		// alert(JSON.stringify(nav_hash));
-		
+	}).done(function(nav_hash){		
 		//if any other information needs to be
 		// posted to nav, this can be refactored
 		clearNavDirection();
@@ -39,7 +37,7 @@ setStage = function(mode) {
 		//should be last thing done:
 		switch(mode){
 			case "verse":
-				bindLayoutButtons({view: "verse"}) //already done by default
+				bindLayoutButtons({view: "verse"})
 				switch(direction) {
 					case "next":
 						$("#stage").show("slide", { direction: "right" }, 500);
@@ -86,6 +84,11 @@ setStage = function(mode) {
 						break;
 				}
 				break;
+			case "bible":
+				bindLayoutButtons({view: "bible"})
+				setBibleStage();
+				$("#stage").show("scale", 500);
+				break
 			case "profile":
 				bindLayoutButtons();
 				// different functionality can be added here later
@@ -133,11 +136,19 @@ setChapterStage = function() {
 }
 
 /*
+	specific functionality for viewing Bible
+*/
+setBibleStage = function() {
+	//none yet
+}
+
+
+/*
 	specific functionality for viewing books
 */
 setBookStage = function() {
 	$("#book").accordion();
-	expandChapter(1);
+	expandChapter("1",null);
 }
 
 /*
@@ -161,10 +172,13 @@ bindLayoutButtons = function(buttonSettings){
 	if(buttonSettings != undefined){
 		if(buttonSettings["view"] != undefined){
 			if(buttonSettings["view"] != undefined){
+				if(buttonSettings["view"] == "bible"){
+					bindBookButtons();
+					bindKeys("bible", "bible");
+				}
 				if(buttonSettings["view"] == "book"){
 					bindBookButtons();
 					bindKeys("bible", "book");
-					//because the keys that vary are the same as chapter mode
 				}
 				else if(buttonSettings["view"] == "chapter"){
 					bindChapterButtons();
@@ -172,7 +186,7 @@ bindLayoutButtons = function(buttonSettings){
 				}
 				else if(buttonSettings["view"] == "verse"){
 					//bindVerseButtons();
-					bindKeys("bible");
+					bindKeys("bible", "verse");
 				}
 			} else {
 				bindKeys();
@@ -219,13 +233,22 @@ bindBookButtons = function(){
 
 /*
 	binds keypresses to navigation functionality
-	@TODO refactor this code, it's verbose
+	mode = e.g. bible, strongs, search
+	mode2 = e.g. book, chapter, verse
 */
-bindKeys = function(mode,mode2){
+bindKeys = function(mode,mode2){	
+	bibleMode = false;
+	// this hack is only to get random_verse()
+	// to be called while the person is doing shift + up
+	// while viewing the whole Bible
+	if(mode2 == "bible"){
+		bibleMode = true;
+		mode2="book";
+		//changes mode2 back to "book", because all that behavior should be the same
+	}
 	switch(mode){
 		case "strongs":
-		// case "bible":
-		default:
+		default: // case "bible":
 			$(document).keydown(function(e){
 				//left arrow
 			    if (e.keyCode == 37) {
@@ -248,11 +271,24 @@ bindKeys = function(mode,mode2){
 				//up arrow
 			    if (e.keyCode == 38) {
 					if(e.shiftKey){
-						// @TODO
-						//should go up to book mode if in chapter mode
-						// so make new method called goUp() or something
-						// that calls curr_chapter or curr_book
-						curr_chapter();
+						if(mode2 != null){
+							switch(mode2){
+								case "verse":
+									curr_chapter();
+									break;
+								case "chapter":
+									curr_book();
+									break;
+								case "book":
+									bibleMode ? random_verse() : bible();
+									break;
+								default: //case "verse":
+									curr_chapter();
+									break;
+							}
+						} else {
+							curr_chapter();
+						}
 					 }else {
 						mode2 != null ? prev_book(mode2)  : prev_book();
 				}
@@ -260,17 +296,37 @@ bindKeys = function(mode,mode2){
 			    }
 				//down arrow
 			    if (e.keyCode == 40) {
-					//@TODO handle shift key
-					//make method called drillDown() or something
 					if(e.shiftKey){
-						curr_verse();
-					} else {
+						if(mode2 != null){
+							switch(mode2){
+								case "verse":
+									random_verse();
+									break;
+								case "chapter":
+									curr_verse();
+									break;
+								case "book":
+									curr_chapter();
+									break;
+								default: 
+									random_verse();
+									break;
+							}
+						} else {
+							curr_verse();
+						}
+					 }else {
 						mode2 != null ? next_book(mode2) : next_book();	
-					}
+				}
 			       return false;
 			    }
 			});
 	}
+}
+
+bible = function(){
+	url = "/Bible"
+	window.location.href = url;
 }
 
 prev_book = function(mode){
@@ -278,15 +334,19 @@ prev_book = function(mode){
 	if(mode != null){
 		url+="?mode="+mode
 	}
-	// alert($("#skip_forward_nav").attr("onClick"));
 	window.location.href = url;
 }
+
+curr_book = function(){
+	url = "/books/current";
+	window.location.href = url;
+}
+
 next_book = function(mode){
 	url = "/books/next";
 	if(mode != null){
 		url+="?mode="+mode
 	}
-	// alert($("#skip_forward_nav").attr("onClick"));
 	window.location.href = url;
 }
 
@@ -295,7 +355,6 @@ prev_chapter = function(mode){
 	if(mode != null){
 		url+="?mode="+mode
 	}
-	// alert($("#skip_forward_nav").attr("onClick"));
 	window.location.href = url;
 }
 
@@ -310,7 +369,6 @@ next_chapter = function(mode){
 	if(mode != null){
 		url+="?mode="+mode
 	}
-	// alert($("#skip_forward_nav").attr("onClick"));
 	window.location.href = url;
 }
 
@@ -326,6 +384,7 @@ curr_verse = function(){
 next_verse = function(){
 	window.location.href = "/verses/next";
 }
+
 random_verse = function(){
 	window.location.href = "/verses/random";
 }
@@ -557,24 +616,30 @@ setCurrVerse = function(id){
 		
 }
 
-setCurrChapter = function(id){
-	var url = "/chapters/current.json?id="+id;
-	$.ajax({
-		url: url,
-		type: "POST"
-		}).done(function(data){
-			$("#channel").html(data["link"]);
-			$("#chat_room").fadeOut("slow").html("").show();
-		});
+setCurrChapter = function(chapter_id){
+	if(chapter_id != null){
+		var url = "/chapters/current.json?id="+id;
+		$.ajax({
+			url: url,
+			type: "POST"
+			}).done(function(data){
+				$("#channel").html(data["link"]);
+				$("#chat_room").fadeOut("slow").html("").show();
+			});
+	} else {
+		//not sure if there is any functionality needed
+		// somehow, probably through the navigation controller filters
+		// chapter is getting set correctly
+	}
 }
 
-expandChapter = function(name,id) {
+expandChapter = function(chapter_name,chapter_id) {
 	//re-show all the other chapter_id_previews
 	$(".chapter_preview").show();
 	//hide this one
-	$("#chapter_"+name+"_preview").hide();
+	$("#chapter_"+chapter_name+"_preview").hide();
 	//set chapter
-	setCurrChapter(id);
+	setCurrChapter(chapter_id);
 }
 
 clearFlash = function() {

@@ -71,13 +71,32 @@ class ChaptersController < NavigationController
   end
   
   def current
-    if @chapter == nil
-      @chapter = Chapter.find(session[:navigation][:chapter])
-    end
     if @verse == nil
-      @verse = Chapter.find(session[:navigation][:verse])
+      @verse = Verse.find(session[:navigation][:verse])
     end
+    @chapter = @verse.chapter
+    @book = @chapter.book
     redirect_to @chapter.path+"#"+@verse.name.to_s
+  end
+  
+  def set_current
+    @response = "ok so far!"
+    if params[:id] != nil then      
+      @response = {}
+      id = params[:id]
+      @chapter = Chapter.find(id)
+      @book = @chapter.book
+      @verse = Verse.lookup(@book.id,@chapter.name,1)
+      @response[:link] = @verse.link #response is for verse stuff
+      @response[:id] = @verse.id
+      session[:navigation][:chapter] = id
+      session[:navigation][:verse] = @verse.id
+      session[:navigation][:book] = @book.id
+      respond_to do |format|
+        format.json { render json: @response }
+      end
+      
+    end
   end
 
 end

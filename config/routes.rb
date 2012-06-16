@@ -46,7 +46,12 @@ TentOfMeeting::Application.routes.draw do
   
   post "/verses/current", :controller => :verses, :action => :set_current
   get "/verses/current", :controller => :verses, :action => :current
-  #post "/chapters/current", :controller => :chapters, :action => :current
+  
+  get "/books/current", :controller => :books, :action => :current, :as => "curr_book"
+  get "books/next", :controller => :books, :action => :next, :as => "next_book"
+  get "books/prev", :controller => :books, :action => :prev, :as => "prev_book"
+  
+  post "/chapters/current", :controller => :chapters, :action => :set_current
   get "/chapters/current", :controller => :chapters, :action => :current
     
   ### Bible navigation  
@@ -55,8 +60,6 @@ TentOfMeeting::Application.routes.draw do
   get "verses/prev", :controller => :verses, :action => :prev, :as => "prev_verse"
   get "chapters/next", :controller => :chapters, :action => :next, :as => "next_chapter"
   get "chapters/prev", :controller => :chapters, :action => :prev, :as => "prev_chapter"
-  get "books/next", :controller => :books, :action => :next, :as => "next_book"
-  get "books/prev", :controller => :books, :action => :prev, :as => "prev_book"
   get "/Bible", :controller => :books, :action => :index, :as => "books_index"
   
   get "/hebrew/:id", :controller => :OT_hebrew_words, :action => :show

@@ -8,6 +8,7 @@ class BooksController < NavigationController
   end
   
   def index
+    set_mode(:bible)
     @books = Book.all
   end
   
@@ -28,6 +29,11 @@ class BooksController < NavigationController
            params[:mode] == "book"
             book_url = "/"+@book.name.to_s.gsub(/ /,'')
             redirect_to book_url
+        elsif
+           params[:mode] == "verse"
+             @verse_text = VerseText.find(@verse.id)
+             verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+             redirect_to verse_url
         end
       else
         @verse_text = VerseText.find(@verse.id)
@@ -53,6 +59,11 @@ class BooksController < NavigationController
            params[:mode] == "book"
             book_url = "/"+@book.name.to_s.gsub(/ /,'')
             redirect_to book_url
+        elsif
+           params[:mode] == "verse"
+             @verse_text = VerseText.find(@verse.id)
+             verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+             redirect_to verse_url
         end
       else
         @verse_text = VerseText.find(@verse.id)
@@ -60,6 +71,13 @@ class BooksController < NavigationController
         redirect_to verse_url
       end
     end
+  end
+  
+  def current
+    if @book == nil
+      @book = Book.find(session[:navigation][:book])
+    end
+    redirect_to @book.path
   end
 
 end

@@ -28,4 +28,8 @@ class Book < ActiveRecord::Base
     return link.html_safe
   end
   
+  def path
+    return "/"+name
+  end
+  
 end

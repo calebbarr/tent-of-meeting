@@ -311,12 +311,14 @@ class VersesController < NavigationController
     if params[:id] != nil then      
       @response = {}
       id = params[:id]
-      verse = Verse.find(id)
-      @response[:link] = verse.link
-      @response[:id] = verse.id
+      @verse = Verse.find(id)
+      @chapter = @verse.chapter
+      @book = @chapter.book
+      @response[:link] = @verse.link
+      @response[:id] = @verse.id
       session[:navigation][:verse] = id
-      session[:navigation][:chapter] = verse.chapter.id
-      session[:navigation][:book] = verse.chapter.book.id
+      session[:navigation][:chapter] = @chapter.id
+      session[:navigation][:book] = @book.id
       respond_to do |format|
         format.json { render json: @response }
       end
