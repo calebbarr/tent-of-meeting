@@ -558,3 +558,135 @@ in the view, translations is nil
 {:book=>58, :chapter=>1146, :verse=>30243, :direction=>"nil", :mode=>:verse}
 in the view, translations is nil
 {:book=>58, :chapter=>1146, :verse=>30243, :direction=>"nil", :mode=>:chapter}
+{:book=>58, :chapter=>1146, :verse=>30243, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>58, :chapter=>1146, :verse=>30243, :direction=>"nil", :mode=>:chapter}
+{:book=>58, :chapter=>1146, :verse=>30243, :direction=>"nil", :mode=>:book}
+{:book=>1, :chapter=>1, :verse=>1, :direction=>"nil", :mode=>:book}
+{:book=>58, :chapter=>1134, :verse=>29965, :direction=>"nil", :mode=>:chapter}
+{:book=>58, :chapter=>1134, :verse=>29965, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>20, :chapter=>638, :verse=>16665, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>20, :chapter=>638, :verse=>16665, :direction=>"nil", :mode=>:chapter}
+{:book=>20, :chapter=>638, :verse=>16658, :direction=>"nil", :mode=>:book}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:chapter}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:chapter}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:book}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:chapter}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:book}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:bible}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:chapter}
+{:book=>20, :chapter=>629, :verse=>16403, :direction=>"nil", :mode=>:book}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:bible}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:chapter}
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>"nil", :mode=>:chapter}
+{:book=>20, :chapter=>629, :verse=>16403, :direction=>:next, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>20, :chapter=>629, :verse=>16402, :direction=>:prev, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>19, :chapter=>628, :verse=>16401, :direction=>:prev, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>19, :chapter=>628, :verse=>16400, :direction=>:prev, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>19, :chapter=>628, :verse=>16400, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:bible}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:chapter}
+{:book=>19, :chapter=>479, :verse=>13943, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:bible}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:bible}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:bible}
+{:book=>19, :chapter=>617, :verse=>16248, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>19, :chapter=>617, :verse=>16248, :direction=>"nil", :mode=>:chapter}
+{:book=>19, :chapter=>617, :verse=>16241, :direction=>"nil", :mode=>:book}
+{:book=>19, :chapter=>479, :verse=>13941, :direction=>"nil", :mode=>:bible}
+{:book=>20, :chapter=>640, :verse=>16733, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>20, :chapter=>640, :verse=>16733, :direction=>"nil", :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>3, :chapter=>117, :verse=>3588, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>3, :chapter=>117, :verse=>3588, :direction=>"nil", :mode=>:chapter}
+{:book=>3, :chapter=>117, :verse=>3590, :direction=>"nil", :mode=>:book}
+{:book=>3, :chapter=>91, :verse=>2747, :direction=>"nil", :mode=>:bible}
+{:book=>23, :chapter=>682, :verse=>17728, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>10, :chapter=>272, :verse=>8144, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>10, :chapter=>272, :verse=>8145, :direction=>:next, :mode=>:verse}
+in the view, translations is nil
+{:book=>3, :chapter=>91, :verse=>2748, :direction=>:next, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>44, :chapter=>1031, :verse=>27379, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>10, :chapter=>271, :verse=>8122, :direction=>:prev, :mode=>:verse}
+in the view, translations is nil
+{:book=>11, :chapter=>268, :verse=>8024, :direction=>:next, :mode=>:verse}
+in the view, translations is nil
+{:book=>1, :chapter=>43, :verse=>1323, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>1, :chapter=>43, :verse=>1323, :direction=>"nil", :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>1, :chapter=>43, :verse=>1323, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>2, :chapter=>89, :verse=>2681, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>2, :chapter=>89, :verse=>2681, :direction=>"nil", :mode=>:chapter}
+{:book=>2, :chapter=>89, :verse=>2666, :direction=>"nil", :mode=>:book}
+{:book=>44, :chapter=>1031, :verse=>27379, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>44, :chapter=>1031, :verse=>27379, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>3, :chapter=>94, :verse=>2820, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>3, :chapter=>94, :verse=>2821, :direction=>:next, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>4, :chapter=>91, :verse=>2747, :direction=>:next, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>5, :chapter=>118, :verse=>3606, :direction=>:next, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>5, :chapter=>154, :verse=>4894, :direction=>"nil", :mode=>:chapter}
+{:book=>5, :chapter=>154, :verse=>4894, :direction=>"nil", :mode=>:book}
+{:book=>5, :chapter=>154, :verse=>4894, :direction=>"nil", :mode=>:bible}
+{:book=>1, :chapter=>37, :verse=>1111, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>66, :chapter=>1181, :verse=>30937, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>26, :chapter=>843, :verse=>21530, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>26, :chapter=>843, :verse=>21530, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>23, :chapter=>743, :verse=>18893, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>23, :chapter=>743, :verse=>18893, :direction=>"nil", :mode=>:chapter}
+{:book=>24, :chapter=>776, :verse=>19697, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>24, :chapter=>776, :verse=>19696, :direction=>:prev, :mode=>:verse}
+in the view, translations is nil
+{:book=>24, :chapter=>776, :verse=>19696, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>23, :chapter=>709, :verse=>18250, :direction=>"nil", :mode=>:chapter}
+{:book=>23, :chapter=>709, :verse=>18251, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>23, :chapter=>709, :verse=>18251, :direction=>"nil", :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>39, :chapter=>927, :verse=>23105, :direction=>:random, :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>39, :chapter=>927, :verse=>23105, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>39, :chapter=>927, :verse=>23105, :direction=>"nil", :mode=>:chapter}
+{:book=>39, :chapter=>927, :verse=>23111, :direction=>"nil", :mode=>:verse}
+in the view, translations is nil
+{:book=>39, :chapter=>927, :verse=>23111, :direction=>"nil", :mode=>:verse}
+in the view, translations is NOT nil
+{:book=>44, :chapter=>1021, :verse=>26999, :direction=>:random, :mode=>:verse}
+in the view, translations is nil
+{:book=>44, :chapter=>1021, :verse=>26998, :direction=>:prev, :mode=>:verse}

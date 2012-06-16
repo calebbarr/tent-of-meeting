@@ -28,12 +28,13 @@ setStage = function(mode) {
 		//if any other information needs to be
 		// posted to nav, this can be refactored
 		clearNavDirection();
-				
+		
 		// it'd be nice if everything that consults the session could be
 		// triggered from here
 		var mode = nav_hash["mode"];
 		var direction = nav_hash["direction"];
-		
+		var verse_id = nav_hash["verse"];
+		subscribe(verse_id);
 		//should be last thing done:
 		switch(mode){
 			case "verse":
@@ -116,6 +117,71 @@ setStage = function(mode) {
 				break;
 		}
 		
+	});
+}
+
+subscribe = function(verse_id){
+	var message_counter = 0; //stand in for message id
+
+	$(function() {
+		// Create a new client to connect to Faye
+		
+		var client = new Faye.Client('http://cbarr.dyndns.org:9292/faye');
+		
+		// Subscribe to the public channel
+		var public_subscription = client.subscribe('/'+verse_id, function(data) {
+			message_counter += 1; //stand in for message id
+			$('<p style="display:none" id ="message_' + message_counter + '" class = "message" title="'/* + data.timestamp */+'"></p>').html("<img style = 'float:left;' src=" + data.image +" title = '" + data.username+ "'></img>" + data.msg ).prependTo('#chat_room');
+			$("#message_" + message_counter).slideDown();
+			$('<p/>').prependTo('#chat_room');
+		});
+ 
+		// Handle form submissions and post messages to faye
+		$('#new_message_form').submit(function(){
+			// if the message is not blank
+			var message = $("#message").val();
+			if( message.match(/^\s+$/g) || message.length < 1){
+				//perhaps do some appropriate GUI thing if message is blank
+			} else {
+			// strings longer than 15 characters will run off the edge of the div
+			// need to break them up so the div will expand vertically
+			var message_array = message.split(/\s+/);
+			var hyphenated_message = "";
+			for(var i = 0; i < message_array.length; i++){
+				var token = message_array[i];
+				if(token.length > 15){
+					var j = 0;
+					var k = 0;
+					while( j < message.length){
+						k=j;
+						j += 15;
+						if( j > message.length){
+							hyphenated_message += message.substring(k);
+						}else{
+							hyphenated_message += message.substring(k,j);
+							hyphenated_message +="- ";
+						}
+					}
+				} else {
+				hyphenated_message += token;
+				hyphenated_message += " ";
+				}
+			}
+			
+			// Publish the message to the public channel
+			client.publish('/'+verse_id, {
+				username: "#{ signed_in? ? current_user.name : 'anonymous'}" ,
+				image: "#{ signed_in? ? current_user.image_url(:icon) : '/icons/16x16/user.png' }",
+				msg: hyphenated_message/* ,
+				timestamp : "#{-> {Time.now.strftime("%I:%M:%S%p")}.call.to_s}"*/
+			});
+
+			// Clear the message box
+			$('#message').val('');
+			}
+			// Don't actually submit the form, otherwise the page will refresh.
+			return false;
+		});
 	});
 }
 
