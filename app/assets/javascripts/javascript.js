@@ -34,11 +34,14 @@ setStage = function(mode) {
 		var mode = nav_hash["mode"];
 		var direction = nav_hash["direction"];
 		var verse_id = nav_hash["verse"];
+		data = {
+			nt: nav_hash["nt"]
+		}
 		subscribe(verse_id);
 		//should be last thing done:
 		switch(mode){
 			case "verse":
-				bindLayoutButtons({view: "verse"})
+				bindLayoutButtons({view: "verse", data: data})
 				switch(direction) {
 					case "next":
 						$("#stage").show("slide", { direction: "right" }, 500);
@@ -98,7 +101,7 @@ setStage = function(mode) {
 				$("#stage").show("blind", 500);
 				break;
 			case "strongs":
-				bindLayoutButtons();
+				bindLayoutButtons({view: "strongs"});
 				setProfileStage();
 				// @TODO
 				// this needs to be changed to setStrongsStage (to be written)
@@ -252,7 +255,10 @@ bindLayoutButtons = function(buttonSettings){
 				}
 				else if(buttonSettings["view"] == "verse"){
 					//bindVerseButtons();
-					bindKeys("bible", "verse");
+					bindKeys("bible", "verse",buttonSettings["data"]);
+				}
+				else if(buttonSettings["view"] == "strongs"){
+					bindKeys("strongs", "word");
 				}
 			} else {
 				bindKeys();
@@ -302,7 +308,7 @@ bindBookButtons = function(){
 	mode = e.g. bible, strongs, search
 	mode2 = e.g. book, chapter, verse
 */
-bindKeys = function(mode,mode2){	
+bindKeys = function(mode,mode2,data){
 	bibleMode = false;
 	// this hack is only to get random_verse()
 	// to be called while the person is doing shift + up
@@ -314,6 +320,20 @@ bindKeys = function(mode,mode2){
 	}
 	switch(mode){
 		case "strongs":
+			//@TODO do rest of strongs keyboard functionality
+			$(document).keydown(function(e){
+				//down arrow
+			    if (e.keyCode == 40) {
+					if(e.shiftKey){
+							curr_verse();//should be random strongs word
+					}else {
+						curr_verse();
+					}
+				}
+			       return false;
+			    });
+			//@TODO do rest of strongs keyboard functionality
+			break;
 		default: // case "bible":
 			$(document).keydown(function(e){
 				//left arrow
@@ -366,7 +386,11 @@ bindKeys = function(mode,mode2){
 						if(mode2 != null){
 							switch(mode2){
 								case "verse":
-									random_verse();
+									if(e.ctrlKey){
+										toggle_original_language(data["nt"]);
+									}else{
+										random_verse();
+									}
 									break;
 								case "chapter":
 									curr_verse();
@@ -669,15 +693,20 @@ setCurrVerse = function(id){
 		url: url,
 		type: "POST"
 		}).done(function(data){
-			updateButtons(id);
+			button_data = {
+				"favorite" : data["favorite"]
+			}
+			updateButtons(id,button_data);
 			$("#channel").html(data["link"]);
 			$("#chat_room").fadeOut("slow").html("").show();
 		});
 		
-		updateButtons = function(id) {
-			$("#related_button").attr("onClick","show_related("+id+");")
-			$("#notes_button").attr("onClick","showNotes("+id+");")
-			$("#favorite_button").attr("onClick","toggleFavorite("+id+");")
+		updateButtons = function(id,data) {
+			$("#related_button").attr("onClick","show_related("+id+");");
+			$("#notes_button").attr("onClick","showNotes("+id+");");
+			$("#favorite_button").attr("onClick","toggleFavorite("+id+");");
+			$("#favorite_button").prop("checked", data["favorite"]);
+			$("#favorite_button").button("refresh");
 		}
 		
 }

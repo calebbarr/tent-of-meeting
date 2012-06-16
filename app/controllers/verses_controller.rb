@@ -316,6 +316,8 @@ class VersesController < NavigationController
       @book = @chapter.book
       @response[:link] = @verse.link
       @response[:id] = @verse.id
+      @response[:favorite] = -> { signed_in? ? @verse.is_favorite?(current_user.id) : false }.call
+      @response[:nt] = @verse.nt?
       session[:navigation][:verse] = id
       session[:navigation][:chapter] = @chapter.id
       session[:navigation][:book] = @book.id

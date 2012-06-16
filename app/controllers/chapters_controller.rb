@@ -30,7 +30,11 @@ class ChaptersController < NavigationController
       @verse = Verse.lookup(@book.id,@chapter.name, verse_name = -> {return  chapter_id == NUMBER_OF_CHAPTERS ? LAST_VERSE_NAME : 1}.call)
       ## chapter_id, not @chapter.id, because we want to know if the chapter was *already* last before being incremented
       if params[:mode] != nil
-        if params[:mode] == "chapter"
+        if params[:mode] == "verse"
+          @verse_text = VerseText.find(@verse.id)
+          verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+          redirect_to verse_url
+        elsif params[:mode] == "chapter"
           chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
           redirect_to chapter_url
         elsif params[:mode] == "book"
@@ -55,7 +59,11 @@ class ChaptersController < NavigationController
       @book = @chapter.book
       @verse = Verse.lookup(@book.id,@chapter.name,1)
       if params[:mode] != nil
-        if params[:mode] == "chapter"
+        if params[:mode] == "verse"
+          @verse_text = VerseText.find(@verse.id)
+          verse_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s+"/"+@verse.name.to_s
+          redirect_to verse_url
+        elsif params[:mode] == "chapter"
           chapter_url = "/"+@book.name.to_s.gsub(/ /,'')+"/"+@chapter.name.to_s
           redirect_to chapter_url
         elsif params[:mode] == "book"

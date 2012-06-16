@@ -6,7 +6,7 @@
 	%img{src: -> {signed_in? ? current_user.image_url(:large_icon) : 'http://localhost:3000/icons/32x32/user.png' }.call, title: -> {signed_in?  ?  current_user.headline_text : Verse.random.verse_texts[0].content }.call, onclick: "document.location='#{profile_path}'"}
 	%b
 		= -> {signed_in? ? current_user.name : 'anonymous' }.call
-	#channel{style: "height:25px;"}
+	#channel.channel{style: "height:25px;"}
 		= @verse.link
 	%form#new_message_form
 		%input#message{:name => "message", :type => "text"}

@@ -3,7 +3,7 @@
 	- chapter = verse.chapter
 	- book = chapter.book
 	%tr{:class => "bible_verse_row", onClick: "location.href='#{verse.path}'"}
-		%td{:valign => "top", :align => "left", :width => "25%"}
+		%td{:valign => "top", :align => "left", :width => "32%"}
 			= link_to book.name, "/"+book.name
 			= link_to chapter.name, "/"+book.name+"/"+chapter.name.to_s
 			\:
