@@ -52,7 +52,7 @@ class NavigationController < ApplicationController
    respond_to do |format|
      nav = session[:navigation]
      verse = Verse.find(nav[:verse])
-     response = { verse: verse.id, link: verse.link, path: verse.path, mode: nav[:mode], direction: nav[:direction]}
+     response = { verse: verse.id, link: verse.link, path: verse.path, mode: nav[:mode], direction: nav[:direction], nt: verse.nt? }
      format.json { render json: response}
    end
  end
