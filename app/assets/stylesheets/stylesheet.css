@@ -357,3 +357,12 @@ header, section, footer, aside, nav, article, figure {
 	height:100%;
 	background: white;
 }
+
+.people {
+/*	opacity: .5;*/
+	width: 100px;
+	position:absolute;
+	z-index:1000;
+	top: 10em;
+	right: 1em;
+}

@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
       @chapter = @verse.chapter
       @book = @chapter.book
     end
+    # @people = people_at_verse(@verse.id)
   end
   
   def clear_q_id
@@ -52,5 +53,8 @@ class ApplicationController < ActionController::Base
   def is_number?(query)
     return true if Integer(query) rescue false
   end
-          
+  
+  def people_at_verse(id)
+    
+  end
 end

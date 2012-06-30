@@ -12,6 +12,8 @@
 		- flash.each do |type, message|
 			%div{:class => "message #{type}"}
 				%p= message
+	.people
+		=render "people"
 	%body{ background: "http://cbarr.dyndns.org/mountains.jpg" }
 		%br
 		#containercontainer{align: "center"}
