@@ -36,7 +36,6 @@ class NavigationController < ApplicationController
        old_record = VerseHistoryRecord.find(session[:navigation][:record_id])
        if old_record.verse_id == @verse.id
          old_record.updated_at = -> {Time.now}.call
-         puts "updating old record"
         else
           session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
         end

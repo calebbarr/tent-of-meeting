@@ -59,5 +59,13 @@ class ProfileController < NavigationController
     end
     redirect_to profile_path, :notice => "Settings updated."
   end
+  
+  def public
+    if params[:name] != nil
+      name = params[:name]
+      user = User.where("name=?", name).first
+      @user = {name: name, image: user.image_url(:medium), headline: {text: user.headline_text, link: user.headline.verse.link }}
+    end
+  end
 
 end

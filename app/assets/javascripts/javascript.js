@@ -149,11 +149,16 @@ populateUsers = function(users){
 	$("#people").html("");
 	for(var i = 0; i < users.length; i++){
 		user = users[i];
-		var img = "<img src='"+user["thumb"]+"' ";
+		var img = "";
+		img += "<a ";
+		img += "href='/meet/"+user["name"]+"'>"
+		img += "<img id='"+user["name"]+"' src='"+user["thumb"]+"' ";
 		img += " title='"+user["headline"]+"'";
 		img += ">";
 		img += "</img>";
+		img += "</a>"		
 		$("#people").append(img);
+		// $("#"+user["name"]).fadeIn("slow");
 	}
 }
 

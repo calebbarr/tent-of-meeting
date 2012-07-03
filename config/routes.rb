@@ -31,7 +31,7 @@ TentOfMeeting::Application.routes.draw do
   get "profile/settings", :as => "settings"
   post "profile/settings", :controller => :profile, :action => :update, as: "update_settings"
   get "users/show"
-  
+  get "/meet/:name", :controller => :profile, :action => :public
   
   #possibly rewrite routes for favorite chapters and books later
   get "verses/favorites/add/:id", controller: :verses, action: :add_favorite_verse, as: "add_favorite_verse"
