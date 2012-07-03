@@ -1,6 +1,6 @@
 class NavigationController < ApplicationController
   before_filter :initialize_navigation
-  after_filter :store_navigation_in_session
+  # after_filter :store_navigation_in_session
   
  def initialize_navigation
    # just to make sure the hash is always there
@@ -29,6 +29,24 @@ class NavigationController < ApplicationController
    @verse = Verse.lookup(@book.id,@chapter.name,1)
    end
    session[:navigation][:verse] = @verse.id
+   
+   # store_navigation_in_user
+   if signed_in?
+     if session[:navigation][:record_id] != nil
+       old_record = VerseHistoryRecord.find(session[:navigation][:record_id])
+       if old_record.verse_id == @verse.id
+         old_record.updated_at = -> {Time.now}.call
+         puts "updating old record"
+        else
+          session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
+        end
+      else
+        session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
+      end
+   # else
+   #   VerseHistoryRecord.create(user_id: 1, verse_id: @verse.id) # @TODO stand-in for handling anonymous user
+   end
+   
  end
  
  def get_navigation_from_session
@@ -37,7 +55,6 @@ class NavigationController < ApplicationController
  
  def set_mode(mode)
    session[:navigation][:mode] = mode
-   puts session[:navigation]
  end
  
  def set_direction(direction)
@@ -52,8 +69,21 @@ class NavigationController < ApplicationController
    respond_to do |format|
      nav = session[:navigation]
      verse = Verse.find(nav[:verse])
-     response = { verse: verse.id, link: verse.link, path: verse.path, mode: nav[:mode], direction: nav[:direction], nt: verse.nt? }
+     users = verse.current_users
+     response = { verse: verse.id, link: verse.link, path: verse.path, mode: nav[:mode], direction: nav[:direction], nt: verse.nt? , users: users}
      format.json { render json: response}
+   end
+ end
+ 
+ def current_users
+   @verse = Verse.find(session[:navigation][:verse] )
+   record = VerseHistoryRecord.find(session[:navigation][:record_id])
+   if record.verse_id == @verse.id
+     record.updated_at = -> { Time.now }.call
+     record.save
+   end
+   respond_to do |format|
+     format.json { render json: @verse.current_users }
    end
  end
  
@@ -73,5 +103,5 @@ class NavigationController < ApplicationController
      format.json{ render json: response }
     end
  end
-  
+   
 end

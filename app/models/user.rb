@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :favorite_verse_relationships, :foreign_key => "user_id", :class_name => "FavoriteVerseRelationship" 
   has_many :favorite_verses, :through => :favorite_verse_relationships, :source => :favorite, :class_name => "Verse"
   has_many :notes
+  has_many :verse_history_records, :as => "history"
   
   
   # def self.favorites
@@ -34,6 +35,14 @@ class User < ActiveRecord::Base
   
   def headline_text
     return VerseText.find(headline_id).content
+  end
+  
+  def history
+    return verse_history_records
+  end
+  
+  def current_verse
+    return -> {history.current}.call#.all[0] ?
   end
   
 end

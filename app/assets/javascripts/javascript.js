@@ -1,3 +1,5 @@
+var POLLING_INTERVAL = 4000;
+
 $(document).ready(function(){
 	checkBrowser();
 	$( ".navigation_button" ).button();
@@ -19,12 +21,23 @@ $(document).ready(function(){
 	}
 	$("#strongs_dropdown").hoverIntent(strongs_hover_config);
 	setStage();
+	setInterval("pollUsers()",POLLING_INTERVAL);
 });
 
 checkBrowser = function(){
 	if(!($.browser.mozilla)){
 			window.location.href = "/firefox_warning.html";
 	}
+}
+
+pollUsers = function() {
+	$.ajax(
+		{
+			url: "/nav/current_users.json"
+		}
+	).done(function(data){
+		populateUsers(data);
+	});
 }
 
 setStage = function(mode) {
@@ -41,10 +54,12 @@ setStage = function(mode) {
 		var mode = nav_hash["mode"];
 		var direction = nav_hash["direction"];
 		var verse_id = nav_hash["verse"];
+		var users = nav_hash["users"]
 		data = {
 			nt: nav_hash["nt"]
 		}
 		subscribe(verse_id);
+		populateUsers(users);
 		//should be last thing done:
 		switch(mode){
 			case "verse":
@@ -128,6 +143,18 @@ setStage = function(mode) {
 		}
 		
 	});
+}
+
+populateUsers = function(users){
+	$("#people").html("");
+	for(var i = 0; i < users.length; i++){
+		user = users[i];
+		var img = "<img src='"+user["thumb"]+"' ";
+		img += " title='"+user["headline"]+"'";
+		img += ">";
+		img += "</img>";
+		$("#people").append(img);
+	}
 }
 
 /*

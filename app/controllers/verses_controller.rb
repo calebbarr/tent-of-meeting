@@ -9,6 +9,7 @@ class VersesController < NavigationController
         if params[:verse] != nil then
           verse_name = params[:verse]
           @verse = Verse.lookup(book_id, chapter_name, verse_name)
+          @users = -> { current_users(@verse.id)}.call
           if signed_in? then
             @notes = @verse.notes_per_user(current_user.id)
             #not sure if this is best practice
@@ -74,6 +75,21 @@ class VersesController < NavigationController
         end
       end
     end
+    store_navigation_in_session
+  end
+      
+  def current_users(id)
+    @users = []
+    if @verse == nil
+      if id != nil
+        @verse = Verse.find(id)
+      elsif params[:id] != nil
+        @verse = Verse.find(params[:id])
+      else
+        return @users
+      end
+    end
+    @users = @verse.current_users
   end
   
   def related

@@ -1,5 +1,4 @@
-class Verse < ActiveRecord::Base
-  
+class Verse < ActiveRecord::Base  
   belongs_to :chapter
   has_many :verse_texts
   has_many :multiple_choice_questions
@@ -29,7 +28,7 @@ class Verse < ActiveRecord::Base
   end
   
   def self.next(id)
-    return id+1 <= NUMBER_OF_VERSES ? Verse.find(id+1) : Verse.find(id)
+    return id + 1 <= NUMBER_OF_VERSES ? Verse.find(id+1) : Verse.find(id)
   end
   
   def prev
@@ -83,6 +82,16 @@ class Verse < ActiveRecord::Base
   
   def nt?
     return id >= FIRST_NT_VERSE
+  end
+  
+  def current_users
+    users = []
+    records = VerseHistoryRecord.current.where("verse_id=?",id)
+    records.each do |record|
+      user = record.user
+      users << { since: record[:created_at], name: user.name, headline: user.headline_text, thumb: user.image_url(:thumb), icon: user.image_url(:icon) }
+    end
+    return users
   end
   
 end

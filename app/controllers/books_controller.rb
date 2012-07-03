@@ -5,6 +5,7 @@ class BooksController < NavigationController
     @chapters = @book.chapters
     @chapter = @chapters[0]
     @verse = @chapter.verses[0]
+    store_navigation_in_session
   end
   
   def index

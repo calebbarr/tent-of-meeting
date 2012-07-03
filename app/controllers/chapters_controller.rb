@@ -18,6 +18,7 @@ class ChaptersController < NavigationController
       @verses = @chapter.verses
       @verse = @verses[0]
     end
+    store_navigation_in_session
   end
   
   def next

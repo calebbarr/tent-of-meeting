@@ -12,7 +12,6 @@
 #verse_text{style: "padding-left:10%; padding-right:10%; vertical-align:middle;", align: "center"}
 	%font{size: "4"}
 		-if @translations == nil then
-			- puts "in the view, translations is nil"
 			=@verse_text
 		-else
 			- puts "in the view, translations is NOT nil"

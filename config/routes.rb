@@ -3,6 +3,7 @@ TentOfMeeting::Application.routes.draw do
   
   get "/nav", controller: :navigation, action: :get_nav
   post "/nav", controller: :navigation, action: :set_nav
+  get "/nav/current_users", controller: :navigation, action: :current_users
   
   get "messages/index"
 
@@ -293,6 +294,14 @@ TentOfMeeting::Application.routes.draw do
   match "/Psalms/:chapter/:verse/quiz/new", :controller => :quizzes, :action => :new, book: 19
   match "/Psalms/:chapter/:verse/quiz/create", :controller => :quizzes, :action => :create, book: 19
   match "/Psalms/:chapter/:verse/memorize", :controller => :memorize, :action => :show, book: 19
+  
+  match "/Psalm", :controller => :books, :action => :show, id: 19
+  match "/Psalm/:chapter", :controller => :chapters, :action => :show, book: 19
+  match "/Psalm/:chapter/:verse", :controller => :verses, :action => :show, book: 19
+  match "/Psalm/:chapter/:verse/quiz", :controller => :quizzes, :action => :show, book: 19
+  match "/Psalm/:chapter/:verse/quiz/new", :controller => :quizzes, :action => :new, book: 19
+  match "/Psalm/:chapter/:verse/quiz/create", :controller => :quizzes, :action => :create, book: 19
+  match "/Psalm/:chapter/:verse/memorize", :controller => :memorize, :action => :show, book: 19
   
   match "/Proverbs", :controller => :books, :action => :show, id: 20
   match "/Proverbs/:chapter", :controller => :chapters, :action => :show, book: 20

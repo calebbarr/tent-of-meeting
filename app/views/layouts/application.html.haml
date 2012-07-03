@@ -12,9 +12,10 @@
 		- flash.each do |type, message|
 			%div{:class => "message #{type}"}
 				%p= message
-	.people
+	#people.people
 		=render "people"
-	%body{ background: "http://cbarr.dyndns.org/mountains.jpg" }
+	/%body{ background: "http://cbarr.dyndns.org/mountains.jpg" }
+	%body{ background: "http://localhost:3000/mountains.jpg" }
 		%br
 		#containercontainer{align: "center"}
 			.container
