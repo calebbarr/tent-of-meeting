@@ -13,9 +13,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :ot_lg, :nt_lg, :name, :image, :headline_id
   has_many :favorite_verse_relationships, :foreign_key => "user_id", :class_name => "FavoriteVerseRelationship" 
   has_many :favorite_verses, :through => :favorite_verse_relationships, :source => :favorite, :class_name => "Verse"
-  has_many :notes
-  has_many :verse_history_records, :as => "history"
-  
+  has_many :notes  
   
   # def self.favorites
   #   return FavoriteVerse.where("user_id=?",user_id).all
@@ -38,7 +36,16 @@ class User < ActiveRecord::Base
   end
   
   def history
-    return verse_history_records
+    return VerseHistoryRecord.where("user_id=?",id).order(:created_at).reverse_order()
+  end
+  
+  def recent_history
+    return VerseHistoryRecord.where("user_id=?",id).order(:created_at).reverse_order().limit(10)
+  end
+  
+  def last_seen_at
+    return recent_history[0]
+    #is this correct?
   end
   
   def current_verse

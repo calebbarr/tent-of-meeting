@@ -116,7 +116,7 @@ setStage = function(mode) {
 				$("#stage").show("scale", 500);
 				break
 			case "profile":
-				bindLayoutButtons();
+				bindLayoutButtons({view: "profile"});
 				// different functionality can be added here later
 				// idea is to get the user back to the Bible as quickly as possible
 				setProfileStage();
@@ -198,6 +198,8 @@ setBookStage = function() {
 	specific functionality for viewing profiles
 */
 setProfileStage = function() {
+	$("#audio_placeholder").hide();
+	$("#audio").hide();
 	$( "#tabs" ).tabs({
 			collapsible: true
 		});
@@ -216,35 +218,48 @@ bindLayoutButtons = function(buttonSettings){
 		if(buttonSettings["view"] != undefined){
 			if(buttonSettings["view"] != undefined){
 				if(buttonSettings["view"] == "bible"){
+					bindStandardButtons();
 					bindBookButtons();
 					bindKeys("bible", "bible");
 				}
 				if(buttonSettings["view"] == "book"){
+					bindStandardButtons();
 					bindBookButtons();
 					bindKeys("bible", "book");
 				}
 				else if(buttonSettings["view"] == "chapter"){
+					bindStandardButtons();
 					bindChapterButtons();
 					bindKeys("bible", "chapter");
 				}
 				else if(buttonSettings["view"] == "verse"){
+					bindStandardButtons();
 					//bindVerseButtons();
 					bindKeys("bible", "verse",buttonSettings["data"]);
 				}
 				else if(buttonSettings["view"] == "strongs"){
 					bindKeys("strongs", "word");
+				} else if(buttonSettings["view"] == "profile") {
+					bindProfileButtons();
+					bindKeys();
 				}
 			} else {
+				bindStandardButtons();
 				bindKeys();
 			}
 		}else {
+			bindStandardButtons();
 			bindKeys();
 		}
 	} else{
+		bindStandardButtons();
 		bindKeys();
 	}
 }
 
+bindStandardButtons = function() {
+	$("#sidebar_button_1").attr("onClick","toggle_audio()")
+}
 rollDownStrongs = function() {
 	$.ajax().done(function(){
 		$(".browse_strongs").slideDown("fast");
@@ -261,6 +276,13 @@ rollUpStrongs = function() {
 
 displayStrongs = function() {
 	$(".browse_strongs").show();
+}
+
+bindProfileButtons = function() {
+	// @TODO change audio button
+	$("#sidebar_button_1").off();
+	//$("#sidebar_button_1").click(function(){alert('what up')});
+	// @TODO change favorite button
 }
 
 bindChapterButtons = function(){
@@ -455,6 +477,7 @@ random_verse = function(){
 
 toggle_audio = function() {
 	// creative use of ajax to make a "ker-snap" visual effect
+	// @TODO remove, dont need more requests coming in than necessary
 	if( $("#audio").is(":visible") ){
 		$.ajax().done(function(){
 			$("#audio").slideUp("fast");
@@ -467,20 +490,6 @@ toggle_audio = function() {
 		$("#audio").slideDown("slow");
 	}
 }
-
-
-// show_verse_audio = function() {
-// 	$("#verse_audio").dialog({position:['center',330], height: 100});
-// }
-
-// show_chapter_audio = function() {
-// 	$("#chapter_audio").dialog({position:['center',330], height: 100});
-// }
-
-// show_book_audio = function() {
-// 	$("#book_audio").dialog({position:['center',330], height: 100});
-// }
-
 
 show_related = function(id) {
 	url = "/verses/related.json?verse="+id

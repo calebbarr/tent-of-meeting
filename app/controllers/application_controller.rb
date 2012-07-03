@@ -23,7 +23,6 @@ class ApplicationController < ActionController::Base
       @chapter = @verse.chapter
       @book = @chapter.book
     end
-    # @people = people_at_verse(@verse.id)
   end
   
   def clear_q_id
@@ -31,7 +30,6 @@ class ApplicationController < ActionController::Base
   end
   
   #PARSING STRINGS , FIGURE OUT WHERE TO PUT THIS LATER
-  
   def is_englishish?(query)
     return (!is_hebrew?(query) and !is_number?(query) and !is_greek?(query))
   end
@@ -52,9 +50,5 @@ class ApplicationController < ActionController::Base
   
   def is_number?(query)
     return true if Integer(query) rescue false
-  end
-  
-  def people_at_verse(id)
-    
   end
 end

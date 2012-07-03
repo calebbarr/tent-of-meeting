@@ -1,7 +1,16 @@
 %h3
 	= @user[:name]
-%img{ src: @user[:image] }
+
 %h2
 	= @user[:headline][:text]
 	\-
 	= @user[:headline][:link]
+%br
+%img{ src: @user[:image] }
+%br
+%br
+%i
+	last seen at
+	= @user[:last_seen_at][:verse]
+	= time_ago_in_words(@user[:last_seen_at][:time])
+	ago

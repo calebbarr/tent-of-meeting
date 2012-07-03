@@ -1,4 +1,6 @@
 class ProfileController < NavigationController
+  # could add a before_filter to set_mode
+  
   def show
     set_mode(:profile)
     @user = {}
@@ -22,6 +24,7 @@ class ProfileController < NavigationController
   end
   
   def settings
+    set_mode(:profile)
     @user = {}
     if signed_in? then
       @user[:ot_lg] = current_user.ot_lg
@@ -40,7 +43,7 @@ class ProfileController < NavigationController
   end
   
   def update
-    puts params
+    set_mode(:profile)
     if signed_in? then
       if params[:ot_lg] != nil
         current_user.ot_lg = params[:ot_lg]
@@ -61,10 +64,15 @@ class ProfileController < NavigationController
   end
   
   def public
+    set_mode(:profile)
     if params[:name] != nil
       name = params[:name]
       user = User.where("name=?", name).first
-      @user = {name: name, image: user.image_url(:medium), headline: {text: user.headline_text, link: user.headline.verse.link }}
+      # last seen at
+      last_record = user.last_seen_at
+      last_verse = Verse.find(last_record.verse_id)
+      last_seen_at = { verse: last_verse.link , time: last_record.updated_at }
+      @user = {name: name, image: user.image_url(:medium), headline: {text: user.headline_text, link: user.headline.verse.link}, last_seen_at: last_seen_at}
     end
   end
 

@@ -2,7 +2,7 @@
 	#sidebar_spacer{style: "height:10px;"}
 	%nav{align: "right"}
 		.sidebar_item
-			%button{id: "sidebar_button_1", :class => "sidebar_button", href:"#", title: "audio", onClick: "toggle_audio()"}
+			%button{id: "sidebar_button_1", :class => "sidebar_button", href:"#", title: "audio"}
 				= image_tag "icons2/32x32/sound.png"
 		.sidebar_item
 			%button{id: "sidebar_button_2", :class => "sidebar_button", onClick: "memorize('"+"/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize"+"')", title: "memorize"}
