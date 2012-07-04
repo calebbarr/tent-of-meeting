@@ -66,7 +66,8 @@
 	}
 
 .chat_control{style: "height:95px;"}
-	%img{src: -> {signed_in? ? current_user.image_url(:large_icon) : '/icons/32x32/user.png' }.call, title: -> {signed_in?  ?  current_user.headline_text : Verse.random.verse_texts[0].content }.call, onclick: "document.location='#{profile_path}'"}
+	%a{href: "/profile"}
+		%img{src: -> {signed_in? ? current_user.image_url(:large_icon) : '/icons/32x32/user.png' }.call, title: -> {signed_in?  ?  current_user.headline_text : Verse.random.verse_texts[0].content }.call, onclick: "document.location='#{profile_path}'"}
 	%b
 		= -> {signed_in? ? current_user.name : 'anonymous' }.call
 	#channel.channel{style: "height:25px;"}

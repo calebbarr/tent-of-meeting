@@ -24,18 +24,22 @@ class Verse < ActiveRecord::Base
   end
   
   def next
+    id = id.to_i
     return id+1 <= NUMBER_OF_VERSES ? Verse.find(id+1) : Verse.find(id)
   end
   
   def self.next(id)
-    return id + 1 <= NUMBER_OF_VERSES ? Verse.find(id+1) : Verse.find(id)
+    id = id.to_i
+    return id+1 <= NUMBER_OF_VERSES ? Verse.find(id+1) : Verse.find(id)
   end
   
   def prev
+    id = id.to_i
     return id-1 > 0 ? Verse.find(id-1) : Verse.find(id)
   end
   
   def self.prev(id)
+    id = id.to_i
     return id-1 > 0 ? Verse.find(id-1) : Verse.find(id)
   end
   

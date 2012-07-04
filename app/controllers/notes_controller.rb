@@ -47,21 +47,13 @@ class NotesController < NavigationController
   
   def delete
     @note = Note.find(params[:id])
-    @verse = Verse.find(@note.verse_id)
     if signed_in?
       if @note.user_id == current_user.id then
         Note.destroy(params[:id])
-        redirect_to @verse.path, :notice => "note deleted."
-      else
-        redirect_to @verse.path, :notice => "you can only delete notes that belong to you."
+        respond_to do |format|
+          format.json { render json: "note " + params[:id] + " deleted" }
+        end
       end
-    else
-      #just for testing, @TODO remove later
-      if @note.user_id == 1 then
-        Note.destroy(params[:id])
-      end
-      redirect_to @verse.path, :notice => "if you are the owner of this note, please log in to delete it."
     end
   end
-
 end

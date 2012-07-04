@@ -366,3 +366,7 @@ header, section, footer, aside, nav, article, figure {
 	top: 10em;
 	right: 1em;
 }
+
+.change_password_field {
+	display:none;
+}

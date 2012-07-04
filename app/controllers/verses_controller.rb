@@ -332,6 +332,7 @@ class VersesController < NavigationController
       @book = @chapter.book
       @response[:link] = @verse.link
       @response[:id] = @verse.id
+      @response[:quiz] = @verse.has_quiz?
       @response[:favorite] = -> { signed_in? ? @verse.is_favorite?(current_user.id) : false }.call
       @response[:nt] = @verse.nt?
       session[:navigation][:verse] = id
@@ -341,6 +342,13 @@ class VersesController < NavigationController
         format.json { render json: @response }
       end
       
+    end
+  end
+  
+  def has_quiz
+    if params[:id] != nil then
+      @verse = Verse.find(params[:id])
+      redirect_to @verse.path + "/quiz" + -> { @verse.has_quiz? ? "" : "/new"}.call
     end
   end
   

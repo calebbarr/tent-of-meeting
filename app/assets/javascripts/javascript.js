@@ -529,7 +529,8 @@ toggleFavorite = function(id) {
 	$.ajax(url);
 }
 
-memorize = function(url) {
+memorize = function(id) {
+	url = "/memorize?id="+id
 	window.location.href = url;
 }
 
@@ -542,14 +543,13 @@ showNotes = function(id) {
 /*
    NOTE:  NOT CURRENTLY BEING USED
 */
-verseNotes = function(verse_id, new_note){
-	
-	deleteNote = function(id){
-		url = "/notes/delete?id="+id;
-		$("#delete"+id).parent().parent().remove();
-		$.ajax(url);
-	}
-	
+deleteNote = function(id){
+	url = "/notes/delete.json?id="+id;
+	$("#delete_note_"+id).parent().parent().remove();
+	$.ajax(url);
+}
+
+verseNotes = function(verse_id, new_note){	
 	var showNotes = function(){
 		var path ="/notes/show.json?verse_id="+verse_id;
 		$.ajax(path).done(function(notes){
@@ -566,7 +566,7 @@ verseNotes = function(verse_id, new_note){
 				div_content += note["content"];
 				div_content += "</td>";
 				div_content += "<td style:'float:top'>";
-				div_content += "<img id='delete"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://localhost:3000/close_x.gif'/>"
+				div_content += "<img id='delete_note_"+note["id"]+"' onClick='deleteNote("+note["id"]+")' src='http://cbarr.dyndns.org/close_x.gif'/>"
 				div_content += "</td>";
 				// div_content += "<td>";
 				// div_content += note["created_at"];
@@ -592,8 +592,14 @@ verseNotes = function(verse_id, new_note){
 	$("#verse_notes").dialog({position:['center',330], height: 200});
 }
 
-quiz = function(url){
-	window.location.href = url;	
+quiz = function(id){
+	// this is kind of loopy
+	// its checking to see if it has quiz here
+	// but when setCurrVerse is called that data is available to it
+	// the below makes sense in verse mode, but not in chapter
+	// @TODO sync up this functionality
+	url = "/verses/has_quiz";
+	window.location.href = url;
 }
 
 toggle_original_language = function(nt){
@@ -677,7 +683,8 @@ setCurrVerse = function(id){
 		type: "POST"
 		}).done(function(data){
 			button_data = {
-				"favorite" : data["favorite"]
+				"favorite" : data["favorite"],
+				"has_quiz" : data["quiz"]
 			}
 			updateButtons(id,button_data);
 			$("#channel").html(data["link"]);
@@ -687,6 +694,13 @@ setCurrVerse = function(id){
 		updateButtons = function(id,data) {
 			$("#related_button").attr("onClick","show_related("+id+");");
 			$("#notes_button").attr("onClick","showNotes("+id+");");
+			$("#quiz_button").attr("onClick","quiz("+id+");");
+			if(data["quiz"]){
+				$("#quiz_button").attr("title", "take quiz");
+			}else{
+				$("#quiz_button").attr("title", "create quiz");
+			}
+			$("#memorize_button").attr("onClick","memorize("+id+");");
 			$("#favorite_button").attr("onClick","toggleFavorite("+id+");");
 			$("#favorite_button").prop("checked", data["favorite"]);
 			$("#favorite_button").button("refresh");
@@ -722,4 +736,9 @@ expandChapter = function(chapter_name,chapter_id) {
 
 clearFlash = function() {
 	$("#flash").fadeIn("slow").delay(2500).fadeOut("slow");
+}
+
+showPasswordFields = function(){
+	$("#change_password_expand").remove();
+	$(".change_password_field").show("blind");
 }

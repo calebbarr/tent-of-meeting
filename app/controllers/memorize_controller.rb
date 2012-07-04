@@ -32,5 +32,12 @@ class MemorizeController < NavigationController
       redirect_to verse_path, :notice => success
     end
   end
+  
+  def redirect_to_verse_url
+    if params[:id] != nil
+          @verse = Verse.find(params[:id])
+          redirect_to @verse.path+"/memorize"
+    end    
+  end
 
 end

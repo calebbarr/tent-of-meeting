@@ -5,13 +5,12 @@
 			%button{id: "sidebar_button_1", :class => "sidebar_button", href:"#", title: "audio"}
 				= image_tag "icons2/32x32/sound.png"
 		.sidebar_item
-			%button{id: "sidebar_button_2", :class => "sidebar_button", onClick: "memorize('"+"/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/memorize"+"')", title: "memorize"}
+			%button{id: "memorize_button", :class => "sidebar_button", onClick: "memorize('#{@verse.id}')", title: "memorize"}
 				= image_tag "icons/32x32/magnifier.png"
 		.sidebar_item
-			%button{id: "sidebar_button_3", :class => "sidebar_button", onClick: "quiz('"+ -> { return @verse.has_quiz? ? "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz" : "/"+@book.name+"/"+@chapter.name.to_s+"/"+@verse.name.to_s+"/quiz/new"}.call + "')" , title: -> {return  @verse.has_quiz? ?  "take quiz" : "create quiz"}.call }
+			%button{id: "quiz_button", :class => "sidebar_button", onClick: "quiz('#{@verse.id}')" , title: "quiz"}
 				= image_tag "icons/32x32/check_mark.png"
 		.sidebar_item
-			/ %input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call)}.call, onClick: "toggleFavorite("+@verse.id.to_s+", "+ ->{signed_in? ? current_user.id.to_s : "1" }.call+","+ @verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call).to_s+")"}
 			%input{id: "favorite_button", type:"checkbox", checked: -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call)}.call, onClick: "toggleFavorite('" + @verse.id.to_s + "')" }
 			%label{for: "favorite_button", title: " "+ -> {@verse.is_favorite?(->{signed_in? ? current_user.id : 1 }.call) ? "unfavorite" : "favorite"}.call+ " "}
 				= image_tag "icons/32x32/heart.png"
@@ -23,9 +22,6 @@
 		.sidebar_item
 			%button{id: "related_button", :class => "sidebar_button", onClick: "show_related(#{@verse.id})", title: "related"}
 				= image_tag "icons/32x32/placemark.png"
-		/ 	%li
-		/ 		/the 1 here is just a stand-in for session-based code if not authenticated
-		/ 		= -> { return @verse.has_note?(id = -> {signed_in? ? current_user.id : 1 }.call ) ?  link_to("✎", controller: :notes, action: :show, :verse_id => @verse.id) : link_to("✎+", controller: :notes, action: :new, :verse_id => @verse.id) }.call
 	/ %aside{style: "height:107px; overflow:scroll;"}
 	/ 						%p
 	/ 							my friends notes

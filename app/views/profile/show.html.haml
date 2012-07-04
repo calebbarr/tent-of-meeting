@@ -55,7 +55,7 @@
 						- verse = note.verse
 						- chapter = verse.chapter
 						- book = chapter.book
-						%tr
+						%tr.note_row
 							%td
 								= verse.link
 							%td
@@ -63,6 +63,8 @@
 									= link_to note.name, :controller => :notes, :action => :show, :id => note.id, :verse_id => verse.id
 							%td
 								= note.content
+							%td
+								%img{id: "delete_note_#{note.id}", src: "http://cbarr.dyndns.org/close_x.gif", onClick: "deleteNote(#{note.id})"}
 	#settings_tab
 		%h4
 			Settings
