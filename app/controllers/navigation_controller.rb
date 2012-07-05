@@ -80,6 +80,12 @@ class NavigationController < ApplicationController
    if record.verse_id == @verse.id
      record.updated_at = -> { Time.now }.call
      record.save
+   elsif record.verse_id != @verse.id
+     new_record = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id)
+     session[:navigation][:record_id] = new_record.id
+   elsif record == nil
+     new_record = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id)
+     session[:navigation][:record_id] = new_record.id
    end
    respond_to do |format|
      format.json { render json: @verse.current_users }

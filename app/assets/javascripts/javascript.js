@@ -689,6 +689,7 @@ setCurrVerse = function(id){
 			updateButtons(id,button_data);
 			$("#channel").html(data["link"]);
 			$("#chat_room").fadeOut("slow").html("").show();
+			populateUsers(id);
 		});
 		
 		updateButtons = function(id,data) {
