@@ -598,7 +598,7 @@ quiz = function(id){
 	// but when setCurrVerse is called that data is available to it
 	// the below makes sense in verse mode, but not in chapter
 	// @TODO sync up this functionality
-	url = "/verses/has_quiz";
+	url = "/verses/quiz?id="+id;
 	window.location.href = url;
 }
 

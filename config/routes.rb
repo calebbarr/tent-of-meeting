@@ -72,7 +72,7 @@ TentOfMeeting::Application.routes.draw do
   
   # activity URLs
   get "/quiz/:q_id/:answer", :controller => :quizzes, :action => :answer, :as => :multiple_choice_check_answer
-  get "/verses/quiz/:id", :controller => :verses, :action => :has_quiz
+  get "/verses/quiz", :controller => :verses, :action => :has_quiz
   get "memorize/next", :controller => :memorize, :action => :next
   get "/memorize", :controller => :memorize, :action => :redirect_to_verse_url
   resources :messages
