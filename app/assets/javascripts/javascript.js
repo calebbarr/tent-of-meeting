@@ -146,19 +146,27 @@ setStage = function(mode) {
 }
 
 populateUsers = function(users){
-	$("#people").html("");
+	var people = $("#people").html();
+	var new_people = ""
 	for(var i = 0; i < users.length; i++){
 		user = users[i];
-		var img = "";
-		img += "<a ";
-		img += "href='/meet/"+user["name"]+"'>"
-		img += "<img id='"+user["name"]+"' src='"+user["thumb"]+"' ";
-		img += " title='"+user["headline"]+"'";
+		var img = '';
+		img += '<a ';
+		img += 'href="/meet/'+user["name"]+'">'
+		img += '<img id="'+user["name"]+'" src="'+user["thumb"]+'"';
+		img += ' title="'+user["headline"]+'"';
 		img += ">";
-		img += "</img>";
-		img += "</a>"		
-		$("#people").append(img);
+		img += "</a>"
+		new_people += img;
 		// $("#"+user["name"]).fadeIn("slow");
+	}
+	if(people.length == 8){ // 8 is currently the length of people when it is functionally blank
+		$("#people").html(new_people);
+	}else if(people != new_people){
+		$("#people").html(new_people);
+	} else {
+		// else they're the same, no need to do anything... this might not be relevant if we include the 'since'
+		 // information into every user's div... have to come up with new logic in that case
 	}
 }
 
@@ -682,6 +690,7 @@ setCurrVerse = function(id){
 		url: url,
 		type: "POST"
 		}).done(function(data){
+			populateUsers(data["users"]);
 			button_data = {
 				"favorite" : data["favorite"],
 				"has_quiz" : data["quiz"]
@@ -689,7 +698,6 @@ setCurrVerse = function(id){
 			updateButtons(id,button_data);
 			$("#channel").html(data["link"]);
 			$("#chat_room").fadeOut("slow").html("").show();
-			populateUsers(id);
 		});
 		
 		updateButtons = function(id,data) {

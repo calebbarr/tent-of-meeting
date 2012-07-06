@@ -9,7 +9,7 @@ class VersesController < NavigationController
         if params[:verse] != nil then
           verse_name = params[:verse]
           @verse = Verse.lookup(book_id, chapter_name, verse_name)
-          @users = -> { current_users(@verse.id)}.call
+          @users = -> { @verse.current_users }.call
           if signed_in? then
             @notes = @verse.notes_per_user(current_user.id)
             #not sure if this is best practice
@@ -78,19 +78,19 @@ class VersesController < NavigationController
     store_navigation_in_session
   end
       
-  def current_users(id)
-    @users = []
-    if @verse == nil
-      if id != nil
-        @verse = Verse.find(id)
-      elsif params[:id] != nil
-        @verse = Verse.find(params[:id])
-      else
-        return @users
-      end
-    end
-    @users = @verse.current_users
-  end
+  # def current_users(id)
+  #   @users = []
+  #   if @verse == nil
+  #     if id != nil
+  #       @verse = Verse.find(id)
+  #     elsif params[:id] != nil
+  #       @verse = Verse.find(params[:id])
+  #     else
+  #       return @users
+  #     end
+  #   end
+  #   @users = @verse.current_users
+  # end
   
   def related
     @verse = Verse.find(params[:verse])
@@ -323,7 +323,6 @@ class VersesController < NavigationController
   end
   
   def set_current
-    @response = "ok so far!"
     if params[:id] != nil then      
       @response = {}
       id = params[:id]
@@ -335,6 +334,19 @@ class VersesController < NavigationController
       @response[:quiz] = @verse.has_quiz?
       @response[:favorite] = -> { signed_in? ? @verse.is_favorite?(current_user.id) : false }.call
       @response[:nt] = @verse.nt?
+      
+      if session[:navigation][:record_id] != nil
+         old_record = VerseHistoryRecord.find(session[:navigation][:record_id])
+         if old_record.verse_id == @verse.id
+           old_record.updated_at = -> {Time.now}.call
+          else
+            session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
+          end
+        else
+          session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
+        end
+      
+      @response[:users] = @verse.current_users
       session[:navigation][:verse] = id
       session[:navigation][:chapter] = @chapter.id
       session[:navigation][:book] = @book.id

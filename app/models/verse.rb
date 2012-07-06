@@ -90,10 +90,14 @@ class Verse < ActiveRecord::Base
   
   def current_users
     users = []
+    seen_users = Set.new
     records = VerseHistoryRecord.current.where("verse_id=?",id)
     records.each do |record|
       user = record.user
-      users << { since: record[:created_at], name: user.name, headline: user.headline_text, thumb: user.image_url(:thumb), icon: user.image_url(:icon) }
+      if not seen_users.include?(user.id)
+        seen_users.add(user.id)
+        users << { since: record[:created_at], name: user.name, headline: user.headline_text, thumb: user.image_url(:thumb), icon: user.image_url(:icon) }
+      end
     end
     return users
   end
