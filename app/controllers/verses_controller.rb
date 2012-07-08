@@ -340,7 +340,7 @@ class VersesController < NavigationController
       @response[:nt] = @verse.nt?
       update_current_verse_history_records
       @response[:users] = @verse.current_users
-      @response[:history] = @user.recent_history unless not signed_in?
+      @response[:history] = current_user.recent_history unless not signed_in?
       session[:navigation][:verse] = id
       session[:navigation][:chapter] = @chapter.id
       session[:navigation][:book] = @book.id
