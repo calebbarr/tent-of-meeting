@@ -30,12 +30,17 @@ class NavigationController < ApplicationController
    end
    session[:navigation][:verse] = @verse.id
    
-   # store_navigation_in_user
+   # update verse current users
+   update_current_verse_history_records
+ end
+ 
+ def update_current_verse_history_records
    if signed_in?
      if session[:navigation][:record_id] != nil
        old_record = VerseHistoryRecord.find(session[:navigation][:record_id])
        if old_record.verse_id == @verse.id
          old_record.updated_at = -> {Time.now}.call
+         old_record.save
         else
           session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
         end
@@ -45,7 +50,6 @@ class NavigationController < ApplicationController
    # else
    #   VerseHistoryRecord.create(user_id: 1, verse_id: @verse.id) # @TODO stand-in for handling anonymous user
    end
-   
  end
  
  def get_navigation_from_session

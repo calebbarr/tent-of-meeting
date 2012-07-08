@@ -91,12 +91,12 @@ class Verse < ActiveRecord::Base
   def current_users
     users = []
     seen_users = Set.new
-    records = VerseHistoryRecord.current.where("verse_id=?",id)
+    records = VerseHistoryRecord.current.where("verse_id=?",id).order(:created_at)
     records.each do |record|
       user = record.user
       if not seen_users.include?(user.id)
         seen_users.add(user.id)
-        users << { since: record[:created_at], name: user.name, headline: user.headline_text, thumb: user.image_url(:thumb), icon: user.image_url(:icon) }
+        users << {name: user.name, headline: user.headline_text, thumb: user.image_url(:thumb), icon: user.image_url(:icon) }
       end
     end
     return users

@@ -334,18 +334,7 @@ class VersesController < NavigationController
       @response[:quiz] = @verse.has_quiz?
       @response[:favorite] = -> { signed_in? ? @verse.is_favorite?(current_user.id) : false }.call
       @response[:nt] = @verse.nt?
-      
-      if session[:navigation][:record_id] != nil
-         old_record = VerseHistoryRecord.find(session[:navigation][:record_id])
-         if old_record.verse_id == @verse.id
-           old_record.updated_at = -> {Time.now}.call
-          else
-            session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
-          end
-        else
-          session[:navigation][:record_id] = VerseHistoryRecord.create(user_id: current_user.id, verse_id: @verse.id).id
-        end
-      
+      update_current_verse_history_records
       @response[:users] = @verse.current_users
       session[:navigation][:verse] = id
       session[:navigation][:chapter] = @chapter.id
