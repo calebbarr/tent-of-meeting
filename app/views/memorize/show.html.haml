@@ -11,7 +11,8 @@
 	= @book.name.to_s
 	= @chapter.name.to_s + "\:"+@verse.name.to_s
 #maindiv{align: "center"}
-	%body{:onload => "writeVerse('#{@verse_text.content.strip}')"}
+	- formatted_verse = @verse_text.content.gsub("\'","\\\\'").gsub("\"","\\\"").strip
+	%body{:onload => "writeVerse('#{formatted_verse}')"}
 		#memorize{:style => "width:50%;", :align => "center"}
 			%input{:id => "type_verse", :size=> "42", :type => "text", :value => "", style: "display:block", placeholder: "type verse here"}
 			:javascript

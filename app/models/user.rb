@@ -41,8 +41,12 @@ class User < ActiveRecord::Base
   
   def recent_history
     entries = []
-    VerseHistoryRecord.where("user_id=?",id).order(:created_at).reverse_order().limit(10).each do |entry|
-      entries << entry.html_format
+    index = 0
+    VerseHistoryRecord.where("user_id=?",id).order(:created_at).reverse_order().limit(11).each do |entry|
+      if index > 0
+        entries << entry.html_format
+      end
+      index +=1
     end
     return entries
   end

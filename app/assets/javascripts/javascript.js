@@ -173,13 +173,16 @@ populateUsers = function(users){
 }
 
 populateHistory = function(history) {
-	$("#history").html(" ")
+	$("#history").html("")
+	// $("#history").attr("style",'display:none;')
 	if(history != null){
 		for(var i = 0; i < history.length; i++){
 			entry = history[i];
 			$("#history").append(entry);
 		}	
 	}
+	$("#history").children(":first").show("slide", { direction: "right" }, 200)
+	$("#history").children(":first").show("blind");
 }
 
 /*
