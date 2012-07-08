@@ -1,6 +1,7 @@
-
-[DEVISE] Devise.apply_schema is deprecated and has no effect. Please remove it.
-
-
-[DEVISE] Devise.use_salt_as_remember_token is deprecated and has no effect. Please remove it.
+>> Using rack adapter
+>> Thin web server (v1.3.1 codename Triple Espresso)
+>> Maximum connections set to 1024
+>> Listening on 0.0.0.0:80, CTRL+C to stop
+!! Invalid request
+ it.
 

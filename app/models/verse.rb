@@ -6,7 +6,7 @@ class Verse < ActiveRecord::Base
   has_many :related, :through => :related_verses, :foreign_key => "related_id"
   has_one :original_verse
   has_many :notes
-  paginates_per VERSE_SEARCH_RESULTS_PER_PAGE
+  # a util script has a problem with the kaminari reference # paginates_per  VERSE_SEARCH_RESULTS_PER_PAGE 
   
   
   

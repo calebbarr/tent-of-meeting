@@ -40,7 +40,11 @@ class User < ActiveRecord::Base
   end
   
   def recent_history
-    return VerseHistoryRecord.where("user_id=?",id).order(:created_at).reverse_order().limit(10)
+    entries = []
+    VerseHistoryRecord.where("user_id=?",id).order(:created_at).reverse_order().limit(10).each do |entry|
+      entries << entry.html_format
+    end
+    return entries
   end
   
   def last_seen_at

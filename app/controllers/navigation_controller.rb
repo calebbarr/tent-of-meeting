@@ -73,7 +73,8 @@ class NavigationController < ApplicationController
      nav = session[:navigation]
      verse = Verse.find(nav[:verse])
      users = verse.current_users
-     response = { verse: verse.id, link: verse.link, path: verse.path, mode: nav[:mode], direction: nav[:direction], nt: verse.nt? , users: users}
+     history = current_user.recent_history unless not signed_in?
+     response = { verse: verse.id, link: verse.link, path: verse.path, mode: nav[:mode], direction: nav[:direction], nt: verse.nt? , users: users, history: history}
      format.json { render json: response}
    end
  end

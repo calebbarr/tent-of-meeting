@@ -176,19 +176,23 @@ class VersesController < NavigationController
       elsif is_englishish?(@query)
         @results = []
         @search_results[:verses] = [] if @search_results[:verses] == nil
-        @search = VerseText.search do
+        @search = SearchHelper.search do
           fulltext params[:query]
           order_by(:book_id, :asc)
           order_by(:chapter_id, :asc)
           order_by(:verse_id, :asc)
         end
         @results = @search.results
-        @search_results[:verses] = @results
         if @results.length == 0 then
           @results = VerseText.regex_search(@query).page(params[:page])
           @search_results[:verses] =  @results
         end
         if @results.length > 0
+          unpaginated_results = []
+          @results.each do |helper|
+            unpaginated_results << helper.verse.verse_texts[0]
+          end  
+          @search_results[:verses] = Kaminari.paginate_array(unpaginated_results).page(params[:page])
           @search_results[:empty] = false
         end
       elsif is_hebrew?(@query)
@@ -336,6 +340,7 @@ class VersesController < NavigationController
       @response[:nt] = @verse.nt?
       update_current_verse_history_records
       @response[:users] = @verse.current_users
+      @response[:history] = @user.recent_history unless not signed_in?
       session[:navigation][:verse] = id
       session[:navigation][:chapter] = @chapter.id
       session[:navigation][:book] = @book.id

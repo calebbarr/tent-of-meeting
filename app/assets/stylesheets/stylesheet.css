@@ -367,6 +367,26 @@ header, section, footer, aside, nav, article, figure {
 	right: 1em;
 }
 
+.history {
+	width: 100px;
+	position:absolute;
+	z-index:1000;
+	top: 10em;
+	left: 1em;
+}
+
+.history_entry {
+	opacity: .5;
+	background-color: rgba(153, 153, 153, 0.2);
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+.history_entry:hover{
+	background-color: white;
+}
+
 .change_password_field {
 	display:none;
 }

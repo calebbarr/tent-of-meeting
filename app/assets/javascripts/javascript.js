@@ -55,11 +55,13 @@ setStage = function(mode) {
 		var direction = nav_hash["direction"];
 		var verse_id = nav_hash["verse"];
 		var users = nav_hash["users"]
+		var history = nav_hash["history"]
 		data = {
 			nt: nav_hash["nt"]
 		}
 		subscribe(verse_id);
 		populateUsers(users);
+		populateHistory(history)
 		//should be last thing done:
 		switch(mode){
 			case "verse":
@@ -167,6 +169,16 @@ populateUsers = function(users){
 	} else {
 		// else they're the same, no need to do anything... this might not be relevant if we include the 'since'
 		 // information into every user's div... have to come up with new logic in that case
+	}
+}
+
+populateHistory = function(history) {
+	$("#history").html(" ")
+	if(history != null){
+		for(var i = 0; i < history.length; i++){
+			entry = history[i];
+			$("#history").append(entry);
+		}	
 	}
 }
 
@@ -691,6 +703,7 @@ setCurrVerse = function(id){
 		type: "POST"
 		}).done(function(data){
 			populateUsers(data["users"]);
+			populateHistory(data["history"]);
 			button_data = {
 				"favorite" : data["favorite"],
 				"has_quiz" : data["quiz"]
