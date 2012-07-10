@@ -77,7 +77,7 @@ TentOfMeeting::Application.routes.draw do
   get "/memorize", :controller => :memorize, :action => :redirect_to_verse_url
   resources :messages
   get "/notes/delete", :controller => :notes, :action => :delete
-  # resources :notes
+  resources :notes
   get "/notes/new"
   get "/notes/create"
   get "/notes/index"

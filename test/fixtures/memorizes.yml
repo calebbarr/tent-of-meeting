@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  verse_id: 1
+  status: MyString
+  tokens: MyText
+  values: MyText
+
+two:
+  verse_id: 1
+  status: MyString
+  tokens: MyText
+  values: MyText
