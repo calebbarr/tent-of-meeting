@@ -1,5 +1,2 @@
-Tent of Meeting is real time, collaborative Bible study and social games.  This will be changing all the time, but a working copy can usually be seen in Firefox at:
-
-http://cbarr.dyndns.org
-
-Log in for best results.
+This project was a real-time, collaborative Bible study and social games app written in Rails and utilizing a Faye push server.
+While I am, at times, not proud of the style of the code, the size and scope of this one-person project showcase my versatility as a developer.  If I were to re-do the project, I would probably do it in Node.js (for the current games), or, if intending to add more complex games, Scala's Lift or Play frameworks. Rails was just not a good fit for this project.
